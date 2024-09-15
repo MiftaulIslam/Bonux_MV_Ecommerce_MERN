@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AdminLayout from './layouts/AdminLayout';
 import Admin from './pages/Admin/Admin';
 import Category from './pages/Admin/Category';
+import ProductDetail from './components/Helper/ProductDetail';
 function App() {
   
   const { isAuthenticated, isLoggedIn, user, loading } = useSelector((state) => state.user);
@@ -52,6 +53,7 @@ transition: Bounce
         {/* For home */}
         <Route path="/" element={<HomeLayout/>}>
         <Route index element={<Home/>}/>
+        <Route path="/product-detail" element={<ProductDetail/>}/>
         </Route> 
 
         {/* Admin */}

@@ -13,7 +13,8 @@ import Pagination from './DataTable/Pagination';
 import TableBody from './DataTable/TableBody';
 import TableHead from './DataTable/TableHead';
 import Modal from './Modal';
-import DeleteModal from './DeleteModal';
+// import DeleteModal from './DeleteModal';
+import StarRating from './StarRating';
 
 export{UserProfile,
     NavSearch,
@@ -29,5 +30,6 @@ export{UserProfile,
     TableBody,
     TableHead,
     Modal,
-    DeleteModal
+    // DeleteModal,
+    StarRating,
 }

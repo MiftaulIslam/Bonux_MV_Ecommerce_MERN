@@ -13,7 +13,8 @@ const productSchema = new mongoose.Schema({
         required: [true, "Please enter a product description"],
     },
     specification: [
-        { key: { type: String }, value: { type: String } }
+        {section:[
+            { key: { type: String }, value: { type: String } }]}
     ],
     price: {
         original_price: { type: Number, required: [true, "Please enter product price"] },
