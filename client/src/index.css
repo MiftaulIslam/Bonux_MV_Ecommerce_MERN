@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Carousel CSS */
+
+
+
+
+.container {
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.container-lg {
+  max-width: 1780px;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* Header class */
+.header {
+    font-size: 24px;
+    font-weight: bold;
+
+  }
+  
+  /* Sub-header class */
+  .sub-header {
+    font-size: 18px;
+    font-weight: bold;
+
+  }
+  
+  /* Font small class */
+  .font-sm {
+    font-size: 14px;
+  }
+  
+  /* Font small class */
+  .font-bold {
+    font-weight: bold;
+  }
+  
+  /* Link class */
+  .link {
+    font-size: 16px;
+    text-decoration: none;
+
+  }

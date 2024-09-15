@@ -1,0 +1,1 @@
+{"scripts":{"web":"cd client && npm run dev","server":"cd server && nodemon server.js","dev":"concurrently \"npm run web\" \"npm run server\""},"devDependencies":{"concurrently":"^8.2.2"},"dependencies":{"nodemon":"^3.1.3"}}

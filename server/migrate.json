@@ -1,0 +1,7 @@
+{
+  "dbConnectionUri": "mongodb+srv://miftaulislam005:badshamiftaul005@multivendordb.0kzzj0i.mongodb.net/myDatabase?retryWrites=true&w=majority",
+  "options": {
+    "useUnifiedTopology": true
+  },
+  "migrationsDir": "./migrations"
+}
