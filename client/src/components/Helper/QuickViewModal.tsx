@@ -43,7 +43,7 @@ const QuickViewModal = ({ data, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[80vh] sm:max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-lg max-w-4xl w-full min-h-[50vh] sm:max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-end mb-4">
             <button onClick={onClose} className="text-gray-500 hover:text-gray-700">

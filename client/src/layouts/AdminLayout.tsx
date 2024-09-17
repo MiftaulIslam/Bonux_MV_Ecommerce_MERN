@@ -8,14 +8,14 @@ import Loader from "../widgets/Loader";
 const AdminLayout = () => {
   const navigate = useNavigate();
   const {isLoggedIn, user, loading} = useSelector((state)=> state.user)
-  useEffect(() => {
-   if(!loading){
-    if(user.role !== "admin" || !isLoggedIn) {
-      showAlert(false, "Unauthorized access detected")  
-      navigate('/')
-    }
-   }
-  }, [loading])
+  // useEffect(() => {
+  //  if(!loading){
+  //   if(user.role !== "admin" || !isLoggedIn) {
+  //     showAlert(false, "Unauthorized access detected")  
+  //     navigate('/')
+  //   }
+  //  }
+  // }, [loading])
   if(loading){
     return <Loader/>
   }
