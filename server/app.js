@@ -27,13 +27,16 @@ const authentication = require('./routes/auth/authentication')
 const activation = require('./routes/auth/activation');
 const category = require('./routes/category');
 const product = require('./routes/product')
+const seller = require('./routes/seller')
 const upload = require('./utiles/multer');
 
 //Routes 
 app.use('/user', authentication)
+app.use('/seller', seller)
 app.use('/user',upload.none(), activation)
 app.use('/category', category)
 app.use('/product', product)
+
 
 //error middleware
 app.use(ErrorMiddleware)

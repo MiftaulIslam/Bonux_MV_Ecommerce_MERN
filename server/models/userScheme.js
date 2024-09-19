@@ -62,11 +62,11 @@ userSchema.pre("save", async function (next){
 
 // jwt token
 userSchema.methods.getJwtToken = function () {
-  return jwt.sign({ id: this._id, name: this.name}, process.env.JWT_SECRET_KEY);
+  return jwt.sign({ id: this._id, name: this.name, role:this.role }, process.env.JWT_SECRET_KEY);
 };
 //Account Activation jwt token
 userSchema.methods.createExpirableActivationToken = function () {
-  return jwt.sign({ id: this._id, name: this.name}, process.env.JWT_SECRET_KEY, {expiresIn:"5m"});
+  return jwt.sign({ id: this._id, name: this.name, role:this.role}, process.env.JWT_SECRET_KEY, {expiresIn:"5m"});
 };
 //Account Activation jwt token verify
 userSchema.methods.verifyToken = function (token) {

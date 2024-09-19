@@ -13,7 +13,8 @@ exports.isAuthenticated = catchAsync(async (req, res, next) => {
     if (!decoded) {
       return next(new ErrorHandler("Invalid token", 401));
     }
-    req.user = decoded.id;
+    req.id = decoded.id;
+    req.role = decoded.role;
     next();
   } catch (error) {
     return next(new ErrorHandler("Token verification failed", 401));

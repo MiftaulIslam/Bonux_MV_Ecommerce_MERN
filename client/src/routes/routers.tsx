@@ -12,6 +12,8 @@ import HomeLayout from '../layouts/HomeLayout'
 import AdminLayout from '../layouts/AdminLayout'
 import PrivateRoute from "./privateRoute";
 import Admin from "../pages/Admin/Admin";
+import SellerLayout from "../layouts/SellerLayout";
+import AddProduct from "../pages/Seller/AddProduct";
 
 
 const router = createBrowserRouter([
@@ -72,6 +74,23 @@ const router = createBrowserRouter([
           },{
             path: "category",
             element: <Category />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    // path:"/seller",
+    element: <PrivateRoute role="seller"/>,
+    children: [
+      {
+        path: "/seller",
+        element: <SellerLayout />,
+        // errorElement: <ErrorPage />,
+        children: [
+          {
+            path: "/seller",
+            element: <AddProduct />,
           },
         ],
       },

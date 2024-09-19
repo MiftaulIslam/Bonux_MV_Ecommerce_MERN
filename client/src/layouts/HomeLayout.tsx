@@ -3,7 +3,6 @@ import { Footer, NavBar } from "../components";
 import { useEffect, useState } from "react";
 import ResponsiveSidebar from './ResponsiveSidebar';
 import VerticalMultiLevelDropDown from "../widgets/VerticalMultiLevelDropDown";
-import { categoriesData } from "../static/data";
 import { useSelector } from "react-redux";
 import { GetService } from "../utils/HTTP/Get";
 
@@ -11,10 +10,8 @@ const HomeLayout = () => {
   const { isOpen } = useSelector((state) => state.togglebar);
   const [categories, setCategories] = useState(null)
   const getCategories = async ()=>{
-      const categories = await GetService(`category/categories-order`, true) 
-      if(categories){
-          setCategories(categories.data);
-      }
+      const categories = await GetService(`category/categories-order`) 
+     
   }
   useEffect(() => {
    getCategories()

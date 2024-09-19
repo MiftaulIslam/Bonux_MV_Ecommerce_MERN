@@ -1,55 +1,48 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { PostService } from "../../utils/HTTP/Post";
+import { useLoader } from "../../hooks/LoaderProvider";
 
 const Activation = () => {
   const navigate = useNavigate();
-  // check token validity
-  const [valid, setValid] = useState<boolean>(false);
-  // Initial Loading
-  const [loading, setLoading] = useState<boolean>(true);
-
+  const {showLoader, hideLoader} =useLoader()
   // Token coming from URL
   const { token } = useParams();
 
   // Validating Token
-  const validateToken = async (token: string | undefined) => {
- const data = await PostService(`user/activate/${token}`, true)
- if(data) {
-  setLoading(false);
-  setValid(true);
-  navigate(`/login`)
- }
-      
-  };
+    const validateToken = async (token: string | undefined) => {
+      showLoader()
+   const data = await PostService(`user/activate/${token}`, true)
+   
+    hideLoader()
+    navigate(`${data.role === 'seller' ? "/login?role=seller": "/login"}`)
+   
+
+    };
 
   useEffect(() => {
     if (token) validateToken(token);
+    
   }, [token]);
 
   return (
-    <div className="flex h-[100vh] justify-center items-center">
-      <div className="form_group bg-[#fff] rounded-lg shadow-md overflow-hidden m-auto flex flex-col sm:flex-row flex-wrap justify-center items-center w-[468px]">
-        <div className="overlay-container w-full h-[380px]">
-          <div className="overlay flex flex-col justify-center text-center items-center text-[#FFFFFF] h-full gap-2 px-2 bg-gradient-to-r from-red-500 to-pink-500">
-            {/* Loading */}
-            {loading && <h1 className="text-dark">Loading...</h1>}
-            {/* After loading complete */}
-            {!loading && valid && (
-              <>
-                <h1>Account successfully activated</h1>
-                <p>Go back to login</p>
-                <Link
-                  to="/login"
-                  className="anchor text-[#FFFFFF] uppercase font-bold inline-block text-sm py-3 px-11 rounded-2xl bg-opacity-0 border-2 border-[#FFFFFF]"
-                >
-                  Login
-                </Link>
-              </>
-            )}
-            {/* If error occured */}
-            {!loading && !valid && <h1>Invalid token</h1>}
-          </div>
+
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-500 to-cyan-400 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl p-8 shadow-2xl">
+        <div>
+          
+          <h2 className="mt-4 text-center text-2xl font-extrabold text-white">
+            Account successfully activated
+          </h2>
+          <p className="text-sm text-center text-blue-100 my-2">
+            Go back to login{" "}
+            <Link
+              className="font-medium text-[#ddd] hover:text-white"
+              to={"/login"}
+            >
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </div>

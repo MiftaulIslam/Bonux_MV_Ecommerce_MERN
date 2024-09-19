@@ -14,3 +14,24 @@ export const validatePassword=(password:string):string=>{
     if(!password.match(passwordPattern)) return 'Password must contains at least one letter and one number and 8 characters'
     return ''
 }
+
+
+export const validatePhone = (phone: string): string => {
+    const phonePattern = /^(?:\+?88)?01[13-9]\d{8}$/;
+    
+    if (!phone) return "Phone number is required";
+    if (!phone.match(phonePattern)) return "Invalid phone number";
+    
+    return "";
+  };
+
+
+  
+export const validateConfirmPassword = (
+  password: string,
+  confirmPassword: string
+)=> {
+  if (!confirmPassword) return {status:false, message:"Confirm password is required"};
+  if (password !== confirmPassword) return {status:false, message:"Passwords do not match"};
+  return null;
+};

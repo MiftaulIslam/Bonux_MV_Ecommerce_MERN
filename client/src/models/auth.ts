@@ -1,8 +1,9 @@
 
 export interface SignupModel{
-    username:string, 
+    name:string, 
     email: string, 
     password:string,
+    phone:string,
     avatar: File | null
 }
 export interface LoginModel{

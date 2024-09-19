@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { fetchUser } from './state/actions/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouterProvider } from 'react-router-dom'; // Correct import
+import { LoaderProvider } from './hooks/LoaderProvider';
 import router from './routes/routers'; // Ensure correct path
 
 function App() {
@@ -18,11 +19,13 @@ console.log(user)
   }, [dispatch, isLoggedIn, isAuthenticated, user]);
 
   return (
-    <>
-      <RouterProvider router={router} />
+    <><LoaderProvider>
+
+
+<RouterProvider router={router} />
       <ToastContainer
         position="top-right"
-        autoClose={100}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -33,6 +36,7 @@ console.log(user)
         theme="colored"
         // transition="bounce" // Fixed this typo
       />
+    </LoaderProvider>
     </>
   );
 }

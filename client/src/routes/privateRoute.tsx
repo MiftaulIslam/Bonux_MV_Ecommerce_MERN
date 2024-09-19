@@ -7,6 +7,7 @@ import Loader from "../widgets/Loader";
 const PrivateRoute = ({ role }) => {
   const { user, loading } = useSelector((state) => state.user);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  console.log(user)
 
   useEffect(() => {
     if (!loading) {
@@ -15,29 +16,27 @@ const PrivateRoute = ({ role }) => {
   }, [loading]);
 
   if (loading || !isUserLoaded) {
-    return <Loader/>; 
+    return <Loader />; 
   }
   if(user){
     
   const isAuthorized = user?.role === role || user?.role === "admin";
-  
-  if (role === "admin" || role === "seller") {
-    if (isAuthorized) {
-      return <Outlet />;
-    } else {
-      showAlert(false, "Unauthorized access detected");
-      return <Navigate to="/" />;
-    }
-  }
+  console.log(isAuthorized)
 
-  if (role === "user") {
     if (isAuthorized) {
       return <Outlet />;
     } else {
-      showAlert(false, "You must login");
-      return <Navigate to="/login" />;
+      showAlert(false, "Unauthorized access");
+      if(user.role === 'user'){
+        return <Navigate to="/" />;
+      }else{
+        return <Navigate to="/seller" />;
+      }
     }
-  }
+    
+    
+  }else{
+    return <Navigate to="/login" />;
 
   }
 };

@@ -1,7 +1,7 @@
 import { base_url } from "../../static/data"
 import { showAlert } from "../showAlert";
 
-export const GetService =async (url:string,alert:boolean):Promise<any>=>{
+export const GetService =async (url:string,alert:boolean = false):Promise<any>=>{
 const Url:string = `${base_url}/${url}`
 const response = await fetch(Url);
 
