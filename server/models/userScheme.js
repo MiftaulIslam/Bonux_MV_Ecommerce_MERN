@@ -17,9 +17,14 @@ const userSchema = new mongoose.Schema({
     minLength: [8, "Password should be greater than 4 characters"],
     
   },
-  phoneNumber:{
-    type: Number,
+  phone:{
+    type: String,
+    RegExp:'/^(?:\+?88)?01[13-9]\d{8}$/gm'
 
+  },
+  gender:{
+    type: String,
+    enum:["male", "female", "other"],
   },
   addresses:[
     { address_1:{type:String},

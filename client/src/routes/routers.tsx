@@ -14,6 +14,8 @@ import PrivateRoute from "./privateRoute";
 import Admin from "../pages/Admin/Admin";
 import SellerLayout from "../layouts/SellerLayout";
 import AddProduct from "../pages/Seller/AddProduct";
+import ManageProfileLayout from "../layouts/ManageProfileLayout";
+import ManageProfile from "../components/ManageProfile/ManageProfile";
 
 
 const router = createBrowserRouter([
@@ -51,7 +53,26 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <Home />,
-          },{
+          },
+          {
+            path:"user",
+            element:<ManageProfileLayout/>,
+            children:[
+              {
+                path: "my",
+                element: <ManageProfile/>,
+              },
+              {
+                path: "orders",
+                element: <ManageProfileLayout/>,
+              },
+              {
+                path: "products",
+                element: <ManageProfileLayout/>,
+              },
+            ]
+          },
+          {
             path: "/product-detail",
             element: <ProductDetail />,
           },

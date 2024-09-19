@@ -24,6 +24,7 @@ app.use(cors(corsOptions))
 
 //Import Routes 
 const authentication = require('./routes/auth/authentication')
+const user = require('./routes/user')
 const activation = require('./routes/auth/activation');
 const category = require('./routes/category');
 const product = require('./routes/product')
@@ -32,6 +33,7 @@ const upload = require('./utiles/multer');
 
 //Routes 
 app.use('/user', authentication)
+app.use('/user', user)
 app.use('/seller', seller)
 app.use('/user',upload.none(), activation)
 app.use('/category', category)

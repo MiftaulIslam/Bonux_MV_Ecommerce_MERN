@@ -21,7 +21,7 @@ const PrivateRoute = ({ role }) => {
   if(user){
     
   const isAuthorized = user?.role === role || user?.role === "admin";
-  console.log(isAuthorized)
+
 
     if (isAuthorized) {
       return <Outlet />;
