@@ -11,6 +11,7 @@ const HomeLayout = () => {
   const [categories, setCategories] = useState(null)
   const getCategories = async ()=>{
       const categories = await GetService(`category/categories-order`) 
+      setCategories(categories)
      
   }
   useEffect(() => {
@@ -23,7 +24,7 @@ const HomeLayout = () => {
       </div>
       <div className={`w-full ${!isOpen && "hidden"}`}>
         <ResponsiveSidebar className={'w-4/5  z-10 bg-[#fff] shadow-lg h-full fixed overflow-y-auto top-15  left-0'}>
-          <VerticalMultiLevelDropDown items={categories}/>
+          <VerticalMultiLevelDropDown items={categories?.data}/>
         </ResponsiveSidebar>
       </div>
       <div className="container">

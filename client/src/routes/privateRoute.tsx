@@ -7,7 +7,6 @@ import Loader from "../widgets/Loader";
 const PrivateRoute = ({ role }) => {
   const { user, loading } = useSelector((state) => state.user);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
-  console.log(user)
 
   useEffect(() => {
     if (!loading) {

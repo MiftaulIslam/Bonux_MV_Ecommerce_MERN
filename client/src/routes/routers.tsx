@@ -15,7 +15,9 @@ import Admin from "../pages/Admin/Admin";
 import SellerLayout from "../layouts/SellerLayout";
 import AddProduct from "../pages/Seller/AddProduct";
 import ManageProfileLayout from "../layouts/ManageProfileLayout";
+import MyProfile from "../components/ManageProfile/MyProfile";
 import ManageProfile from "../components/ManageProfile/ManageProfile";
+import ManageAddresses from "../components/ManageProfile/ManageAddresses";
 
 
 const router = createBrowserRouter([
@@ -55,12 +57,20 @@ const router = createBrowserRouter([
             element: <Home />,
           },
           {
-            path:"user",
+            path:"/user",
             element:<ManageProfileLayout/>,
             children:[
               {
-                path: "my",
+                path: "/user",
                 element: <ManageProfile/>,
+              },
+              {
+                path: "my",
+                element: <MyProfile/>,
+              },
+              {
+                path: "addresses",
+                element: <ManageAddresses/>,
               },
               {
                 path: "orders",

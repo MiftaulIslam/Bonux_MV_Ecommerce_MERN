@@ -4,6 +4,7 @@ import { Plus, Subtract } from "./icons";
 
 const VerticalMultiLevelDropDown = ({ items, className }) => {
   const [activeItems, setActiveItems] = React.useState({});
+  console.log(items)
 
   const handleItemClick = (item) => {
     setActiveItems((prevActiveItems) => {
@@ -35,7 +36,7 @@ const VerticalMultiLevelDropDown = ({ items, className }) => {
               <span className="flex-grow">{item.name}</span>
 
               <span className="ml-2">
-                {activeItems[item.name] ? <Subtract /> : <Plus/>}
+                {activeItems[item.name] ? <Subtract width={"28px"} height={"25px"} color={"#000000"}/> : <Plus width={"28px"} height={"25px"} color={"#000000"}/>}
                 
               </span>
             </div>
@@ -52,7 +53,7 @@ const VerticalMultiLevelDropDown = ({ items, className }) => {
               {item.children.length !== 0 ? (
                 <span className="ml-2">
                 
-                {activeItems[item.name] ? <Subtract /> : <Plus/>}
+                {activeItems[item.name] ? <Subtract width={"28px"} height={"25px"} color={"#000000"}/> : <Plus width={"28px"} height={"25px"} color={"#000000"}/>}
                 </span>
               ) : (
                 ""

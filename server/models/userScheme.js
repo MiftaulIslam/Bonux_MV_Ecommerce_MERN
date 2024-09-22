@@ -27,13 +27,14 @@ const userSchema = new mongoose.Schema({
     enum:["male", "female", "other"],
   },
   addresses:[
-    { address_1:{type:String},
-      street:{type:String },
+
+    { 
+      address:{type:String},
+      region:{type:String },
       city:{type:String,}, 
-      state:{type:String,}, 
-      country:{type:String,},
-      zip:{type:String,}, 
-  
+      zone:{type:String,}, 
+      defaultBilling:{type:Boolean, default:false},
+      defaultShipping:{type:Boolean, default:false}
     }
   ],
   role:{

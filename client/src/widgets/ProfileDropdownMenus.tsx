@@ -13,7 +13,7 @@ const ProfileDropdownMenus = ({data}) => {
     <li className="py-2">
       <Link
         className="hover:underline text-[#555555]"
-        to="/user/my"
+        to="/user"
       >
         Profile
       </Link>

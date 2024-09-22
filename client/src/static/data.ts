@@ -1,6 +1,8 @@
 export const default_src = 'data:image/jpeg;base64,'
 export const base_url = 'http://localhost:3000'
 
+
+
   // categories data
   export const categoriesData = [
     //Women's and girls fashion categories
