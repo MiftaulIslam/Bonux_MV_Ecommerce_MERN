@@ -18,6 +18,7 @@ import ManageProfileLayout from "../layouts/ManageProfileLayout";
 import MyProfile from "../components/ManageProfile/MyProfile";
 import ManageProfile from "../components/ManageProfile/ManageProfile";
 import ManageAddresses from "../components/ManageProfile/ManageAddresses";
+import AddressForm from "../components/Helper/AddressForm";
 
 
 const router = createBrowserRouter([
@@ -71,6 +72,14 @@ const router = createBrowserRouter([
               {
                 path: "addresses",
                 element: <ManageAddresses/>,
+              },
+              {
+                path: "addresses/add",
+                element: <AddressForm/>,
+              },
+              {
+                path: "addresses/edit",
+                element: <AddressForm/>,
               },
               {
                 path: "orders",

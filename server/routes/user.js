@@ -77,6 +77,69 @@ router.put('/add-address', upload.none(), isAuthenticated, catchAsync(async (req
         message: 'User address added successfully'
     });
 }));
+router.put('/update-address/:id', upload.none(), isAuthenticated, catchAsync(async (req, res, next) => {
+    const { id } = req.params; 
+    const { address, region, city, zone} = req.body;
+
+    // Validate input
+    if (!address || !region || !city || !zone) {
+        return next(new ErrorHandler('All fields are required', 400));
+    }
+
+    const userId = req.id; // User ID from authentication
+    if (!userId) return next(new ErrorHandler("Authentication failed", 400));
+
+    try {
+        // directly Updating the address 
+        const user = await userSchema.findOneAndUpdate(
+            { _id: userId, 'addresses._id': id }, // Find user and specific address by ID
+            { 
+                $set: { 
+                    'addresses.$.address': address,
+                    'addresses.$.region': region,
+                    'addresses.$.city': city,
+                    'addresses.$.zone': zone,
+                }
+            },
+            { new: true} 
+        );
+
+        if (!user) return next(new ErrorHandler("User or address not found", 404));
+
+        res.status(200).json({
+            success: true,
+            message: 'Address updated successfully',
+            data: user.addresses.id(id) // Return the updated address
+        });
+    } catch (error) {
+        next(new ErrorHandler(error.message || "Internal Server Error", 500));
+    }
+}));router.delete('/delete-address/:id', upload.none(), isAuthenticated, catchAsync(async (req, res, next) => {
+    const { id } = req.params; 
+    const userId = req.id; // User ID from authentication
+
+    if (!userId) return next(new ErrorHandler("Authentication failed", 400));
+
+    try {
+        // Find the user and pull the address from the addresses array
+        const user = await userSchema.findOneAndUpdate(
+            { _id: userId }, 
+            { $pull: { addresses: { _id: id } } }, // Remove the address with the specified ID
+            { new: true } 
+        );
+
+        if (!user) return next(new ErrorHandler("User not found", 404));
+
+        res.status(200).json({
+            success: true,
+            message: 'Address deleted successfully',
+            data: user.addresses 
+        });
+    } catch (error) {
+        next(new ErrorHandler(error.message || "Internal Server Error", 500));
+    }
+}));
+
 router.put('/update-paymentaddress/:id', upload.none(), isAuthenticated, catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const userId = req.id;

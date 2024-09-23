@@ -37,6 +37,7 @@ const menuItems: MenuItem[] = [
 function MenuItem({ item }: { item: MenuItem }) {
   const [selectedItem, setselectedItem] = useState("Manage My Account")
     const location = useLocation()
+
   return (
     <div className="mb-2">
       {item.subItems ? (
