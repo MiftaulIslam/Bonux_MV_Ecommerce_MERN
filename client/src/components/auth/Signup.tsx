@@ -91,13 +91,16 @@ const Signup = ({role}) => {
       if (formData.avatar) {
         formDataToSend.append("avatar", formData.avatar);
       }
-      showLoader();
-      const data = await PostService( role==='seller'?"seller/seller-signup": "user/register" , true, formDataToSend);
-      if(data.success){
+      try{
+        showLoader();
+        const data = await PostService( role==='seller'?"seller/seller-signup": "user/register" , true, formDataToSend);
         hideLoader()
 
-        navigate(`${role==='seller'? '/login?role=seller': '/login'}`);
+      }catch(err){
+        hideLoader()
+
       }
+      
       console.log(data)
     }
   };

@@ -19,6 +19,7 @@ import MyProfile from "../components/ManageProfile/MyProfile";
 import ManageProfile from "../components/ManageProfile/ManageProfile";
 import ManageAddresses from "../components/ManageProfile/ManageAddresses";
 import AddressForm from "../components/Helper/AddressForm";
+import SellerHome from "../pages/Seller/SellerHome";
 
 
 const router = createBrowserRouter([
@@ -130,7 +131,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/seller",
-            element: <AddProduct />,
+            element: <SellerHome />,
           },
         ],
       },
