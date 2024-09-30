@@ -29,12 +29,14 @@ const activation = require('./routes/auth/activation');
 const category = require('./routes/category');
 const product = require('./routes/product')
 const seller = require('./routes/seller')
+const store = require('./routes/store')
 const upload = require('./utiles/multer');
 
 //Routes 
 app.use('/user', authentication)
 app.use('/user', user)
 app.use('/seller', seller)
+app.use('/store', store)
 app.use('/user',upload.none(), activation)
 app.use('/category', category)
 app.use('/product', product)

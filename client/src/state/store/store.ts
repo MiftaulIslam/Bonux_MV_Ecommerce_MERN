@@ -1,11 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit'
 import userReducer from '../reducers/userSlice';
+import storeReducer from '../reducers/storeSlice';
 import responsiveToggleSidebarReducer from '../reducers/responsiveToggleSidebarSlice';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    togglebar:responsiveToggleSidebarReducer
+    togglebar:responsiveToggleSidebarReducer,
+    store:storeReducer
 
   },
 })

@@ -5,7 +5,9 @@ const ErrorHandler = require("../../../utiles/ErrorHandler");
 const getUser = async (req, res, next) => {
   try {
     let data;
-    if(req.role === 'user'){
+    
+    console.log(req.role)
+    if(req.role === 'user' || req.role === 'admin'){
       const user = await userScheme.findById(req.id);
       if (!user) return next(new ErrorHandler("User not found", 404));
       data=user

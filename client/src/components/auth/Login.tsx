@@ -74,11 +74,22 @@ const Login = ({ role }) => {
         true,
         formDataToSend
       );
-      hideLoader();
-      if (!isLoggedIn) {
-        // Dispatch user fetch action only if not already logged in
+
+      console.log(data.data);
+      if(data.ok){
+        if(data.data.data.role =='admin'){
+          navigate('/admin')
+        }else if(data.data.data.role == 'seller'){
+          navigate('/seller')
+        }else{
+          navigate('/')
+        }
         dispatch(fetchUser());
+
       }
+      
+      hideLoader();
+      
     } catch (err: any) {
       
       hideLoader();
@@ -86,18 +97,6 @@ const Login = ({ role }) => {
     }
   };
 
-  useEffect(() => {
-    if (!loading && isLoggedIn && user) {
-      hideLoader();
-      if (user.role === "admin") {
-        navigate("/admin");
-      } else if(user.role === 'seller') {
-        navigate("/seller");
-      } else{
-        navigate("/");
-      }
-    }
-  }, [loading, isLoggedIn, user, navigate]);
 
   return (
     <>

@@ -65,6 +65,7 @@ router.post(
                     auth:true,
                     success: true,
                     message: `${seller.name} Logged in Successfully`,
+                    data:seller
                 });
         
             }catch(e){

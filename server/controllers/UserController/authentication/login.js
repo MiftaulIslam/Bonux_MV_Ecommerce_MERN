@@ -20,6 +20,7 @@ const userLogin = async (req, res, next)=>{
             auth:true, 
             success: true,
             message: `${existingUser.name} Logged in Successfully`,
+            data:existingUser,
             token
         })
         

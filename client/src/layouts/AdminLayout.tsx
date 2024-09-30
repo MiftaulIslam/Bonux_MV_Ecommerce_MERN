@@ -9,13 +9,14 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const {isLoggedIn, user, loading} = useSelector((state)=> state.user)
   // useEffect(() => {
-  //  if(!loading){
+  //   console.log(user)
+
   //   if(user.role !== "admin" || !isLoggedIn) {
   //     showAlert(false, "Unauthorized access detected")  
   //     navigate('/')
   //   }
-  //  }
-  // }, [loading])
+   
+  // }, [])
   if(loading){
     return <Loader/>
   }

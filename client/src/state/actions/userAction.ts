@@ -13,7 +13,6 @@ import { DeleteService } from "../../utils/HTTP/Delete";
 export const fetchUser = () => async (dispatch: Dispatch) => {
   dispatch(LoadUserRequest());
 const data = await GetService(`user/getuser`)
-
   if (data.ok) {
     dispatch(GetUserSuccess(data.data.data));
   }else{

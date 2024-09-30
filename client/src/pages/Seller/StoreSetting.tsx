@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import { geo } from '../../static/geoBd';
+import { PostService } from '../../utils/HTTP/Post';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchStore } from '../../state/actions/storeAction';
+import { fetchUser } from '../../state/actions/userAction';
+import {  useNavigate } from 'react-router-dom';
 
 export default function StoreSettings() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { isLoggedIn, user, loading } = useSelector((state) => state.user)
   const [formData, setFormData] = useState({
-    name_bn: '',
-    name_en: '',
+    
+  
+    name: '',
     description: '',
     media: {
-      logo: '',
-      banner: '',
+      logo: null,
+      banner: null,
     },
     address: {
       address: '',
@@ -18,7 +27,7 @@ export default function StoreSettings() {
     },
     opening_hours: '',
     closing_hours: '',
-    shop_status: '',
+    shop_status: 'active',
   });
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -27,14 +36,14 @@ export default function StoreSettings() {
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setLogoFile(event.target.files[0]);
-      setFormData({ ...formData, media: { ...formData.media, logo: event.target.files[0].name } });
+      setFormData({ ...formData, media: { ...formData.media, logo: event.target.files[0] } });
     }
   };
 
   const handleBannerUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setBannerFile(event.target.files[0]);
-      setFormData({ ...formData, media: { ...formData.media, banner: event.target.files[0].name } });
+      setFormData({ ...formData, media: { ...formData.media, banner: event.target.files[0] } });
     }
   };
 
@@ -53,31 +62,35 @@ export default function StoreSettings() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission
 
-    const data = new FormData();
-    data.append('name_bn', formData.name_bn);
-    data.append('name_en', formData.name_en);
-    data.append('description', formData.description);
-    data.append('opening_hours', formData.opening_hours);
-    data.append('closing_hours', formData.closing_hours);
-    data.append('shop_status', formData.shop_status);
-    data.append('address', formData.address.address);
-    data.append('region', formData.address.region);
-    data.append('city', formData.address.city);
-    data.append('zone', formData.address.zone);
+    const formDataToSend = new FormData();
+    formDataToSend.append('seller', user._id);
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('description', formData.description);
+    formDataToSend.append('opening_hours', formData.opening_hours);
+    formDataToSend.append('closing_hours', formData.closing_hours);
+    formDataToSend.append('shop_status', formData.shop_status);
+    formDataToSend.append('address', formData.address.address);
+    formDataToSend.append('region', formData.address.region);
+    formDataToSend.append('city', formData.address.city);
+    formDataToSend.append('zone', formData.address.zone);
 
     // Append files
     if (logoFile) {
-      data.append('logo', logoFile);
+      formDataToSend.append('logo', formData.media.logo);
+      console.log(formData.media.logo)
     }
     if (bannerFile) {
-      data.append('banner', bannerFile);
+      formDataToSend.append('banner', formData.media.logo);
     }
 
-    // Now you can send `data` to the server
-  
+    const data = await PostService('store/create',true,formDataToSend)
+    if(data.ok){
+      dispatch(fetchUser())
+      navigate('/seller')
+    }
   };
 
   const selectedRegion = geo.regions.find((x) => x.name === formData.address.region);
@@ -85,20 +98,15 @@ export default function StoreSettings() {
   const selectedCity = cities.find((x) => x.name === formData.address.city);
   const zones = selectedCity ? selectedCity.zones : [];
 
-  console.log(formData);
 
   return (
-    <form className="space-y-6 bg-white p-6 rounded-lg shadow">
+    <form className="space-y-6 bg-white p-6 rounded-lg shadow" onSubmit={handleSubmit}>
       <h2 className="text-2xl font-bold mb-6">Store Settings</h2>
+      <input type="hidden" value={user._id} />
 
       <div>
-        <label htmlFor="name_bn" className="block text-sm font-medium text-gray-600">Store Name (Bengali)</label>
-        <input id="name_bn" name='name_bn' onChange={handleInputChange} value={formData.name_bn} type="text" placeholder="Enter store name in Bengali" className="mt-1 block w-full px-3 py-2 text-gray-600 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
-      </div>
-
-      <div>
-        <label htmlFor="name_en" className="block text-sm font-medium text-gray-600">Store Name (English)</label>
-        <input id="name_en" name='name_en' onChange={handleInputChange} value={formData.name_en} type="text" placeholder="Enter store name in English" className="mt-1 block w-full px-3 py-2 bg-white border text-gray-600 text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+        <label htmlFor="name" className="block text-sm font-medium text-gray-600">Store Name (English)</label>
+        <input id="name" name='name' onChange={handleInputChange} value={formData.name} type="text" placeholder="Enter store name in English" className="mt-1 block w-full px-3 py-2 bg-white border text-gray-600 text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
       </div>
 
       <div>

@@ -5,16 +5,17 @@ import { PutService } from "../../utils/HTTP/Put";
 import { GetStoreSuccess, LoadStoreRequest, StoreFaliure, UpdateStoreSuccess } from "../reducers/storeSlice";
 import { PostService } from "../../utils/HTTP/Post";
 
-export const fetchStore = () => async (dispatch: Dispatch) => {
+export const fetchStore = (storeId) => async (dispatch: Dispatch) => {
   dispatch(LoadStoreRequest());
-
-  const response = await fetch(`${base_url}/user/getuser`, {
+  
+  const response = await fetch(`${base_url}/store/${storeId}`, {
     credentials: "include",
   });
 
   const jsonResponse = await response.json();
+  // console.log(jsonResponse)
   if (response.ok) {
-    dispatch(GetStoreSuccess(jsonResponse.message));
+    dispatch(GetStoreSuccess(jsonResponse.data));
   }else{
 
     dispatch(StoreFaliure(jsonResponse.message));

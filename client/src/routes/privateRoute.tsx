@@ -13,7 +13,6 @@ const PrivateRoute = ({ role }) => {
       setIsUserLoaded(true);
     }
   }, [loading, user]);
-
   if (loading || !isUserLoaded) {
     return <Loader />;
   }

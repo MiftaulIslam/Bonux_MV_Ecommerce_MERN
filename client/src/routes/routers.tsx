@@ -106,7 +106,7 @@ const router = createBrowserRouter([
     element: <PrivateRoute role="admin"/>,
     children: [
       {
-        path: "/admin",
+        path: "admin",
         element: <AdminLayout />,
         // errorElement: <ErrorPage />,
         children: [

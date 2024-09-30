@@ -136,7 +136,7 @@ export default function SellerLayout() {
             <span>
               <SellerCenterIcon width={40} height={40} />
             </span>
-            <h1 className="text-2xl font-semibold">Bonux Seller Center</h1>
+            <Link to={"/seller"} className="text-2xl font-semibold">Bonux Seller Center</Link>
           </div>
         </div>
 

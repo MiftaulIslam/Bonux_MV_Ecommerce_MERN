@@ -1,4 +1,6 @@
 const mongoose =require('mongoose');
+const sellerSchema = require('./sellerSchema');
+
 const storeSchema = new mongoose.Schema({
     seller: {
         type: mongoose.Schema.Types.ObjectId,
@@ -6,8 +8,7 @@ const storeSchema = new mongoose.Schema({
         required: true
     },
     
- name_en:{type:String, required:true},
- name_bn:{type:String, required:true},
+ name:{type:String, required:true},
  description:{type:String, required:true},
  media:{
     logo:{type:String},
@@ -30,4 +31,8 @@ const storeSchema = new mongoose.Schema({
  products:[{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
  orders:[{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
 })
+
+storeSchema.post('save', async function (store) {
+   await sellerSchema.findByIdAndUpdate(store.seller, { store: store._id });
+ });
 module.exports = mongoose.model('Store', storeSchema)
