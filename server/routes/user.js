@@ -33,7 +33,7 @@ router.post('/confirm-password/:token',upload.none(), catchAsync(confirmForgotPa
 router.get('/getuser',upload.none(),isAuthenticated, catchAsync(getUser))
 
 // User info
-router.post('/update-info',upload.single('avatar'),isAuthenticated, catchAsync(async (req, res, next)=>{
+router.put('/update-info',upload.single('avatar'),isAuthenticated, catchAsync(async (req, res, next)=>{
 const {...data} = req.body;
 const id = req.id
 console.log(data)
@@ -48,7 +48,8 @@ if(req.file){
     data.avatar = base64Image
 }
         
-        const updatedUser = await userSchema.findByIdAndUpdate(id, data) 
+        const updatedUser = await userSchema.findByIdAndUpdate(id, data,{new:true}) 
+        console.log(updatedUser)
         res.status(200).json({
             success: true,
             message: 'User info updated successfully',
@@ -63,18 +64,19 @@ if(req.file){
 router.put('/add-address', upload.none(), isAuthenticated, catchAsync(async (req, res, next) => {
     const { ...address } = req.body;
     console.log(req.body)
-    if (!address.address || !address.region || !address.city || !address.zone) {
+    if (!address.address || !address.region || !address.city || !address. zone) {
         return next(new ErrorHandler('All fields are required', 400));
     }
 
     const id = req.id;
     if (!id) return next(new ErrorHandler("Authentication failed", 400));
 
-    await userSchema.findByIdAndUpdate(id, { $push: { addresses: address } });
+    const updatedUser = await userSchema.findByIdAndUpdate(id, { $push: { addresses: address } });
 
     res.status(200).json({
         success: true,
-        message: 'User address added successfully'
+        message: 'User address added successfully',
+        data:updatedUser
     });
 }));
 router.put('/update-address/:id', upload.none(), isAuthenticated, catchAsync(async (req, res, next) => {
@@ -91,7 +93,7 @@ router.put('/update-address/:id', upload.none(), isAuthenticated, catchAsync(asy
 
     try {
         // directly Updating the address 
-        const user = await userSchema.findOneAndUpdate(
+        const updatedUser = await userSchema.findOneAndUpdate(
             { _id: userId, 'addresses._id': id }, // Find user and specific address by ID
             { 
                 $set: { 
@@ -109,7 +111,7 @@ router.put('/update-address/:id', upload.none(), isAuthenticated, catchAsync(asy
         res.status(200).json({
             success: true,
             message: 'Address updated successfully',
-            data: user.addresses.id(id) // Return the updated address
+            data: updatedUser
         });
     } catch (error) {
         next(new ErrorHandler(error.message || "Internal Server Error", 500));
@@ -133,7 +135,7 @@ router.put('/update-address/:id', upload.none(), isAuthenticated, catchAsync(asy
         res.status(200).json({
             success: true,
             message: 'Address deleted successfully',
-            data: user.addresses 
+            data: user
         });
     } catch (error) {
         next(new ErrorHandler(error.message || "Internal Server Error", 500));
@@ -170,12 +172,12 @@ router.put('/update-paymentaddress/:id', upload.none(), isAuthenticated, catchAs
 
         }
         // Save the updated user document
-        await user.save();
+        const updatedUser = await user.save();
 
         res.status(200).json({
             success: true,
             message: 'Payment address updated successfully',
-            data: user.addresses
+            data: updatedUser
         });
     } catch (error) {
         next(new ErrorHandler(error.message || "Internal Server Error", 500));

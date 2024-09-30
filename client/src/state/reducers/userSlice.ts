@@ -28,6 +28,12 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = action.payload;
       },
+      UpdateUserSuccess(state, action: PayloadAction<any>) {
+        state.isLoggedIn = true;
+        state.isAuthenticated = true;
+        state.loading = false;
+        state.user = action.payload;
+      },
       UserFaliure(state, action: PayloadAction<any>) {
         state.isLoggedIn = false;
         state.isAuthenticated = false;
@@ -45,6 +51,6 @@ const userSlice = createSlice({
     },
   });
 
-export const { LoadUserRequest, GetUserSuccess, UserFaliure, ResetState } = userSlice.actions;
+export const { LoadUserRequest, GetUserSuccess, UserFaliure, ResetState,UpdateUserSuccess } = userSlice.actions;
 
 export default userSlice.reducer;

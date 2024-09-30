@@ -4,7 +4,6 @@ import { Plus, Subtract } from "./icons";
 
 const VerticalMultiLevelDropDown = ({ items, className }) => {
   const [activeItems, setActiveItems] = React.useState({});
-  console.log(items)
 
   const handleItemClick = (item) => {
     setActiveItems((prevActiveItems) => {
@@ -16,7 +15,6 @@ const VerticalMultiLevelDropDown = ({ items, className }) => {
       return { ...prevActiveItems };
     });
     
-    console.log(activeItems[item.name])
   };
 
   return (

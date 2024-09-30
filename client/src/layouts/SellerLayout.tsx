@@ -1,20 +1,21 @@
-import { useState, ReactNode } from "react";
+import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
   BellIcon,
+  BrifcaseIcon,
   Close,
   LogoutIcon,
   MenuIcon,
   MessageSquareIcon,
+  NotepadIcon,
+  ProductIcon,
   RightArrow,
   SellerCenterIcon,
   SettingIcon,
+  StoreIcon,
 } from "../widgets/icons";
 import { LogoutButton } from "../widgets";
 
-type SellerLayoutProps = {
-  children: ReactNode;
-};
 
 export default function SellerLayout() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -48,23 +49,21 @@ export default function SellerLayout() {
       label: "Products",
       level: 0,
       href: 'products',
+      element: <ProductIcon/>,
       children: [
         {
           label: 'Manage Products',
           level: 1,
-          element: null,
           href: 'products'
         },
         {
           label: 'Add Products',
           level: 1,
-          element: null,
           href: 'product/add'
         },
         {
           label: 'Brands Management',
           level: 1,
-          element: null,
           href: 'Brands'
         },
       ]
@@ -73,23 +72,21 @@ export default function SellerLayout() {
       label: "Orders and Reviews",
       level: 0,
       href: 'orders-reviews',
+      element: <NotepadIcon/>,
       children: [
         {
           label: 'Order Management',
           level: 1,
-          element: null,
           href: 'orders'
         },
         {
           label: 'Handle Return',
           level: 1,
-          element: null,
           href: 'return'
         },
         {
           label: 'Reviews',
           level: 1,
-          element: null,
           href: 'review'
         },
       ]
@@ -98,17 +95,16 @@ export default function SellerLayout() {
       label: "Manage Store",
       level: 0,
       href: 'store',
+      element: <StoreIcon/>,
       children: [
         {
           label: 'Store Preview',
           level: 1,
-          element: null,
           href: 'Preview'
         },
         {
           label: 'Store Settings',
           level: 1,
-          element: null,
           href: 'store-settings'
         },
       ]
@@ -117,11 +113,11 @@ export default function SellerLayout() {
       label: "Finance",
       level: 0,
       href: 'finance',
+      element: <BrifcaseIcon/>,
       children: [
         {
           label: 'Income',
           level: 1,
-          element: null,
           href: 'income'
         },
       ]
@@ -195,8 +191,11 @@ export default function SellerLayout() {
                   onClick={() => toggleMenu(item.label)}
                   className="flex items-center justify-between w-full px-6 py-3 text-gray-700 hover:bg-gray-200"
                 >
-                  <div className="flex items-center">
-                    <MenuIcon  />
+                  <div className="flex gap-4 items-center">
+                    {
+                      item.element ? item.element : 
+                      <MenuIcon  /> 
+                    }
                     {item.label}
                   </div>
                   <RightArrow
@@ -306,7 +305,7 @@ export default function SellerLayout() {
                   className="flex items-center justify-between text-gray-700 hover:bg-gray-100 px-2 py-1 rounded"
                 >
                   {item}
-                  <RightArrow className="h-4 w-4" />
+                  <RightArrow classname="h-4 w-4" />
                 </a>
               </li>
             ))}

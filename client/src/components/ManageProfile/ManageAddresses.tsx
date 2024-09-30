@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {  useEffect, useState } from "react";
 import { PutService } from "../../utils/HTTP/Put";
 import { useLoader } from "../../hooks/LoaderProvider";
-import { fetchUser } from "../../state/actions/userAction";
+import { fetchUser, updateUser, deleteAddress } from "../../state/actions/userAction";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "../../widgets";
 import { DeleteService } from "../../utils/HTTP/Delete";
@@ -53,15 +53,10 @@ const ManageAddresses = () => {
     formDataToSend.append("type", type.type);
     try {
       showLoader();
-      const data = await PutService(
-        `user/update-paymentaddress/${type.id}`,
-        true,
-        formDataToSend
-      );
-      if (data) {
-        dispatch(fetchUser());
+      dispatch(updateUser(`user/update-paymentaddress/${type.id}`, formDataToSend))
+
         navigate("/user");
-      }
+
       hideLoader();
     } catch (error) {
       hideLoader();
@@ -71,8 +66,10 @@ const ManageAddresses = () => {
   const deleteAddress =async (id) => {
     showLoader();
 const data = await DeleteService(`user/delete-address/${id}`, true)
-
-dispatch(fetchUser());
+if(data.ok){
+  dispatch(fetchUser());
+}
+//  dispatch(deleteAddress(`user/delete-address/${id}`));
 hideLoader();
   };
   return (

@@ -9,7 +9,7 @@ const HeroSection = () => {
     const getCategories = async ()=>{
         const categories = await GetService(`category/categories-order`, true) 
         if(categories){
-            setCategories(categories.data);
+            setCategories(categories.data.data);
         }
     }
     useEffect(() => {

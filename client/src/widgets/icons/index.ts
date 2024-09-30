@@ -16,11 +16,12 @@ import LogoutIcon from './LogoutIcon';
 import CheckIcon from './CheckIcon';
 import SellerCenterIcon from './SellerCenterIcon';
 import BagIcon from './BagIcon';
-// import NotePadIcon from './NotePadIcon';
-// import StoreIcon from './StoreIcon';
-// import BrifcaseIcon from './BrifcaseIcon';
+import NotepadIcon from './NotepadIcon';
+import StoreIcon from './StoreIcon';
+import ProductIcon from './ProductIcon';
+import BrifcaseIcon from './BrifcaseIcon';
 export{
 
     SortAscendingIcon, SortDescendingIcon,
-    SearchIcon,LeftArrow,RightArrow, Close, Plus, Subtract, Cart,MenuIcon, BellIcon, MessageSquareIcon, SettingIcon, LogoutIcon,CheckIcon, SellerCenterIcon, BagIcon, 
+    SearchIcon,LeftArrow,RightArrow, Close, Plus, Subtract, Cart,MenuIcon, BellIcon, MessageSquareIcon, SettingIcon, LogoutIcon,CheckIcon, SellerCenterIcon, BagIcon, BrifcaseIcon, StoreIcon, NotepadIcon, ProductIcon
 }

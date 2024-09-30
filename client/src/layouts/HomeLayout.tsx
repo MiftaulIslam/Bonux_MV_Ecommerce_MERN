@@ -11,7 +11,7 @@ const HomeLayout = () => {
   const [categories, setCategories] = useState(null)
   const getCategories = async ()=>{
       const categories = await GetService(`category/categories-order`) 
-      setCategories(categories)
+      setCategories(categories.data.data)
      
   }
   useEffect(() => {

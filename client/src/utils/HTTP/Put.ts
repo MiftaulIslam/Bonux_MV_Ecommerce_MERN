@@ -9,12 +9,11 @@ const response = await fetch(Url, {
     body: object,
   });
 
+  const responseData:any = await response.json();
   if (!response.ok) {
-    const errorData:any = await response.json();
-    showAlert(false, errorData.message || "Something went wrong");
+    showAlert(false, responseData.message || "Something went wrong");
   }
 
-  const responseData:any = await response.json();
   if(alert) showAlert(true, responseData.message);
-  return responseData;
+  return { ok: response.ok, data: responseData }; 
 }

@@ -13,16 +13,6 @@ const sellerSchema = new mongoose.Schema({
     minLength: [8, "Password should be greater than 7 characters"],
   },
   phone: { type: String, required: true, RegExp:'/^(?:\+?88)?01[13-9]\d{8}$/gm' },
-  addresses: {
-    address_1: { type: String },
-    street: { type: String },
-    colony: { type: String },
-    region: { type: String },
-    city: { type: String },
-    area: { type: String },
-    zip: { type: String },
-    country: { type: String },
-  },
   role: {
     type: String,
     default: "seller",

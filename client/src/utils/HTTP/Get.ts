@@ -3,15 +3,17 @@ import { showAlert } from "../showAlert";
 
 export const GetService =async (url:string,alert:boolean = false):Promise<any>=>{
 const Url:string = `${base_url}/${url}`
-const response = await fetch(Url);
+const response = await fetch(Url,{
+  credentials:"include",
+});
 
+const responseData:any = await response.json();
   if (!response.ok) {
-    const errorData:any = await response.json();
-    showAlert(false, errorData.message || "Something went wrong");
-    return null
+    showAlert(false, responseData.message || "Something went wrong");
+
+    return {ok:response.ok?true:false, data:responseData}
   }
 
-  const responseData:any = await response.json();
   if(alert) showAlert(true, responseData.message);
-  return responseData;
+  return {ok:response.ok?true:false, data:responseData}
 }

@@ -1,28 +1,66 @@
-import React from "react";
+import React from 'react'
 
-const NotePadIcon = () => {
+const NotepadIcon = () => {
   return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 48 48"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="48" height="48" fill="white" fill-opacity="0.01" />
-      <path
-        d="M18 8H11C10.4477 8 10 8.44772 10 9V43C10 43.5523 10.4477 44 11 44H39C39.5523 44 40 43.5523 40 43V9C40 8.44772 39.5523 8 39 8H32"
-        stroke="#000000"
-        stroke-width="4"
-      />
-      <path
-        d="M18 13V8H21.9505C21.9778 8 22 7.97784 22 7.9505V6C22 4.34315 23.3431 3 25 3C26.6569 3 28 4.34315 28 6V7.9505C28 7.97784 28.0222 8 28.0495 8H32V13C32 13.5523 31.5523 14 31 14H19C18.4477 14 18 13.5523 18 13Z"
-        fill="#2F88FF"
-        stroke="#000000"
-        stroke-width="4"
-      />
-    </svg>
-  );
-};
+    <svg width="24" height="24" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+    <defs>
+      <clipPath id="clip-notepad">
+        <rect width="32" height="32"/>
+      </clipPath>
+    </defs>
+    <g id="notepad" clipPath="url(#clip-notepad)">
+      <g id="Group_3042" data-name="Group 3042" transform="translate(-260 -156)">
+        <g id="Group_3024" data-name="Group 3024">
+          <g id="Group_3023" data-name="Group 3023">
+            <g id="Group_3022" data-name="Group 3022">
+              <g id="Group_3021" data-name="Group 3021">
+                <path id="Path_3967" data-name="Path 3967" d="M287.632,157.923h-3.559v-.757a1,1,0,0,0-2,0v.757h-2.721v-.757a1,1,0,1,0-2,0v.757h-2.721v-.757a1,1,0,0,0-2,0v.757H269.91v-.757a1,1,0,0,0-2,0v.757h-3.542a1,1,0,0,0-1,1v27.911a1,1,0,0,0,1,1h23.264a1,1,0,0,0,1-1V158.923A1,1,0,0,0,287.632,157.923Zm-1,27.911H265.368V159.923h2.542v.756a1,1,0,0,0,2,0v-.756h2.721v.756a1,1,0,0,0,2,0v-.756h2.721v.756a1,1,0,0,0,2,0v-.756h2.721v.756a1,1,0,0,0,2,0v-.756h2.559Z" fill="#344952"/>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Group_3041" data-name="Group 3041">
+          <g id="Group_3028" data-name="Group 3028">
+            <g id="Group_3027" data-name="Group 3027">
+              <g id="Group_3026" data-name="Group 3026">
+                <g id="Group_3025" data-name="Group 3025">
+                  <path id="Path_3968" data-name="Path 3968" d="M283.646,167.92H268.354a1,1,0,0,1,0-2h15.292a1,1,0,0,1,0,2Z" fill="#344952"/>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g id="Group_3032" data-name="Group 3032">
+            <g id="Group_3031" data-name="Group 3031">
+              <g id="Group_3030" data-name="Group 3030">
+                <g id="Group_3029" data-name="Group 3029">
+                  <path id="Path_3969" data-name="Path 3969" d="M283.646,171.92H268.354a1,1,0,0,1,0-2h15.292a1,1,0,0,1,0,2Z" fill="#344952"/>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g id="Group_3036" data-name="Group 3036">
+            <g id="Group_3035" data-name="Group 3035">
+              <g id="Group_3034" data-name="Group 3034">
+                <g id="Group_3033" data-name="Group 3033">
+                  <path id="Path_3970" data-name="Path 3970" d="M283.646,175.92H268.354a1,1,0,0,1,0-2h15.292a1,1,0,0,1,0,2Z" fill="#344952"/>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g id="Group_3040" data-name="Group 3040">
+            <g id="Group_3039" data-name="Group 3039">
+              <g id="Group_3038" data-name="Group 3038">
+                <g id="Group_3037" data-name="Group 3037">
+                  <path id="Path_3971" data-name="Path 3971" d="M275.823,179.92h-7.469a1,1,0,0,1,0-2h7.469a1,1,0,0,1,0,2Z" fill="#344952"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+  )
+}
 
-export default NotePadIcon;
+export default NotepadIcon

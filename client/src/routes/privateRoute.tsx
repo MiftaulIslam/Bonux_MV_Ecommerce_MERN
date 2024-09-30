@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { showAlert } from "../utils/showAlert";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import Loader from "../widgets/Loader";
 
 const PrivateRoute = ({ role }) => {
@@ -12,32 +12,23 @@ const PrivateRoute = ({ role }) => {
     if (!loading) {
       setIsUserLoaded(true);
     }
-  }, [loading]);
+  }, [loading, user]);
 
   if (loading || !isUserLoaded) {
-    return <Loader />; 
+    return <Loader />;
   }
-  if(user){
-    
-  const isAuthorized = user?.role === role || user?.role === "admin";
-
+  
+  if (user) {
+    const isAuthorized = user?.role === role || user?.role === "admin";
 
     if (isAuthorized) {
       return <Outlet />;
     } else {
       showAlert(false, "Unauthorized access");
-      if(user.role === 'user'){
-        return <Navigate to="/" />;
-      }else{
-        return <Navigate to="/seller" />;
-      }
+      return user.role === 'user' ? <Navigate to="/" /> : <Navigate to="/seller" />;
     }
-    
-    
-  }else{
+  } else {
     return <Navigate to="/login" />;
-
   }
 };
-
-export default PrivateRoute;
+export default PrivateRoute

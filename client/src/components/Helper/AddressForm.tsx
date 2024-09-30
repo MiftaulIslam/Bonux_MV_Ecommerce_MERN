@@ -95,7 +95,9 @@ const AddressForm = () => {
       );
       dispatch(fetchUser())
       hideLoader();
-      navigate(-1)
+      if(data.ok){
+        navigate("/user")
+      }
     }
   };
 

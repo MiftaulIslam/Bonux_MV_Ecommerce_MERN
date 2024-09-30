@@ -17,7 +17,8 @@ const getUser = async (req, res, next) => {
     }
     res.status(200).json({
       success: true,
-      message: data,
+      message: 'User found',
+      data:data
     });
   } catch (err) {
     return next(new ErrorHandler("Internal Server Error", 500));

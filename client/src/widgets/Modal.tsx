@@ -91,7 +91,6 @@ const Modal = ({
   useEffect(() => {
     if (isOpen) {
       initializeFormData();
-      console.log(data?._id)
     }
   }, [isOpen, data]);
 

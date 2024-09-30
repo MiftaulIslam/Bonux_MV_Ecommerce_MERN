@@ -6,19 +6,18 @@ const storeSchema = new mongoose.Schema({
         required: true
     },
     
- name:{type:String, required:true},
+ name_en:{type:String, required:true},
+ name_bn:{type:String, required:true},
  description:{type:String, required:true},
  media:{
     logo:{type:String},
     banner:{type:String}
  },
  address:{
-        street:{type:String, },
-        city:{type:String,}, 
-        state:{type:String,}, 
-        country:{type:String,},
-        zip:{type:String,}, 
-    
+    address:{type:String},
+    region:{type:String },
+    city:{type:String,}, 
+    zone:{type:String,}, 
  },
  opening_hours:{type:String, required:true},
  closing_hours:{type:String, required:true},

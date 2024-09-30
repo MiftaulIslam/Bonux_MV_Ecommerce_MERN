@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLoader } from '../../hooks/LoaderProvider';
 import { maskEmail } from '../../utils/MaskEmail';
-import { PostService } from '../../utils/HTTP/Post';
+import { updateUser } from '../../state/actions/userAction';
 
 const MyProfile = () => {
     const { showLoader, hideLoader } = useLoader();
-  
-    const { isLoggedIn, user, loading } = useSelector((state) => state.user);
+    const dispatch = useDispatch()
+    const { user, loading } = useSelector((state) => state.user);
+    
     const [formData, setFormData] = useState({
       name: user?.name || '',
       email: user?.email || '',
@@ -26,7 +27,7 @@ const MyProfile = () => {
       } else {
         hideLoader();
       }
-    }, [user]);
+    }, [loading]);
   
     const handleInputChange = (e) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,7 +52,7 @@ const MyProfile = () => {
         formDataToSend.append('avatar', image);
       }
       showLoader();
-      await PostService('user/update-info', true, formDataToSend);
+        dispatch(updateUser('user/update-info', formDataToSend))
       hideLoader();
     };
   

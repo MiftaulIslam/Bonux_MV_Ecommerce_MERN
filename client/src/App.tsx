@@ -9,14 +9,14 @@ import { LoaderProvider } from './hooks/LoaderProvider';
 import router from './routes/routers'; // Ensure correct path
 
 function App() {
-  const { isAuthenticated, isLoggedIn, user } = useSelector((state) => state.user);
+  const { isAuthenticated, isLoggedIn, user, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-console.log(user)
   useEffect(() => {
     if (!isAuthenticated && !isLoggedIn) {
       dispatch(fetchUser());
+    
     }
-  }, [dispatch, isLoggedIn, isAuthenticated, user]);
+  }, []);
 
   return (
     <><LoaderProvider>

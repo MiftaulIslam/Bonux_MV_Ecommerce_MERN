@@ -20,6 +20,7 @@ import ManageProfile from "../components/ManageProfile/ManageProfile";
 import ManageAddresses from "../components/ManageProfile/ManageAddresses";
 import AddressForm from "../components/Helper/AddressForm";
 import SellerHome from "../pages/Seller/SellerHome";
+import StoreSettings from "../pages/Seller/StoreSetting";
 
 
 const router = createBrowserRouter([
@@ -132,6 +133,10 @@ const router = createBrowserRouter([
           {
             path: "/seller",
             element: <SellerHome />,
+          },
+          {
+            path: "store-settings",
+            element: <StoreSettings />,
           },
         ],
       },
