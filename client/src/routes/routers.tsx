@@ -21,6 +21,7 @@ import ManageAddresses from "../components/ManageProfile/ManageAddresses";
 import AddressForm from "../components/Helper/AddressForm";
 import SellerHome from "../pages/Seller/SellerHome";
 import StoreSettings from "../pages/Seller/StoreSetting";
+import StorePreview from "../pages/Seller/StorePreview";
 
 
 const router = createBrowserRouter([
@@ -137,6 +138,10 @@ const router = createBrowserRouter([
           {
             path: "store-settings",
             element: <StoreSettings />,
+          },
+          {
+            path: "store-preview",
+            element: <StorePreview />,
           },
         ],
       },

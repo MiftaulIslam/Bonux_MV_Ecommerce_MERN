@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
   BellIcon,
@@ -15,9 +15,14 @@ import {
   StoreIcon,
 } from "../widgets/icons";
 import { LogoutButton } from "../widgets";
+import { fetchStore } from "../state/actions/storeAction";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function SellerLayout() {
+  
+  const { user } = useSelector((state) => state.user)
+  const dispatch = useDispatch()
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<string[]>([]);
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
@@ -35,7 +40,11 @@ export default function SellerLayout() {
         : [...prevOpenMenus, menu]
     );
   };
-
+  useEffect(() => {
+    
+    dispatch(fetchStore(user?.store))
+  }, [])
+  
   const isMenuOpen = (menu: string) => openMenus.includes(menu);
 
   const rightMenuItems = [
@@ -100,7 +109,7 @@ export default function SellerLayout() {
         {
           label: 'Store Preview',
           level: 1,
-          href: 'Preview'
+          href: 'store-preview'
         },
         {
           label: 'Store Settings',
@@ -129,7 +138,7 @@ export default function SellerLayout() {
       {/* Header */}
       <header className="bg-white border-b p-4 flex justify-between items-center">
         <div className="flex items-center">
-          <button type="button" onClick={toggleLeftSidebar} className="mr-4 sm:hidden text-gray-500">
+          <button type="button" onClick={toggleLeftSidebar} className="mr-4 lg:hidden text-gray-500">
             <MenuIcon />
           </button>
           <div className="flex items-center">
@@ -141,7 +150,7 @@ export default function SellerLayout() {
         </div>
 
         <div className="flex items-center">
-          <div className="hidden sm:flex space-x-2 mr-4">
+          <div className="hidden lg:flex space-x-2 mr-4">
             <Link to={' '} className="px-4 py-2 border rounded hover:bg-gray-100">
               Product Data
             </Link>
@@ -149,7 +158,7 @@ export default function SellerLayout() {
               + New Product
             </Link>
           </div>
-          <button onClick={toggleRightSidebar} className="sm:hidden">
+          <button onClick={toggleRightSidebar} className="md:hidden">
             <MenuIcon />
           </button>
         </div>
@@ -160,10 +169,10 @@ export default function SellerLayout() {
         <div
           className={`fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
             isLeftSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } sm:relative sm:translate-x-0`}
+          } lg:relative lg:translate-x-0`}
         >
           {/* Left Sidebar Header */}
-          <div className="flex sm:hidden items-center justify-between h-16 border-b px-4">
+          <div className="flex lg:hidden items-center justify-between h-16 border-b px-4">
             <div className="flex items-center">
               <span>
                 <SellerCenterIcon width={40} height={40} />
@@ -175,7 +184,7 @@ export default function SellerLayout() {
             <button
               type="button"
               onClick={toggleLeftSidebar}
-              className="sm:hidden p-1 rounded-full hover:bg-gray-200"
+              className="lg:hidden p-1 rounded-full hover:bg-gray-200"
             >
               <Close />
             </button>
@@ -229,7 +238,7 @@ export default function SellerLayout() {
         </main>
 
         {/* Right sidebar -  for larger screens */}
-        <div className="hidden sm:block w-16 bg-white shadow-lg">
+        <div className="hidden md:block w-16 bg-white shadow-lg">
           <div className="flex flex-col items-center py-4">
             <button className="mb-4">
               <BellIcon className="h-6 w-6 text-gray-500" />
@@ -245,7 +254,7 @@ export default function SellerLayout() {
 
         {/* Right sidebar -  for mobile screens */}
         <div
-          className={`sm:hidden fixed inset-y-0 right-0 z-30 w-64 bg-white shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
+          className={`md:hidden fixed inset-y-0 right-0 z-30 w-64 bg-white shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
             isRightSidebarOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
