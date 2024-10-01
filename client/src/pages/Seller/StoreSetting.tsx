@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { geo } from '../../static/geoBd';
 import { PostService } from '../../utils/HTTP/Post';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchStore } from '../../state/actions/storeAction';
 import { fetchUser } from '../../state/actions/userAction';
 import {  useNavigate } from 'react-router-dom';
 
 export default function StoreSettings() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { isLoggedIn, user, loading } = useSelector((state) => state.user)
+  const {  user  } = useSelector((state) => state.user)
   const [formData, setFormData] = useState({
     
   
@@ -83,7 +82,7 @@ export default function StoreSettings() {
       console.log(formData.media.logo)
     }
     if (bannerFile) {
-      formDataToSend.append('banner', formData.media.logo);
+      formDataToSend.append('banner', formData.media.banner);
     }
 
     const data = await PostService('store/create',true,formDataToSend)
