@@ -2,6 +2,7 @@
 const express = require('express');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const storeSchema = require('../models/storeSchema');
+const {isAuthenticated} = require('../middlewares/index')
 const { ErrorHandler, upload } = require('../utiles');
 const router = express.Router();
 
@@ -46,6 +47,70 @@ const store = await newStore.save();
         message: 'Store found',
         data: store
     })
+}))
+
+router.put('/update-media/:id',isAuthenticated,upload.single('media'), catchAsyncErrors(async (req, res, next)=>{
+    try{
+
+        const {id} = req.params
+        const {type} = req.query;
+        if(!req.file)return next(new ErrorHandler('400', 'Invalid file format'))
+    
+        const base64Image = req.file.buffer.toString('base64');
+        let updatedObject = {}
+        if (type === 'banner') {
+            updatedObject['media.banner'] = base64Image;
+        } else if (type === 'logo') {
+            updatedObject['media.logo'] = base64Image;
+        } else {
+            return next(new ErrorHandler('Invalid media type. Must be "cover" or "logo".', 400));
+        }
+        console.log(type)
+        const store = await storeSchema.findByIdAndUpdate(id, updatedObject,{new:true});
+    
+        if(!store) return next(new ErrorHandler('Store not found', 404))
+        
+            res.json({
+                success: true,
+                message: `${type} photo updated successfully`,
+                data: store
+            })
+    } catch(e){
+        next(new ErrorHandler('Internal Server Error', 500))
+    }
+}))
+router.put('/update-info/:id',isAuthenticated,upload.none(), catchAsyncErrors(async (req, res, next)=>{
+  
+    const { id } = req.params;
+  
+    // Destructure the request body
+    const { name, description, opening_hours, closing_hours, shop_status, address, region, city, zone } = req.body;
+  
+    // Construct the updated data
+    const updatedData = {
+      name,
+      description,
+      opening_hours,
+      closing_hours,
+      shop_status,
+      address: {
+        address,
+        region,
+        city,
+        zone,
+      },
+    };
+  console.log(req.body)
+    try {
+      const store = await storeSchema.findByIdAndUpdate(id, updatedData, { new: true });
+      if (!store) {
+        return next(new ErrorHandler(404, 'Store not found'))
+      }
+      return res.status(200).json({ success:true,message: 'Store updated successfully', data:store });
+    } catch (err) {
+        console.log(err)
+      return next(new ErrorHandler(500, 'Internal Server Error'))
+    }
 }))
 
 

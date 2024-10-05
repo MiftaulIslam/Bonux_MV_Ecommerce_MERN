@@ -40,7 +40,7 @@ export const updateStore = (url:string,updatedStoreData:any) => async (dispatch:
   dispatch(LoadStoreRequest());
 
   
-  const data = await PutService(url, true, updatedStoreData)
+  const data = await PutService(url, false, updatedStoreData)
 if(data.ok){
 
     dispatch(UpdateStoreSuccess(data.data.data));

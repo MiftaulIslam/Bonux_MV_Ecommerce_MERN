@@ -4,7 +4,7 @@ import { PostService } from '../../utils/HTTP/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../state/actions/userAction';
 import {  useNavigate } from 'react-router-dom';
-
+import {time} from '../../static/data'
 export default function StoreSettings() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -158,11 +158,22 @@ export default function StoreSettings() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label htmlFor="opening_hours" className="block text-sm font-medium text-gray-700">Opening Hours</label>
-          <input id="opening_hours" name='opening_hours' onChange={handleInputChange} value={formData.opening_hours} type="text" placeholder="e.g. 9:00 AM" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 text-sm text-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+          <select name="opening_hours" id="opening_hours" className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 text-sm text-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500' onChange={handleInputChange} value={formData.opening_hours} >
+            <option value="">Select opening hour</option>
+            {time.map((x, i) =>(
+              <option value={x} key={i}>{x}</option>
+            ))}
+          </select>
+
         </div>
         <div>
           <label htmlFor="closing_hours" className="block text-sm font-medium text-gray-700">Closing Hours</label>
-          <input id="closing_hours" name='closing_hours' onChange={handleInputChange} value={formData.closing_hours} type="text" placeholder="e.g. 5:00 PM" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 text-sm text-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+          <select name="closing_hours" id="closing_hours" className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 text-sm text-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500' onChange={handleInputChange} value={formData.closing_hours} >
+            <option value="">Select closing hour</option>
+            {time.map((x, i) =>(
+              <option value={x} key={i}>{x}</option>
+            ))}
+          </select>
         </div>
       </div>
 

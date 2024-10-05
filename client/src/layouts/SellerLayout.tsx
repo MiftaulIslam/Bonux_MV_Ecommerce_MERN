@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function SellerLayout() {
   
   const { user } = useSelector((state) => state.user)
+  const {  loading, store } = useSelector((state) => state.store);
   const dispatch = useDispatch()
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<string[]>([]);
@@ -41,8 +42,10 @@ export default function SellerLayout() {
     );
   };
   useEffect(() => {
-    
-    dispatch(fetchStore(user?.store))
+    if(!store ){
+      dispatch(fetchStore(user?.store))
+
+    }
   }, [])
   
   const isMenuOpen = (menu: string) => openMenus.includes(menu);

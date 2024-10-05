@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { StarRating } from '../../widgets'
+import { useNavigate, useParams } from 'react-router-dom'
+import Loader from '../../widgets/Loader'
+import { Cart } from '../../widgets/icons'
+import QuickViewModal from './QuickViewModal'
 
 const dummyProduct = {
   name: "Smartphone X",
@@ -15,7 +19,7 @@ const dummyProduct = {
   originalPrice: 699.99,
   discountPercentage: 14,
   specifications: {
-    "Key Featuhrfgsgyfuyufygfygyhfyhfyhfdyridfhiruyzhyhfdrbnzyhfdrzyfrdhzyfrdhznbgfryzhres": [
+    "Key Features": [
       "Model: 40 SE",
       "Display: 6.75\" HD+, Mini-Notch, 90hz Display",
       "Processor: MediaTek Helio G37 (12nm)",
@@ -23,27 +27,6 @@ const dummyProduct = {
       "Features: Side Fingerprint, 18W Fast Charging",
     ],
     "Display": [
-      "Size: 6.75 Inch",
-      "Type: IPS LCD",
-      "Resolution: HD+ (720x1600 pixels) 260PPI",
-      "Refresh Rate: 90Hz",
-      "Brightness: 450 nits (Typ.)",
-    ],
-    "adwdwdad": [
-      "Size: 6.75 Inch",
-      "Type: IPS LCD",
-      "Resolution: HD+ (720x1600 pixels) 260PPI",
-      "Refresh Rate: 90Hz",
-      "Brightness: 450 nits (Typ.)",
-    ],
-    "Diswadadssplay": [
-      "Size: 6.75 Inch",
-      "Type: IPS LCD",
-      "Resolution: HD+ (720x1600 pixels) 260PPI",
-      "Refresh Rate: 90Hz",
-      "Brightness: 450 nits (Typ.)",
-    ],
-    "wadadasd": [
       "Size: 6.75 Inch",
       "Type: IPS LCD",
       "Resolution: HD+ (720x1600 pixels) 260PPI",
@@ -69,27 +52,44 @@ const dummyReviews = [
   { id: 3, user: "Mike R.", rating: 4.5, comment: "Impressive performance. The display is stunning!", date: "2023-05-05" },
 ]
 export default function ProductDetail() {
+  const {id}= useParams()
+  const navigate = useNavigate()
+  const [toggleQuickView, settoggleQuickView] = useState(false);
+  const [selectedProduct, setselectedProduct] = useState(null);
+
+
+
+  const [quickDemo, setquickDemo] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [quantity, setQuantity] = useState(1)
+  const [loading, setLoading] = useState(true)
+  const [product, setProduct] = useState(null)
+  const [products, setProducts] = useState(null)
   const [magnifyStyle, setMagnifyStyle] = useState({})
   const [reviews, setReviews] = useState(dummyReviews)
   const [newReview, setNewReview] = useState({ rating: 0, comment: '' })
   const imageRef = useRef(null)
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setActiveImageIndex((prevIndex) => (prevIndex + 1) % dummyProduct.images.length)
-  //   }, 5000)
-  //   return () => clearInterval(interval)
-  // }, [])
-
+const fetchProduct =async  ()=>{
+ const data = await fetch(`https://dummyjson.com/products/${id}`)
+ const data2 = await fetch(`https://dummyjson.com/products/category/smartphones?limit=10&skip=10`)
+ const jsonData = await data.json()
+ const jsonData2 = await data2.json()
+ setProduct(jsonData)
+ setProducts(jsonData2.products)
+ setLoading(false)
+}
+  useEffect(() => {
+    fetchProduct()
+    window.scrollTo(0, 0);
+  }, [id])
+console.log(product)
   const handleMouseMove = (e) => {
     if (imageRef.current) {
       const { left, top, width, height } = imageRef.current.getBoundingClientRect()
       const x = ((e.pageX - left) / width) * 100
       const y = ((e.pageY - top) / height) * 100
       setMagnifyStyle({
-        backgroundImage: `url(${dummyProduct.images[activeImageIndex]})`,
+        backgroundImage: `url(${product.images[activeImageIndex]})`,
         backgroundPosition: `${x}% ${y}%`,
       })
     }
@@ -108,9 +108,11 @@ export default function ProductDetail() {
     // setReviews([newReviewObj, ...reviews])
     // setNewReview({ rating: 0, comment: '' })
   }
-
+if(loading) return <Loader/>
   return (
     <div className="container mx-auto px-4 py-8">
+      
+      {toggleQuickView && selectedProduct && <QuickViewModal data={selectedProduct} onClose={() => settoggleQuickView(false)} />}
       <div className="flex flex-col md:flex-row gap-8">
         {/* Left side - Images */}
         <div className="md:w-1/2">
@@ -121,9 +123,9 @@ export default function ProductDetail() {
           >
             <img
               ref={imageRef}
-              src={dummyProduct.images[activeImageIndex]}
-              alt={dummyProduct.name}
-              className="w-full h-full object-cover"
+              src={product?.images[activeImageIndex]}
+              alt={product?.title}
+              className="w-full h-full object-contain"
             />
             <div 
               className="absolute inset-0 bg-no-repeat bg-cover transition-opacity duration-300 opacity-0 hover:opacity-100"
@@ -131,11 +133,11 @@ export default function ProductDetail() {
             />
           </div>
           <div className="flex gap-2 overflow-x-auto">
-            {dummyProduct.images.map((image, index) => (
+            {product?.images.map((image, index) => (
               <img
                 key={index}
                 src={image}
-                alt={`${dummyProduct.name} ${index + 1}`}
+                alt={`${product?.title} ${index + 1}`}
                 className={`w-20 h-20 object-cover rounded-md cursor-pointer ${
                   index === activeImageIndex ? 'border-2 border-blue-500' : ''
                 }`}
@@ -147,28 +149,28 @@ export default function ProductDetail() {
 
         {/* Right side - Product details */}
         <div className="md:w-1/2">
-          <h1 className="text-3xl font-bold mb-4">{dummyProduct.name}</h1>
-          <div className="flex items-center gap-4 mb-4">
+          <h1 className="text-3xl font-bold mb-4">{product?.title}</h1>
+          {/* <div className="flex items-center gap-4 mb-4">
             <img
               src={dummyProduct.vendor.image}
               alt={dummyProduct.vendor.name}
               className="w-8 h-8 rounded-full"
             />
             <span>{dummyProduct.vendor.name}</span>
-          </div>
+          </div> */}
           <div className="flex items-center gap-2 mb-4">
-            <StarRating rating={dummyProduct.rating} />
-            <span>{dummyProduct.rating.toFixed(1)}</span>
-            <span>({dummyProduct.reviews} reviews)</span>
+            <StarRating rating={product?.rating} />
+            <span>{product?.rating.toFixed(1)}</span>
+            <span>({product?.reviews.length} reviews)</span>
           </div>
-          <p className="text-gray-600 mb-4">{dummyProduct.description}</p>
+          <p className="text-gray-600 mb-4">{product?.description}</p>
           <div className="flex items-center gap-4 mb-4">
-            <span className="text-3xl font-bold">${dummyProduct.price.toFixed(2)}</span>
+            <span className="text-3xl font-bold">${((product?.price - ((product?.discountPercentage / 100) * product?.price))*quantity).toFixed(2)}</span>
             <span className="text-xl text-gray-500 line-through">
-              ${dummyProduct.originalPrice.toFixed(2)}
+              ${product?.price.toFixed(2)}
             </span>
             <span className="text-green-500">
-              {dummyProduct.discountPercentage}% OFF
+              {product?.discountPercentage}% OFF
             </span>
           </div>
           <div className="flex items-center py-4 space-x-2">
@@ -205,7 +207,7 @@ export default function ProductDetail() {
         {Object.entries(dummyProduct.specifications).map(([category, specs]) => (
           <div key={category} className="mb-6">
             <h3 className="text-xl font-semibold mb-2">{category}</h3>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <ul className="grid grid-cols-1 md:grid-cols-1 gap-2">
               {specs.map((spec, index) => (
                 <li key={index} className="flex items-start">
                   <span className="mr-2">•</span>
@@ -250,17 +252,17 @@ export default function ProductDetail() {
 
         {/* Existing Reviews */}
         <div className="space-y-4">
-          {reviews.map((review) => (
-            <div key={review.id} className="border-b pb-4">
+          {product.reviews.map((review) => (
+            <div key={review?.date} className="border-b pb-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-semibold">{review.user}</span>
+                <span className="font-semibold">{review?.reviewerName}</span>
                 <span className="text-gray-500 text-sm">{review.date}</span>
               </div>
               <div className="flex items-center mb-2">
-                <StarRating rating={review.rating} />
-                <span className="ml-2">{review.rating.toFixed(1)}</span>
+                <StarRating rating={review?.rating} />
+                <span className="ml-2">{review?.rating.toFixed(1)}</span>
               </div>
-              <p className="text-gray-700">{review.comment}</p>
+              <p className="text-gray-700">{review?.comment}</p>
             </div>
           ))}
         </div>
@@ -270,16 +272,49 @@ export default function ProductDetail() {
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">You May Also Like</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {dummyProduct.relatedProducts.map((product, index) => (
-            <div key={index} className="border rounded-lg p-4">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-48 object-cover rounded-md mb-4"
-              />
-              <h3 className="font-semibold mb-2">{product.name}</h3>
-              <p className="text-blue-500 font-bold">${product.price.toFixed(2)}</p>
+          {products?.map((product, index) => (
+          <div
+          key={product.id}
+          className="relative p-3 cursor-pointer bg-white rounded-lg overflow-hidden hover:shadow-lg hover:translate-y-1 transition-transform duration-200"
+          onMouseEnter={() => setquickDemo(product.id)}
+          onMouseLeave={() => setquickDemo(0)}
+          onClick={()=> navigate(`/product-detail/${product.id}`)}
+        >
+          <img
+            src={product.image || product?.images[0]}
+            alt={product.title}
+            className="w-full h-36 object-contain"
+          />
+          <div>
+            <h3 className="text-sm font-semibold text-gray-800 mb-2">
+              {product.title.length > 80 ? `${product.title.slice(0, 50)}...` : product.title}
+            </h3>
+            <div className="mb-4">
+              <p className="text-base font-bold text-red-600">${(product.price - ((product.discountPercentage / 100) * product.price)).toFixed(2)}</p>
+              <p>
+                <span className="text-xs line-through text-gray-500">
+                  ${product.price.toFixed(2)}
+                </span>
+                <span className='text-xs ml-1'>-{product.discountPercentage}%</span>
+              </p>
             </div>
+            <div className='flex justify-between'>
+              <button
+                type='button'
+                className={`bg-white px-3 rounded hover:shadow-sm hover:border transition-opacity duration-300 ${quickDemo === product.id ? 'opacity-100' : 'opacity-0'}`}
+              >
+                <Cart width={"1.3rem"} height={"1.3rem"} color={"#0C4A6E"} />
+              </button>
+              <button
+                onClick={() => { settoggleQuickView(true); setselectedProduct(product); }}
+                type='button'
+                className={`bg-white text-[#0C4A6E] text-xs sm:text-sm font-bold hover:shadow-md hover:border py-2 px-4 rounded transition-opacity duration-300 ${quickDemo === product.id ? 'opacity-100' : 'opacity-0'}`}
+              >
+                Quick view
+              </button>
+            </div>
+          </div>
+        </div>
           ))}
         </div>
       </div>

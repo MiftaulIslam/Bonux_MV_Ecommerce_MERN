@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import Loader from "../../widgets/Loader";
-import { useSelector } from "react-redux";
-import { default_src } from "../../static/data";
+import { useDispatch, useSelector } from "react-redux";
+import { base_url, default_src } from "../../static/data";
 import EmailIcon from "../../widgets/icons/EmailIcon";
 import PhoneIcon from "../../widgets/icons/PhoneIcon";
 import InfoCardIcon from "../../widgets/icons/InfoCardIcon";
@@ -10,11 +10,34 @@ import StatusIcon from "../../widgets/icons/StatusIcon";
 import ClockIcon from "../../widgets/icons/ClockIcon";
 import { showAlert } from "../../utils/showAlert";
 import { useNavigate } from "react-router-dom";
+import { PutService } from "../../utils/HTTP/Put";
+import ImageIcon from "../../widgets/icons/ImageIcon";
+import AddressIcon from "../../widgets/icons/AddressIcon";
+import { updateStore } from "../../state/actions/storeAction";
+import StoreInfoModal from "../../components/Store/StoreInfoModal";
+import { Modal } from "../../widgets";
 
 const StorePreview = () => {
+  const disptach = useDispatch()
+const coverInputClick = useRef(null)
+const logoInputClick = useRef(null)
   const navigate = useNavigate()
   const [selectedItem, setSelectedItem] = useState("Back");
+  const [isEdit, setisEdit] = useState(false);
+  
   const { loading, store } = useSelector((state) => state.store);
+  const [formData, setFormData] = useState({
+    name: store?.name || "",
+    description: store?.description || "",
+    address: store?.address.address || "",
+    region: store?.address.region || "",
+    city: store?.address.city || "",
+    zone: store?.address.zone || "",
+    status: store?.status || "",
+    openingHours: store?.openingHours || "",
+    closingHours: store?.closingHours || "",
+  });
+  console.log(store)
   const { user } = useSelector((state) => state.user);
   const About = () => {
     return (
@@ -65,6 +88,12 @@ const StorePreview = () => {
             </span>
             {store?.opening_hours} - {store?.closing_hours}
           </p>
+          <p className="flex items-center gap-3 ">
+            <span>
+              <AddressIcon width={"20"} height={"20"} />
+            </span>
+           {store?.address.zone}, {store?.address.city},  {store?.address.region} 
+          </p>
         </div>
       </div>
     );
@@ -92,8 +121,34 @@ const StorePreview = () => {
     showAlert(false, "You haven't create any store yet");
     navigate("/seller")
   }
+  const handleCoverChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const formDataToSend = new FormData();
+    const file = event.target.files[0];
+    formDataToSend.append("media", file);
+    const validTypes = ["image/jpeg", "image/png", "image/jpg"]
+    if(file && validTypes.includes(file.type)){
+      
+      disptach(updateStore(`store/update-media/${store?._id}?type=banner`, formDataToSend))
+    }else{
+      console.error('Invalid image type')
+    }
+  }
+  const handleLogoChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const formDataToSend = new FormData();
+    const file = event.target.files[0];
+    formDataToSend.append("media", file);
+    const validTypes = ["image/jpeg", "image/png", "image/jpg"]
+    if(file && validTypes.includes(file.type)){
+      disptach(updateStore(`store/update-media/${store?._id}?type=logo`, formDataToSend))
+      
+    }else{
+      console.error('Invalid image type')
+    }
+  }
+
   return (
     <div className="bg-gray-100 w-full min-h-screen">
+     {isEdit && <StoreInfoModal onClose={()=> setisEdit(!isEdit)}/>}
       {/* Cover Photo */}
       <div className="relative w-full h-44 sm:h-80  bg-gray-300">
         <img
@@ -102,22 +157,41 @@ const StorePreview = () => {
           alt={store.name}
         />
         <button
+        onClick={() => coverInputClick.current?.click()}
           type="button"
-          className="absolute bottom-4 right-4 bg-white text-black px-4 py-2 rounded-md text-sm"
-        >
+          className="flex justify-center items-center gap-2 absolute bottom-4 right-4 bg-white text-black px-4 py-2 rounded-md text-sm"
+        ><ImageIcon width={17} height={17}/>
           Edit cover photo
         </button>
+        
+        <input
+          type="file"
+          ref={coverInputClick}
+          onChange={handleCoverChange}
+          className="absolute bottom-4 right-4  cursor-pointer hidden w-36 h-9 opacity-0"
+        />
+
       </div>
 
       {/* Profile Section */}
       <div className="max-w-5xl px-2  mx-auto relative -mt-16">
         <div className="sm:flex  sm:items-end sm:space-x-5">
-          <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-full ring-4 ring-white bg-gray-300 overflow-hidden">
+          <div className="relative h-24 w-24 sm:h-32 sm:w-32 rounded-full ring-4 ring-white bg-gray-300 ">
+         
             <img
-              className="w-full h-full object-cover object-center"
+            
+               onClick={() => logoInputClick.current?.click()}
+              className="w-full absolute top-0 left-0 h-full cursor-pointer rounded-full object-cover object-center"
               src={`${default_src}${store?.media.logo}`}
               alt={store.name}
             />
+            <span 
+               onClick={() => logoInputClick.current?.click()} className="duration-300 hover:cursor-pointer bg-gray-200 border  shadow
+               rounded-full w-10 h-10
+               flex justify-center items-center absolute bottom-0 right-0  "><ImageIcon width={20} height={20}/></span>
+            <input ref={logoInputClick} onChange={handleLogoChange} className="hidden" type="file" name="logo" id="logo" />
+        
+            
           </div>
 
           {/* Name */}
@@ -131,9 +205,12 @@ const StorePreview = () => {
               <button
                 type="button"
                 className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 shadow-sm focus:outline-none"
+                onClick={()=> setisEdit(!isEdit)}
               >
                 Edit profile
               </button>
+         
+              {/* {isEdit && <Modal action={"edit"} modalLabel={"Edit info"} isOpen={isEdit} onClose={()=>setisEdit(false)} onSubmit={undefined} input={undefined} data={undefined}/>} */}
             </div>
           </div>
         </div>

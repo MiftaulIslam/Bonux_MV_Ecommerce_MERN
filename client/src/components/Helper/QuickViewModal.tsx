@@ -22,7 +22,7 @@ const QuickViewModal = ({ data, onClose }) => {
   const incrementQuantity = () => setQuantity((q) => q + 1)
   const decrementQuantity = () => setQuantity((q) => Math.max(1, q - 1))
 
-  const totalPrice = data.price * quantity
+  const discountedPrice =(data.price -  ((data.discountPercentage / 100)*data.price)) * quantity
 
   const handleMouseMove = (e) => {
     if (imageRef.current) {
@@ -63,7 +63,7 @@ const QuickViewModal = ({ data, onClose }) => {
                   ref={imageRef}
                   src={data.images[currentImageIndex]}
                   alt={`${data.name} - Image ${currentImageIndex + 1}`}
-                  className="w-full h-full cursor-pointer object-cover"
+                  className="w-full h-full cursor-pointer object-contain"
                 />
                 <div 
                   className="absolute inset-0 bg-no-repeat bg-cover pointer-events-none"
@@ -74,7 +74,7 @@ const QuickViewModal = ({ data, onClose }) => {
                 />
               </div>
               <div className="flex justify-center space-x-2 overflow-x-auto">
-                {data.images.map((image, index) => (
+                {data?.images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
@@ -85,18 +85,18 @@ const QuickViewModal = ({ data, onClose }) => {
                     <img
                       src={image}
                       alt={`${data.name} - Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </button>
                 ))}
               </div>
             </div>
             <div className="flex-1 space-y-4">
-              <h2 className="text-2xl font-bold">{data.name}</h2>
-              <div className="flex items-center space-x-2">
+              <h2 className="text-2xl font-bold">{data.title}</h2>
+              {/* <div className="flex items-center space-x-2">
                 <img src={data.vendor.image} alt={data.vendor.name} className="w-8 h-8 rounded-full" />
                 <span className="text-sm text-gray-600">{data.vendor.name}</span>
-              </div>
+              </div> */}
               <div className="flex items-center  space-x-1">
                 {[...Array(5)].map((_, i) => (
                   <svg
@@ -109,13 +109,13 @@ const QuickViewModal = ({ data, onClose }) => {
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 ))}
-                <span className="text-sm text-gray-600">({data.reviews_number} reviews)</span>
+                <span className="text-sm text-gray-600">({data.reviews.length} reviews)</span>
               </div>
               <p className="text-sm text-gray-600">{data.description}</p>
               <div className="flex items-center space-x-2">
-                <span className="text-2xl font-bold">${(data.price*quantity).toFixed(2)}</span>
-                <span className="text-sm text-gray-500 line-through">${(data.originalPrice * quantity).toFixed(2)}</span>
-                <span className="text-sm text-green-600">-{data.discount_percentage}%</span>
+                <span className="text-2xl font-bold">${discountedPrice.toFixed(2)}</span>
+                <span className="text-sm text-gray-500 line-through">${(data.price * quantity).toFixed(2)}</span>
+                <span className="text-sm text-green-600">-{data.discountPercentage}%</span>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="text-sm font-medium">Quantity:</span>

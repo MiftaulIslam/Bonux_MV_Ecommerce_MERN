@@ -54,13 +54,6 @@ const SellerHome = () => {
   const handleStepClick = (stepNumber) => {
     setCurrentStep(stepNumber);
   };
-useEffect(() => {
-  if(!store){
-    showLoader()
-    dispatch(fetchStore(user?.store))
-    hideLoader()
-  }
-}, [user])
 
   const renderStepContent = (step) => {
     
