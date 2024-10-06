@@ -1,5 +1,5 @@
 const { ErrorHandler } = require("../../utiles");
-const category = require("../../models/CategorySchema")
+const category = require("../../models/categorySchema")
 const getCategory = async (req, res, next) => {
     const { id } = req.params;
     if (!id) {next(new ErrorHandler('Invalid Id', 400));}

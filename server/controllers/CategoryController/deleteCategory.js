@@ -1,5 +1,5 @@
 const { ErrorHandler } = require("../../utiles");
-const Category = require('../../models/CategorySchema')
+const Category = require('../../models/categorySchema')
 // Recursive function to collect all category IDs to delete
 const collectCategoryIdsToDelete = async (id, idsToDelete = new Set()) => {
     // Add current category ID to the set

@@ -1,6 +1,6 @@
 
 
-const Category = require("../../models/CategorySchema");
+const Category = require("../../models/categorySchema");
 const { ErrorHandler } = require("../../utiles");
 
 const getNestedCategories = async (data) => {

@@ -1,6 +1,6 @@
 const { ErrorHandler } = require("../../utiles");
 
-const Category = require("../../models/CategorySchema");
+const Category = require("../../models/categorySchema");
 
 const categoriesRaw = async (req, res, next) => {
     try {

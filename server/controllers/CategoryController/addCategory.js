@@ -1,6 +1,6 @@
 const { ErrorHandler } = require("../../utiles");
 
-const Category = require('../../models/CategorySchema');
+const Category = require('../../models/categorySchema');
 
 
 const createCategory = async (name, area, parentId) => {

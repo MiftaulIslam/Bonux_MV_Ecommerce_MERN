@@ -1,5 +1,5 @@
 const { ErrorHandler } = require("../../utiles");
-const Category = require("../../models/CategorySchema")
+const Category = require("../../models/categorySchema")
 const updateCategory = async (req, res, next) => {
     const { id } = req.params;
     const { ...data } = req.body;
