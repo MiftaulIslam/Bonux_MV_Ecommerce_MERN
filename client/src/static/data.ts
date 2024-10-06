@@ -1,5 +1,5 @@
 export const default_src = 'data:image/jpeg;base64,'
-export const base_url = 'http://localhost:3000'
+export const base_url = 'https://bonux-backend.onrender.com'
 
 // Time zones
 export const time = [
