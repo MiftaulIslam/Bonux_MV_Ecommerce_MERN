@@ -20,7 +20,7 @@ const userRegister = async(req, res, next)=>{
         })
 
         const activationToken = await user.createExpirableActivationToken()
-        const activateUrl = `http://localhost:5173/activation/${activationToken}`
+        const activateUrl = `https://bonux-mvec.onrender.com/activation/${activationToken}`
 
         //send mail
         try{
