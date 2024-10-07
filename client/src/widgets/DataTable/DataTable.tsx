@@ -5,10 +5,9 @@ import {
   PageInfo,
   TableHead,
   TableBody,
-  Modal,
 } from "../index";
 
-import { SearchIcon } from "../icons/index";
+import  SearchIcon  from "../icons/SearchIcon";
 
 /**
  * A complete reusable Datatable where you need to create a json object that contains the label of heading and the column names to get the values
@@ -27,6 +26,9 @@ import { SearchIcon } from "../icons/index";
 
 const DataTable: //Property type defination
 FC<{
+  addFeature: any; 
+  isAddModalOpen: any; 
+  onAddModalOpen: any; 
   data: any[]; //The data coming from the database
   pageSizeOptions: number[] | string[]; //can be a number or a string specifying a select list optoins
   //a function that takes the data a array of objects and returns an array of objects with some nessecary properties
@@ -51,7 +53,7 @@ FC<{
 
   //**Used to sort the data based on the specific column. Specified by clicking the column header. It will do some calculations such as comparing the column values and sort them in a order.
   const [sortedColumn, setSortedColumn] = useState<string>("");
-  const [sortedDirection, setSortedDirection] = useState<string>("asc"); //Indicates the order of sorting, Initially ascending
+  const [sortedDirection, setSortedDirection] = useState<any>("asc"); //Indicates the order of sorting, Initially ascending
 
   const [totalPages, setTotalPages] = useState<number>(1); //Number of pages of pagination.
   // Number of items to be displayed in a single page. Default value is the first item of the pageSizeOptions that coming from the parent component

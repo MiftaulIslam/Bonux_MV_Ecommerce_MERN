@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Plus, Subtract } from "./icons";
+import  Plus  from "./icons/Plus";
+import  Subtract  from "./icons/Subtract";
+import { verticalMultiLevelDropDownProp } from "../models/PropType";
 
-const VerticalMultiLevelDropDown = ({ items, className }) => {
-  const [activeItems, setActiveItems] = React.useState({});
+const VerticalMultiLevelDropDown:React.FC<verticalMultiLevelDropDownProp> = ({ items, className }) => {
+  const [activeItems, setActiveItems] = React.useState<any>({});
 
-  const handleItemClick = (item) => {
-    setActiveItems((prevActiveItems) => {
+  const handleItemClick = (item:any) => {
+    setActiveItems((prevActiveItems:any) => {
       if (prevActiveItems[item.name]) {
         delete prevActiveItems[item.name];
       } else {
@@ -19,7 +21,7 @@ const VerticalMultiLevelDropDown = ({ items, className }) => {
 
   return (
     <ul className={`${className}`}>
-      {items?.map((item, index) => (
+      {items?.map((item:any, index:number) => (
         <li
           key={index}
           className="hover:bg-[#f8f6f2] cursor-pointer duration-200"

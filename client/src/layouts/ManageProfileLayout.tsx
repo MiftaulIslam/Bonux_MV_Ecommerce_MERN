@@ -1,16 +1,10 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import  { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom';
-
-interface MenuItem {
-  label: string
-  href: string
-  link?:string
-  subItems?: MenuItem[]
-}
+import { MenuItemProp } from '../models/PropType';
 
 
-const menuItems: MenuItem[] = [
+
+const menuItems: MenuItemProp[] = [
   {
     label: 'Manage My Account',
     href: '',
@@ -34,7 +28,7 @@ const menuItems: MenuItem[] = [
   },
 ]
 
-function MenuItem({ item }: { item: MenuItem }) {
+function MenuItem({ item }: { item: MenuItemProp }) {
   const [selectedItem, setselectedItem] = useState("Manage My Account")
     const location = useLocation()
 

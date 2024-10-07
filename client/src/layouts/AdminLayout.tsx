@@ -1,13 +1,11 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { NavBar, Sidebar } from "../components";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { showAlert } from "../utils/showAlert";
 import Loader from "../widgets/Loader";
+import { RootState } from "../state/store/store";
 
 const AdminLayout = () => {
-  const navigate = useNavigate();
-  const {isLoggedIn, user, loading} = useSelector((state)=> state.user)
+  const {loading} = useSelector((state:RootState)=> state.user)
   // useEffect(() => {
   //   console.log(user)
 

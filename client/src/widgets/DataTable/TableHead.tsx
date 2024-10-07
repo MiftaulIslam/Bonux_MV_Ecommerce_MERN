@@ -1,5 +1,6 @@
 import { FC } from 'react'
-import {SortAscendingIcon, SortDescendingIcon} from '../icons/index';
+import SortAscendingIcon from '../icons/SortAscendingIcon'
+import  SortDescendingIcon from '../icons/SortDescendingIcon';
 /**
  * Dynamic data table header generator. 
  * @description 

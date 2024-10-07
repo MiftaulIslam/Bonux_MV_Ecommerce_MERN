@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Close } from "./icons";
+import  Close  from "./icons/Close";
 
 // interface ModalInput {
 //   type: "text" | "textarea" | "select" | "file";
@@ -12,33 +12,32 @@ import { Close } from "./icons";
 //   options?: { label: string; value: string }[];
 // }
 
-// interface ModalProps {
-//   action: "update" | "add" | "delete";
-//   modalLabel: string;
-//   isOpen: boolean;
-//   onClose: () => void;
-//   onSubmit: (id?: string, data?: any) => void;
-//   input: () => ModalInput[];
-//   data?: any;
-// }
-
-const Modal = ({
+interface ModalProps {
+  action: "update" | "add" | "delete";
+  modalLabel: string;
+  isOpen: boolean;
+  onClose: any;
+  onSubmit: any;
+  input?: any|null;
+  data?: any;
+}
+const Modal:React.FC<ModalProps> = ({
   action,
   modalLabel,
   isOpen,
   onClose,
   onSubmit,
-  input,
+  input=null,
   data,
 }) => {
-  const [formData, setFormData] = useState({});
-  const [image, setImage] = useState<File | null>(null);
-  const [oldImage, setOldImage] = useState<string>(null);
+  const [formData, setFormData] = useState<any>({});
+  const [image, setImage] = useState<any>(null);
+  const [oldImage, setOldImage] = useState<string|null>(null);
   const [imageChanged, setimageChanged] = useState<boolean>(false);
   const initializeFormData = () => {
     if (input) {
       const initialFormData: { [key: string]: string } = {};
-      input().forEach((i) => {
+      input().forEach((i:any) => {
         
         if(i.type !== 'file'){
           initialFormData[i.name] = i.value || "";
@@ -114,7 +113,7 @@ const Modal = ({
               {action.charAt(0).toUpperCase() + action.slice(1)} {modalLabel}
             </h3>
             {action === "update" || action === "add" ? (
-              input().map((field, index) => {
+              input().map((field:any, index:number) => {
                 if (field.type === "text" || field.type === "textarea") {
                   return (
                     <div key={index}>
@@ -168,7 +167,7 @@ const Modal = ({
                         onChange={handleInputChange}
                         disabled={field.disabled || false}
                       >
-                        {field.options?.map((option, idx) => (
+                        {field.options?.map((option:any, idx:number) => (
                           <option key={idx} value={option.value}>
                             {option.label}
                           </option>

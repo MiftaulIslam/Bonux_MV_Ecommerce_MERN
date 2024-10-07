@@ -5,16 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { PutService } from "../../utils/HTTP/Put";
 import { useLoader } from "../../hooks/LoaderProvider";
 import { fetchUser } from "../../state/actions/userAction";
+import { AppDispatch, RootState } from "../../state/store/store";
+import { UserAddress } from "../../models/StateType";
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 const AddressForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const query = useQuery();
   const id = query.get("id") || "";
 
-  const { user, loading } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state:RootState) => state.user);
 
   const [formData, setFormData] = useState({
     address: "",
@@ -39,7 +41,7 @@ const AddressForm = () => {
   useEffect(() => {
     if (id) {
         
-  const address = user?.addresses.find((a) => a._id === id);
+  const address = user?.addresses.find((a:UserAddress) => a._id === id);
       if (address) {
         setFormData({
           address: address.address,
@@ -57,7 +59,7 @@ const AddressForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleBlur = (e) => {
+  const handleBlur = (e:React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setTouched({ ...touched, [name]: true });
 
@@ -144,7 +146,6 @@ const AddressForm = () => {
               id="region"
               value={formData.region}
               onChange={handleInputChange}
-              onBlur={handleBlur}
               required={true}
               className="mt-1 block w-full pl-3 pr-10 py-2 text-base border focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
             >
@@ -172,7 +173,6 @@ const AddressForm = () => {
               id="city"
               value={formData.city}
               onChange={handleInputChange}
-              onBlur={handleBlur}
               required={true}
               disabled={!formData.region}
               className="mt-1 block max-h-24 overflow-y-auto w-full pl-3 pr-10 py-2 text-base border focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -201,7 +201,6 @@ const AddressForm = () => {
               id="zone"
               value={formData.zone}
               onChange={handleInputChange}
-              onBlur={handleBlur}
               required={true}
               disabled={!formData.city}
               className="mt-1 block w-full pl-3 pr-10 py-2 text-base border focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"

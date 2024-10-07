@@ -1,28 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { CheckIcon } from '../../widgets/icons';
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchStore } from '../../state/actions/storeAction';
-import { useLoader } from '../../hooks/LoaderProvider';
+import {  useState } from 'react';
+import  CheckIcon  from '../../widgets/icons/CheckIcon';
+import { Link } from 'react-router-dom';
+import {  useSelector } from 'react-redux';
 import Loader from '../../widgets/Loader';
+import {  RootState } from '../../state/store/store';
 
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
+// const useQuery = () => {
+//   return new URLSearchParams(useLocation().search);
+// };
 
 const SellerHome = () => {
   
-  const dispatch = useDispatch()
-  const {showLoader, hideLoader} = useLoader()
-  const { user } = useSelector((state) => state.user);
-  const {  loading, store } = useSelector((state) => state.store);
+  const { user } = useSelector((state:RootState) => state.user);
+  const {  loading, store } = useSelector((state:RootState) => state.store);
   const [currentStep, setCurrentStep] = useState(0);
-  const [emailAdded, setEmailAdded] = useState(false);
-  const [storeAdded, setStoreAdded] = useState(false);
-  const [productAdded, setProductAdded] = useState(false);
+  const [productAdded] = useState(false);
 
-  const query = useQuery();
-  const type = query.get("type") || "";
+  // const query = useQuery();
+  // const type = query.get("type") || "";
 
   const steps = [
     {
@@ -51,11 +46,11 @@ const SellerHome = () => {
     },
   ];
 
-  const handleStepClick = (stepNumber) => {
+  const handleStepClick = (stepNumber:any) => {
     setCurrentStep(stepNumber);
   };
 
-  const renderStepContent = (step) => {
+  const renderStepContent = (step:any) => {
     
     return (
       <div className="bg-white rounded-lg p-6 text-black">
@@ -85,7 +80,7 @@ const SellerHome = () => {
           <div key={index} className="flex flex-col items-center cursor-pointer" onClick={() => handleStepClick(index)}>
             <Link to={`?type=${step.title.toLowerCase()}`} className={`w-8 h-8 border border-gray-500 rounded-full flex items-center justify-center mb-2`}>
               {step.Success ? (
-                <CheckIcon className="w-5 h-5" />
+                <CheckIcon  />
               ) : (
                 index + 1
               )}

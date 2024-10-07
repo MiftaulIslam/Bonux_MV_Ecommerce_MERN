@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { StarRating } from '../../widgets'
 import { useNavigate, useParams } from 'react-router-dom'
 import Loader from '../../widgets/Loader'
-import { Cart } from '../../widgets/icons'
+import  Cart  from '../../widgets/icons/Cart'
 import QuickViewModal from './QuickViewModal'
 
 const dummyProduct = {
@@ -46,11 +46,6 @@ const dummyProduct = {
     { name: "Smartphone Y", price: 499.99, image: "https://via.placeholder.com/150/0000FF/808080?text=TechStore" },
   ],
 }
-const dummyReviews = [
-  { id: 1, user: "John D.", rating: 5, comment: "Great phone! The camera quality is exceptional.", date: "2023-05-15" },
-  { id: 2, user: "Sarah M.", rating: 4, comment: "Good value for money. Battery life could be better.", date: "2023-05-10" },
-  { id: 3, user: "Mike R.", rating: 4.5, comment: "Impressive performance. The display is stunning!", date: "2023-05-05" },
-]
 export default function ProductDetail() {
   const {id}= useParams()
   const navigate = useNavigate()
@@ -63,12 +58,12 @@ export default function ProductDetail() {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(true)
-  const [product, setProduct] = useState(null)
-  const [products, setProducts] = useState(null)
+  const [product, setProduct] = useState<any>(null)
+  const [products, setProducts] = useState<any>(null)
   const [magnifyStyle, setMagnifyStyle] = useState({})
-  const [reviews, setReviews] = useState(dummyReviews)
+  // const [reviews, setReviews] = useState(dummyReviews)
   const [newReview, setNewReview] = useState({ rating: 0, comment: '' })
-  const imageRef = useRef(null)
+  const imageRef = useRef<HTMLImageElement | null>(null)
 const fetchProduct =async  ()=>{
  const data = await fetch(`https://dummyjson.com/products/${id}`)
  const data2 = await fetch(`https://dummyjson.com/products/category/smartphones?limit=10&skip=10`)
@@ -83,19 +78,19 @@ const fetchProduct =async  ()=>{
     window.scrollTo(0, 0);
   }, [id])
 console.log(product)
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e:React.MouseEvent) => {
     if (imageRef.current) {
       const { left, top, width, height } = imageRef.current.getBoundingClientRect()
       const x = ((e.pageX - left) / width) * 100
       const y = ((e.pageY - top) / height) * 100
       setMagnifyStyle({
-        backgroundImage: `url(${product.images[activeImageIndex]})`,
+        backgroundImage: `url(${product?.images[activeImageIndex]})`,
         backgroundPosition: `${x}% ${y}%`,
       })
     }
   }
 
-  const handleReviewSubmit = (e) => {
+  const handleReviewSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log("review submmited")
     // const newReviewObj = {
@@ -109,6 +104,7 @@ console.log(product)
     // setNewReview({ rating: 0, comment: '' })
   }
 if(loading) return <Loader/>
+
   return (
     <div className="container mx-auto px-4 py-8">
       
@@ -133,7 +129,7 @@ if(loading) return <Loader/>
             />
           </div>
           <div className="flex gap-2 overflow-x-auto">
-            {product?.images.map((image, index) => (
+            {product?.images.map((image:any, index:number) => (
               <img
                 key={index}
                 src={image}
@@ -231,7 +227,7 @@ if(loading) return <Loader/>
             <StarRating 
               rating={newReview.rating} 
               editable={true} 
-              onChange={(value) => setNewReview({...newReview, rating: value})}
+              onChange={(value:any) => setNewReview({...newReview, rating: value})}
             />
           </div>
           <div className="mb-4">
@@ -241,7 +237,7 @@ if(loading) return <Loader/>
               value={newReview.comment}
               onChange={(e) => setNewReview({...newReview, comment: e.target.value})}
               className="w-full p-2 border rounded"
-              rows="4"
+              
               required
             ></textarea>
           </div>
@@ -252,7 +248,7 @@ if(loading) return <Loader/>
 
         {/* Existing Reviews */}
         <div className="space-y-4">
-          {product.reviews.map((review) => (
+          {product.reviews.map((review:any) => (
             <div key={review?.date} className="border-b pb-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-semibold">{review?.reviewerName}</span>
@@ -272,7 +268,7 @@ if(loading) return <Loader/>
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">You May Also Like</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {products?.map((product, index) => (
+          {products?.map((product:any) => (
           <div
           key={product.id}
           className="relative p-3 cursor-pointer bg-white rounded-lg overflow-hidden hover:shadow-lg hover:translate-y-1 transition-transform duration-200"

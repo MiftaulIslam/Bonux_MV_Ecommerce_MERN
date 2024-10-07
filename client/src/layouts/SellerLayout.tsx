@@ -1,29 +1,30 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import {
-  BellIcon,
-  BrifcaseIcon,
-  Close,
-  LogoutIcon,
-  MenuIcon,
-  MessageSquareIcon,
-  NotepadIcon,
-  ProductIcon,
-  RightArrow,
-  SellerCenterIcon,
-  SettingIcon,
-  StoreIcon,
-} from "../widgets/icons";
+
+
 import { LogoutButton } from "../widgets";
 import { fetchStore } from "../state/actions/storeAction";
 import { useDispatch, useSelector } from "react-redux";
+import BellIcon from "../widgets/icons/BellIcon";
+import BrifcaseIcon from "../widgets/icons/BrifcaseIcon";
+import Close from "../widgets/icons/Close";
+import LogOutIcon from "../widgets/icons/LogoutIcon";
+import MenuIcon from "../widgets/icons/MenuIcon";
+import MessageSquareIcon from "../widgets/icons/MessageSquareIcon";
+import NotepadIcon from "../widgets/icons/NotepadIcon";
+import ProductIcon from "../widgets/icons/ProductIcon";
+import RightArrow from "../widgets/icons/RightArrow";
+import SellerCenterIcon from "../widgets/icons/SellerCenterIcon";
+import SettingIcon from "../widgets/icons/SettingIcon";
+import StoreIcon from "../widgets/icons/StoreIcon";
+import { AppDispatch, RootState } from "../state/store/store";
 
 
 export default function SellerLayout() {
   
-  const { user } = useSelector((state) => state.user)
-  const {  loading, store } = useSelector((state) => state.store);
-  const dispatch = useDispatch()
+  const { user } = useSelector((state:RootState) => state.user)
+  const {   store } = useSelector((state:RootState) => state.store);
+  const dispatch = useDispatch<AppDispatch>()
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<string[]>([]);
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
@@ -161,7 +162,7 @@ export default function SellerLayout() {
               + New Product
             </Link>
           </div>
-          <button onClick={toggleRightSidebar} className="md:hidden">
+          <button type="button" onClick={toggleRightSidebar} className="md:hidden">
             <MenuIcon />
           </button>
         </div>
@@ -211,7 +212,7 @@ export default function SellerLayout() {
                     {item.label}
                   </div>
                   <RightArrow
-                    classname={`h-4 w-4 transition-transform ${
+                    className={`h-4 w-4 transition-transform ${
                       isMenuOpen(item.label) ? "transform rotate-90" : ""
                     }`}
                   />
@@ -243,14 +244,17 @@ export default function SellerLayout() {
         {/* Right sidebar -  for larger screens */}
         <div className="hidden md:block w-16 bg-white shadow-lg">
           <div className="flex flex-col items-center py-4">
-            <button className="mb-4">
-              <BellIcon className="h-6 w-6 text-gray-500" />
+            <button 
+              type="button" className="mb-4">
+              <BellIcon  />
             </button>
-            <button className="mb-4">
-              <MessageSquareIcon className="h-6 w-6 text-gray-500" />
+            <button 
+              type="button" className="mb-4">
+              <MessageSquareIcon  />
             </button>
-            <button onClick={toggleSettings}>
-              <SettingIcon className="h-6 w-6 text-gray-500" />
+            <button 
+              type="button" onClick={toggleSettings}>
+              <SettingIcon />
             </button>
           </div>
         </div>
@@ -265,10 +269,11 @@ export default function SellerLayout() {
             <div className="flex justify-between items-center px-6 py-4 border-b">
               <h2 className="text-lg font-semibold">Menu</h2>
               <button
+              type="button"
                 onClick={closeRightSidebar}
                 className="p-1 rounded-full hover:bg-gray-200"
               >
-                <Close className="h-6 w-6 text-gray-500" />
+                <Close />
               </button>
             </div>
             <div className="flex-1 overflow-y-auto">
@@ -299,8 +304,8 @@ export default function SellerLayout() {
       >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold">My Account</h2>
-          <button onClick={toggleSettings}>
-            <Close className="h-6 w-6 text-gray-500" />
+          <button type="button" onClick={toggleSettings}>
+            <Close  />
           </button>
         </div>
         <nav>
@@ -317,7 +322,7 @@ export default function SellerLayout() {
                   className="flex items-center justify-between text-gray-700 hover:bg-gray-100 px-2 py-1 rounded"
                 >
                   {item}
-                  <RightArrow classname="h-4 w-4" />
+                  <RightArrow className="h-4 w-4" />
                 </a>
               </li>
             ))}
@@ -328,7 +333,7 @@ export default function SellerLayout() {
             href="#"
             className="flex items-center gap-4 text-red-500 hover:bg-red-100 px-2 py-1 rounded"
           >
-            <LogoutIcon className="h-4 w-4 mr-2" />
+            <LogOutIcon />
             <LogoutButton/>
           </a>
         </div>

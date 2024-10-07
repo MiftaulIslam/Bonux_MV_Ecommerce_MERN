@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { starRatingProp } from '../models/PropType';
 
-const StarRating = ({ rating, onChange, editable = false }) => {
+const StarRating:React.FC<starRatingProp> = ({ rating, onChange, editable = false }) => {
   const [hoveredRating, setHoveredRating] = useState(0);
 
-  const handleMouseEnter = (value) => {
+  const handleMouseEnter = (value:any) => {
     if (editable) {
       setHoveredRating(value);
     }
@@ -15,7 +16,7 @@ const StarRating = ({ rating, onChange, editable = false }) => {
     }
   };
 
-  const handleClick = (value) => {
+  const handleClick = (value:any) => {
     if (editable && onChange) {
       onChange(value);
     }

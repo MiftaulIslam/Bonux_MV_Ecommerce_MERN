@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { carouselProp } from '../models/PropType';
 
-const Carousel = ({ children, autoplayInterval=5000 }) => {
+const Carousel:React.FC<carouselProp> = ({ children, autoplayInterval=5000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef(null);
 
@@ -11,7 +12,7 @@ const Carousel = ({ children, autoplayInterval=5000 }) => {
   const moveNext = () => {
     setCurrentIndex((currentIndex + 1) % React.Children.count(children));
   };
-  const handlePaginationClick = (index) => {
+  const handlePaginationClick = (index:any) => {
     setCurrentIndex(index);
   };
 
@@ -28,6 +29,7 @@ const Carousel = ({ children, autoplayInterval=5000 }) => {
     <div className="carousel overflow-hidden w-full h-full relative">
       <div className="flex justify-between  items-center absolute top left w-full h-full">
         <button
+        type='button'
           onClick={movePrev}
           className="bg-[#686D76] text-white w-6 h-[50px]  opacity-50 hover:opacity-75 disabled:cursor-not-allowed p-0 m-0 transition-all ease-in-out duration-300"
           
@@ -45,6 +47,7 @@ const Carousel = ({ children, autoplayInterval=5000 }) => {
           <span className="sr-only">Prev</span>
         </button>
         <button
+        type='button'
           onClick={moveNext}
            className="bg-[#686D76] text-white w-6 h-[50px]  opacity-50 hover:opacity-75 disabled:cursor-not-allowed  p-0 m-0 transition-all ease-in-out duration-300"
          
@@ -81,8 +84,9 @@ const Carousel = ({ children, autoplayInterval=5000 }) => {
       </div>
 
       <div className="pagination gap-1 absolute bottom-0 left-0 w-full flex justify-center mb-4">
-        {React.Children.map(children, (child, index) => (
+        {React.Children.map(children, (_child, index) => (
           <button
+          type='button'
             key={index}
             onClick={() => handlePaginationClick(index)}
             className={` w-10 h-1 rounded-full bg-gray-300 hover:bg-gray-500 transition-all ease-in-out duration-300 ${

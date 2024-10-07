@@ -9,7 +9,7 @@ import Loader from "../../widgets/Loader";
 
 const Category = () => {
   const [categories, setCategories] = useState<any | null>(null);
-  const [SelectedCategory, setSelectedCategory] = useState(null);
+  const [SelectedCategory, setSelectedCategory] = useState<any>(null);
   const [isAddModalOpen, setisAddModalOpen] = useState(false);
   const [isEditModalOpen, setisEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setisDeleteModalOpen] = useState(false);
@@ -38,25 +38,25 @@ const Category = () => {
     }  
   };
 
-  const deleteCategory =  async(id) =>{
+  const deleteCategory =  async(id:any) =>{
     setLoading(true)
-      const deleteCategory = await DeleteService(`category/delete-category/${id}`, true)
+      await DeleteService(`category/delete-category/${id}`, true)
       setLoading(false)
       getCategories()
 
   }
-  const addCategory =  async(body) =>{
+  const addCategory =  async(body:any) =>{
       setLoading(true)
-      const addedCategory = await PostService(`category/add`, true, body)
+      await PostService(`category/add`, true, body)
       setLoading(false)
       getCategories()
 
   }
 
-  const updateCategory = async (body,id)=>{
+  const updateCategory = async (body:any,id:any)=>{
     console.log(body)
     setLoading(true)
-    const updatedCategory = await PutService(`category/update-category/${id}`, true, body)
+    await PutService(`category/update-category/${id}`, true, body)
     setLoading(false)
     getCategories()
   }
@@ -65,7 +65,7 @@ const Category = () => {
   }, []);
 
   //Columns to generate the data table
-  const columns = (data: any) => [
+  const columns = () => [
     {
       column: "_id",
       label: "ID",
@@ -77,7 +77,7 @@ const Category = () => {
     {
       column: "image",
       label: "Image",
-      render: (value, row: any, data: any) => {
+      render: (value:any) => {
        
         return  <img
         src={`data:image/jpeg;base64,${value}`}
@@ -98,7 +98,7 @@ const Category = () => {
     {
       column: "parentId",
       label: "Parent",
-      render: (value: string | number, row: any, data: any) => {
+      render: (value: string | number,  data: any) => {
        
         const parent = data.find((item: any) => item._id == value);
         return <span className="italic">{parent ? parent.name : "None"}</span>;
@@ -107,7 +107,7 @@ const Category = () => {
     {
       column: "actions",
       label: "Manage",
-      render: (value: string | number, row: any, data: any) => (
+      render: ( row: any) => (
         <div className="flex gap-2">
           <button
             onClick={() => fetchCategory(row?._id)}
@@ -161,7 +161,7 @@ const Category = () => {
           options: !SelectedCategory?.parentId ? 
           [
             { label: "No parent...", value: null }, // Default option
-            ...filteredCategories.map((cat) => ({
+            ...filteredCategories.map((cat:any) => ({
               label: cat.name,
               value: cat._id,
             })),
@@ -209,7 +209,7 @@ const Category = () => {
           disabled: categories.length < 1,
           options: [
             { label: "Select...", value: null }, // Default option
-            ...categories.map((cat) => ({
+            ...categories.map((cat:any) => ({
               label: cat.name,
               value: cat._id,
             })),

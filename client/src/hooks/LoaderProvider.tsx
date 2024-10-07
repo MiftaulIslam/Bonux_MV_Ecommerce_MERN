@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState } from "react";
+import  { createContext, useContext, useState } from "react";
 import Loader from "../widgets/Loader";
+import { loaderProviderProp } from "../models/PropType";
 
 // Create the context
 const LoaderContext = createContext({
@@ -8,7 +9,7 @@ const LoaderContext = createContext({
 });
 
 // Provider component
-export const LoaderProvider = ({ children }) => {
+export const LoaderProvider:React.FC<loaderProviderProp> = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const showLoader = () => setLoading(true);

@@ -5,7 +5,7 @@ import { PutService } from "../../utils/HTTP/Put";
 import { GetStoreSuccess, LoadStoreRequest, StoreFaliure, UpdateStoreSuccess } from "../reducers/storeSlice";
 import { PostService } from "../../utils/HTTP/Post";
 
-export const fetchStore = (storeId) => async (dispatch: Dispatch) => {
+export const fetchStore = (storeId:string) => async (dispatch: Dispatch) => {
   dispatch(LoadStoreRequest());
   
   const response = await fetch(`${base_url}/store/${storeId}`, {
@@ -21,7 +21,7 @@ export const fetchStore = (storeId) => async (dispatch: Dispatch) => {
     dispatch(StoreFaliure(jsonResponse.message));
   }
 };
-export const addStore = (storeData) => async (dispatch: Dispatch) => {
+export const addStore = (storeData:any) => async (dispatch: Dispatch) => {
   dispatch(LoadStoreRequest());
 
   const data = await PostService(`${base_url}/`, true, storeData)

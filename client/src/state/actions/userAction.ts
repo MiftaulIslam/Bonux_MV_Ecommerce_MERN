@@ -5,7 +5,6 @@ import {
   UserFaliure,
   UpdateUserSuccess,
 } from "../reducers/userSlice";
-import { base_url } from "../../static/data";
 import { PutService } from "../../utils/HTTP/Put";
 import { GetService } from "../../utils/HTTP/Get";
 import { DeleteService } from "../../utils/HTTP/Delete";

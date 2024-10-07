@@ -1,8 +1,9 @@
 
 import { Link } from 'react-router-dom'
 import LogoutButton from './LogoutButton';
+import { profileDropdownMenusProp } from '../models/PropType';
 
-const ProfileDropdownMenus = ({data}) => {
+const ProfileDropdownMenus:React.FC<profileDropdownMenusProp> = ({data}) => {
     
   // const { user } = useSelector((state) => state.user);
   return (

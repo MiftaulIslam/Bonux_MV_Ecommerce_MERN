@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { base_url } from '../static/data.ts'
 
 import Cookies from 'js-cookie';

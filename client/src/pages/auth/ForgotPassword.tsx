@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     };
   
   //Manipulating Form Data
-    const handleChange = (e:   ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e:   ChangeEvent<HTMLInputElement>|ChangeEvent<HTMLSelectElement>) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     };  
 
@@ -39,7 +39,7 @@ const ForgotPassword = () => {
       formDataToSend.append('email', formData.email);
       formDataToSend.append('role', formData.role);
       try {
-        const data = await PostService('user/forgot-password', true, formDataToSend)
+        await PostService('user/forgot-password', true, formDataToSend)
       } catch (err) {
         showAlert(false,'Something went wrong')
       }

@@ -1,6 +1,6 @@
-import React from 'react'
+import { sellerCenterIconProp } from "../../models/IconType"
 
-const SellerCenterIcon = ({width, height}) => {
+const SellerCenterIcon:React.FC<sellerCenterIconProp> = ({width, height}) => {
   return (
 
     <svg

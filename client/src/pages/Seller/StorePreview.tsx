@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useRef, useState } from "react";
+import  {  useRef, useState } from "react";
 import Loader from "../../widgets/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { base_url, default_src } from "../../static/data";
+import { default_src } from "../../static/data";
 import EmailIcon from "../../widgets/icons/EmailIcon";
 import PhoneIcon from "../../widgets/icons/PhoneIcon";
 import InfoCardIcon from "../../widgets/icons/InfoCardIcon";
@@ -10,35 +10,34 @@ import StatusIcon from "../../widgets/icons/StatusIcon";
 import ClockIcon from "../../widgets/icons/ClockIcon";
 import { showAlert } from "../../utils/showAlert";
 import { useNavigate } from "react-router-dom";
-import { PutService } from "../../utils/HTTP/Put";
 import ImageIcon from "../../widgets/icons/ImageIcon";
 import AddressIcon from "../../widgets/icons/AddressIcon";
 import { updateStore } from "../../state/actions/storeAction";
 import StoreInfoModal from "../../components/Store/StoreInfoModal";
-import { Modal } from "../../widgets";
+import { AppDispatch, RootState } from "../../state/store/store";
 
 const StorePreview = () => {
-  const disptach = useDispatch()
-const coverInputClick = useRef(null)
-const logoInputClick = useRef(null)
+  const disptach = useDispatch<AppDispatch>()
+const coverInputClick = useRef<any>(null)
+const logoInputClick = useRef<any>(null)
   const navigate = useNavigate()
   const [selectedItem, setSelectedItem] = useState("Back");
   const [isEdit, setisEdit] = useState(false);
   
-  const { loading, store } = useSelector((state) => state.store);
-  const [formData, setFormData] = useState({
-    name: store?.name || "",
-    description: store?.description || "",
-    address: store?.address.address || "",
-    region: store?.address.region || "",
-    city: store?.address.city || "",
-    zone: store?.address.zone || "",
-    status: store?.status || "",
-    openingHours: store?.openingHours || "",
-    closingHours: store?.closingHours || "",
-  });
-  console.log(store)
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state:RootState) => state.user);
+  const { loading, store } = useSelector((state:RootState) => state.store);
+  // const [formData, setFormData] = useState({
+  //   name: store?.name || "",
+  //   description: store?.description || "",
+  //   address: store?.address.address || "",
+  //   region: store?.address.region || "",
+  //   city: store?.address.city || "",
+  //   zone: store?.address.zone || "",
+  //   status: store?.status || "",
+  //   openingHours: store?.openingHours || "",
+  //   closingHours: store?.closingHours || "",
+  // });
+  // console.log(store)
   const About = () => {
     return (
       <div className="bg-white shadow rounded-lg p-4">
@@ -121,7 +120,7 @@ const logoInputClick = useRef(null)
     showAlert(false, "You haven't create any store yet");
     navigate("/seller")
   }
-  const handleCoverChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleCoverChange = async (event:any) => {
     const formDataToSend = new FormData();
     const file = event.target.files[0];
     formDataToSend.append("media", file);
@@ -133,7 +132,7 @@ const logoInputClick = useRef(null)
       console.error('Invalid image type')
     }
   }
-  const handleLogoChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleLogoChange = async (event:any) => {
     const formDataToSend = new FormData();
     const file = event.target.files[0];
     formDataToSend.append("media", file);
@@ -165,6 +164,7 @@ const logoInputClick = useRef(null)
         </button>
         
         <input
+        placeholder="Insert banner"
           type="file"
           ref={coverInputClick}
           onChange={handleCoverChange}
@@ -189,7 +189,7 @@ const logoInputClick = useRef(null)
                onClick={() => logoInputClick.current?.click()} className="duration-300 hover:cursor-pointer bg-gray-200 border  shadow
                rounded-full w-10 h-10
                flex justify-center items-center absolute bottom-0 right-0  "><ImageIcon width={20} height={20}/></span>
-            <input ref={logoInputClick} onChange={handleLogoChange} className="hidden" type="file" name="logo" id="logo" />
+            <input placeholder="Insert logo" ref={logoInputClick} onChange={handleLogoChange} className="hidden" type="file" name="logo" id="logo" />
         
             
           </div>

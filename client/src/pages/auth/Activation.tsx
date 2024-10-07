@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { PostService } from "../../utils/HTTP/Post";
 import { useLoader } from "../../hooks/LoaderProvider";

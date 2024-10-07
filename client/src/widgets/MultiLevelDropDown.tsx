@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { multiLevelDropDownProp } from '../models/PropType';
 
-const MultiLevelDropDown = ({ items, className }:{className:string}) => {
+const MultiLevelDropDown:React.FC<multiLevelDropDownProp> = ({ items, className }) => {
   const [hoveredItem, setHoveredItem] = React.useState(null);
 
-  const handleMouseEnter = (item) => {
+  const handleMouseEnter = (item:any) => {
     setHoveredItem(item);
   };
 
@@ -16,7 +17,7 @@ const MultiLevelDropDown = ({ items, className }:{className:string}) => {
   return (
     <div>
       <ul className={`${className}`}>
-        {items?.map((item, index) => (
+        {items?.map((item:any, index:number) => (
           <li
             key={index}
             className="px-2 py-2 cursor-pointer hover:bg-[#ddd] duration-300"

@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { LeftArrow, RightArrow } from '../icons';
+import  LeftArrow  from '../icons/LeftArrow';
+import   RightArrow  from '../icons/RightArrow';
 
 /**
  * A dynamic pagination component. Useful in DataTables
@@ -13,7 +14,7 @@ import { LeftArrow, RightArrow } from '../icons';
 const Pagination:FC<{
   totalPage: number;
   currentPage: number;
-  onPageChange: (page: (number)) => void;
+  onPageChange: (page: any) => void;
 }> = ({ totalPage, currentPage, onPageChange }) => {
 
   //Format of pagination. 

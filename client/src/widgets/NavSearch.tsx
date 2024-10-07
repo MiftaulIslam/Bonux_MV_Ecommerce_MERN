@@ -1,18 +1,12 @@
 import {ChangeEvent,
   FC} from 'react';
 import { Link } from 'react-router-dom';
-import { SearchIcon } from './icons/index';
+import  SearchIcon  from './icons/SearchIcon';
 
 interface NavSearchProps {
-  width: string;
-  display: string;
-  top?: string;
-  right?: string;
-  position?: string;
-  smallMedia?: string;
   term: string;
   data: any[] | null;
-  className:string;
+  className?:string;
   handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 

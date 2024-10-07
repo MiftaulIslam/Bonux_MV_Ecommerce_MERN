@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from "react"
+import { quickViewodalProp } from "../../models/PropType"
 
-const QuickViewModal = ({ data, onClose }) => {
+const QuickViewModal:React.FC<quickViewodalProp> = ({ data, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [quantity, setQuantity] = useState(1)
   const [magnifyStyle, setMagnifyStyle] = useState({})
-  const imageRef = useRef(null)
+  const imageRef = useRef<any>(null)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,7 +25,7 @@ const QuickViewModal = ({ data, onClose }) => {
 
   const discountedPrice =(data.price -  ((data.discountPercentage / 100)*data.price)) * quantity
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e:any) => {
     if (imageRef.current) {
       const { left, top, width, height } = imageRef.current.getBoundingClientRect()
       const x = ((e.clientX - left) / width) * 100
@@ -74,8 +75,9 @@ const QuickViewModal = ({ data, onClose }) => {
                 />
               </div>
               <div className="flex justify-center space-x-2 overflow-x-auto">
-                {data?.images.map((image, index) => (
+                {data?.images.map((image:any, index:number) => (
                   <button
+                  type="button"
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
                     className={`w-12 h-12 border-2 rounded-md overflow-hidden flex-shrink-0 ${

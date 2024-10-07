@@ -1,38 +1,15 @@
 import React from "react";
+import { cardIconProp } from "../../models/IconType";
 
-const Cart = ({width, height, color}) => {
-  //     <svg
-  //     width="28px"
-  //     height="25px"
-  //     viewBox="0 0 24 24"
-  //     fill="none"
-  //     xmlns="http://www.w3.org/2000/svg"
-  //     stroke="#000000"
-  //   >
-  //     <path
-  //       d="M6 6h15.09l1.27 6H6.82l-.56-2.79C6.13 8.34 6 8 6 8H3"
-  //       stroke="#000000"
-  //       strokeWidth="1.5"
-  //       strokeLinecap="round"
-  //       strokeLinejoin="round"
-  //     />
-  //     <circle cx="10" cy="20" r="2" stroke="#000000" strokeWidth="1.5" />
-  //     <circle cx="18" cy="20" r="2" stroke="#000000" strokeWidth="1.5" />
-  //     <path
-  //       d="M6 6h15.09l1.27 6H6.82l-.56-2.79C6.13 8.34 6 8 6 8H3"
-  //       stroke="#000000"
-  //       strokeWidth="1.5"
-  //       strokeLinecap="round"
-  //       strokeLinejoin="round"
-  //     />
-  //   </svg>
+const Cart:React.FC<cardIconProp> = ({width, height, color}) => {
+
 
   return (
     <svg
     
   width = {`${width}`}
   height = {`${height}`}
-      fill={`${color}`}
+      fill={`${color?color:"#00000"}`}
       viewBox="0 0 32 32"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"

@@ -5,10 +5,11 @@ import ResponsiveSidebar from './ResponsiveSidebar';
 import VerticalMultiLevelDropDown from "../widgets/VerticalMultiLevelDropDown";
 import { useSelector } from "react-redux";
 import { GetService } from "../utils/HTTP/Get";
+import { RootState } from "../state/store/store";
 
 const HomeLayout = () => {
-  const { isOpen } = useSelector((state) => state.togglebar);
-  const [categories, setCategories] = useState(null)
+  const { isOpen } = useSelector((state:RootState) => state.togglebar);
+  const [categories, setCategories] = useState<any>(null)
   const getCategories = async ()=>{
       const categories = await GetService(`category/categories-order`) 
       setCategories(categories.data.data)

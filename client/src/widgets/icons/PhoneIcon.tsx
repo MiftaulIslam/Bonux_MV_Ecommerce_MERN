@@ -1,6 +1,6 @@
-import React from 'react'
+import { phoneIconProp } from "../../models/IconType"
 
-const PhoneIcon = ({width, height}) => {
+const PhoneIcon:React.FC<phoneIconProp> = ({width, height}) => {
   return (
     <svg version="1.1" id="Layer_1" width={width} height={height} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
     viewBox="0 0 32 32" enableBackground="new 0 0 32 32" xmlSpace="preserve">

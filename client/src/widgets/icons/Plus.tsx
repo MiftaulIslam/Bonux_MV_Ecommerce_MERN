@@ -1,4 +1,6 @@
-const Plus = ({width, height, color}) => {
+import { plusIconProp } from "../../models/IconType";
+
+const Plus:React.FC<plusIconProp> = ({width, height, color}) => {
   return (
     <svg
       width={width} 
@@ -6,7 +8,7 @@ const Plus = ({width, height, color}) => {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      stroke={color}
+      stroke={color?color:"#000000"}
       transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>

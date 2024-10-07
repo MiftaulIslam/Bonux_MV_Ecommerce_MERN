@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { Close } from '../../widgets/icons'
+import  Close  from '../../widgets/icons/Close'
 import { geo } from '../../static/geoBd';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../widgets/Loader';
 import {time} from '../../static/data'
-import { PutService } from '../../utils/HTTP/Put';
 import { updateStore } from '../../state/actions/storeAction';
-const StoreInfoModal = ({onClose}) => {
-  const disptach = useDispatch()
-  const { loading, store } = useSelector((state) => state.store);
+import { storeInfoModalProp } from '../../models/PropType';
+import { AppDispatch, RootState } from '../../state/store/store';
+const StoreInfoModal:React.FC<storeInfoModalProp> = ({onClose}) => {
+  const disptach = useDispatch<AppDispatch>()
+  const { loading, store } = useSelector((state:RootState) => state.store);
 
   const [formData, setFormData] = useState({
     name: store?.name || "",
@@ -29,7 +30,7 @@ const StoreInfoModal = ({onClose}) => {
 
   const zones = selectedCity ? selectedCity.zones : [];
   console.log(store)
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>|React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -38,7 +39,7 @@ const StoreInfoModal = ({onClose}) => {
   };
   
   
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent the default form submission
 
     const formDataToSend = new FormData();

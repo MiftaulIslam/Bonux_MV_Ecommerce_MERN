@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Cart } from '../../widgets/icons';
+import  { useEffect, useState } from 'react';
+import  Cart  from '../../widgets/icons/Cart';
 import QuickViewModal from '../Helper/QuickViewModal';
 import { useNavigate } from 'react-router-dom';
 
 const JustForYou = () => {
   const navigate = useNavigate()
   const [quickDemo, setquickDemo] = useState(0);
-  const [products, setproducts] = useState([]);
+  const [products, setproducts] = useState<any>([]);
   const [pageSize, setPageSize] = useState(0);
   const [toggleQuickView, settoggleQuickView] = useState(false);
   const [selectedProduct, setselectedProduct] = useState(null);
 
-  const productss = [
-    // Your existing products array here
-  ];
+ 
 
-  const fetchProduct = async (size) => {
+  const fetchProduct = async (size:any) => {
     const data = await fetch(`https://dummyjson.com/products/category/smartphones?limit=10&skip=${size}`);
     const jsonData = await data.json();
-    setproducts((prevProducts) => [...prevProducts, ...jsonData.products]); // Merge with existing products
+    setproducts((prevProducts:any) => [...prevProducts, ...jsonData.products]); // Merge with existing products
   };
 
   useEffect(() => {
@@ -34,27 +32,27 @@ const JustForYou = () => {
       <h2 className="text-2xl font-bold text-gray-800">Just for you</h2>
       <div className="flex justify-between items-center mb-2">
         <h4 className='text-base font-bold text-blue-800'>On sale now</h4>
-        <button className="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200">
+        <button type='button' className="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200">
           See more
         </button>
       </div>
       <hr />
       <div className="grid py-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-        {products.map((product) => (
+        {products.map((product:any, i:number) => (
           <div
-            key={product.id}
+            key={i}
             className="relative p-3 cursor-pointer bg-white rounded-lg overflow-hidden hover:shadow-lg hover:translate-y-1 transition-transform duration-200"
             onMouseEnter={() => setquickDemo(product.id)}
             onMouseLeave={() => setquickDemo(0)}
-            onClick={()=> navigate(`/product-detail/${product.id}`)}
           >
             <img
+            onClick={()=> navigate(`product-detail/${product.id}`)}
               src={product.image || product?.images[0]}
               alt={product.title}
               className="w-full h-36 object-contain"
             />
-            <div>
-              <h3 className="text-sm font-semibold text-gray-800 mb-2">
+            <div >
+<div onClick={()=> navigate(`product-detail/${product.id}`)}><h3 className="text-sm font-semibold text-gray-800 mb-2">
                 {product.title.length > 80 ? `${product.title.slice(0, 50)}...` : product.title}
               </h3>
               <div className="mb-4">
@@ -65,7 +63,8 @@ const JustForYou = () => {
                   </span>
                   <span className='text-xs ml-1'>-{product.discountPercentage}%</span>
                 </p>
-              </div>
+              </div></div>
+              
               <div className='flex justify-between'>
                 <button
                   type='button'

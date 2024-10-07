@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLoader } from '../../hooks/LoaderProvider';
 import { maskEmail } from '../../utils/MaskEmail';
 import { updateUser } from '../../state/actions/userAction';
+import { AppDispatch, RootState } from '../../state/store/store';
 
 const MyProfile = () => {
     const { showLoader, hideLoader } = useLoader();
-    const dispatch = useDispatch()
-    const { user, loading } = useSelector((state) => state.user);
+    const dispatch = useDispatch<AppDispatch>()
+    const { user, loading } = useSelector((state:RootState) => state.user);
     
     const [formData, setFormData] = useState({
       name: user?.name || '',
@@ -16,7 +17,7 @@ const MyProfile = () => {
       gender: user?.gender || '',
     });
   
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState<File | null>(null);
     const [changeImage, setChangeImage] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
   
@@ -29,11 +30,11 @@ const MyProfile = () => {
       }
     }, [loading]);
   
-    const handleInputChange = (e) => {
+    const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>|React.ChangeEvent<HTMLSelectElement>) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     };
   
-    const handleFileInputChange = (e) => {
+    const handleFileInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files.length > 0) {
         setImage(e.target.files[0]);
       } else {
@@ -41,7 +42,7 @@ const MyProfile = () => {
       }
     };
   
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:any) => {
       e.preventDefault();
       const formDataToSend = new FormData();
       formDataToSend.append('name', formData.name);
@@ -138,6 +139,7 @@ const MyProfile = () => {
               />
             )}{changeImage &&
               <input
+              placeholder='Insert image'
               type="file"
               id='image'
               accept=".jpeg, .jpg, .png"

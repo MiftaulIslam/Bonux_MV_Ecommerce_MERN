@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FocusEvent, FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // Input validation functions
 import {
   validateEmail,
@@ -14,9 +14,9 @@ import { no_user_image } from "../../utils/logo";
 // Post Request Service 
 import { PostService } from "../../utils/HTTP/Post";
 import { useLoader } from "../../hooks/LoaderProvider";
+import { signupProp } from "../../models/PropType";
 
-const Signup = ({role}) => {
-  const navigate = useNavigate();
+const Signup:React.FC<signupProp> = ({role}) => {
   const { showLoader, hideLoader } = useLoader();
   //Handling Form Data
   const [formData, setFormData] = useState<SignupModel>({
@@ -91,17 +91,11 @@ const Signup = ({role}) => {
       if (formData.avatar) {
         formDataToSend.append("avatar", formData.avatar);
       }
-      try{
-        showLoader();
-        const data = await PostService( role==='seller'?"seller/seller-signup": "user/register" , true, formDataToSend);
-        hideLoader()
-
-      }catch(err){
-        hideLoader()
-
-      }
       
-      console.log(data)
+        showLoader();
+        await PostService( role==='seller'?"seller/seller-signup": "user/register" , true, formDataToSend);
+        hideLoader()
+
     }
   };
 
@@ -215,6 +209,7 @@ const Signup = ({role}) => {
               />
             )}
               <input
+              placeholder="Insert image"
                 type="file"
               accept=".jpeg, .jpg, .png"
                 className=""

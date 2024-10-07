@@ -1,4 +1,6 @@
-const Loader = ({status}) => {
+import { loaderProp } from "../models/PropType";
+
+const Loader:React.FC<loaderProp> = ({status}) => {
     return (
       <div className={` ${status ==='partial' ? 'w-full h-full':"fixed bg-opacity-50 backdrop-blur-sm bg-gray-300"} inset-0 flex items-center justify-center  z-50`}>
         <span className="relative inline-block w-12 h-12 rounded-full animate-rotate">

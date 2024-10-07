@@ -3,9 +3,11 @@ import { showAlert } from "../utils/showAlert";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Loader from "../widgets/Loader";
+import { privateRouteProp } from "../models/PropType";
+import { RootState } from "../state/store/store";
 
-const PrivateRoute = ({ role }) => {
-  const { user, loading } = useSelector((state) => state.user);
+const PrivateRoute:React.FC<privateRouteProp> = ({ role }) => {
+  const { user, loading } = useSelector((state:RootState) => state.user);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
 
   useEffect(() => {

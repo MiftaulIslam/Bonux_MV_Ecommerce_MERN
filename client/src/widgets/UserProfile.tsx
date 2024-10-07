@@ -1,7 +1,8 @@
-import React from 'react'
+
+import { userProfileProp } from '../models/PropType.ts'
 import { default_src } from '../static/data.ts'
 
-const UserProfile = ({user}) => {
+const UserProfile:React.FC<userProfileProp> = ({user}) => {
   return (
     <>
     <img

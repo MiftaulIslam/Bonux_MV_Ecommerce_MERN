@@ -1,23 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { maskEmail } from "../../utils/MaskEmail";
 import { useLoader } from "../../hooks/LoaderProvider";
 import { useEffect, useState } from "react";
+import { RootState } from "../../state/store/store";
+import { UserAddress } from "../../models/StateType";
 
 
 const ManageProfile = () => {
   
     const{showLoader, hideLoader} = useLoader()
-    const { user, loading } = useSelector((state) => state.user);
-    const [shippingAddress, setShippingAddress] = useState(null)
-    const [billingAddress, setBillingAddress] = useState(null)
+    const { user, loading } = useSelector((state:RootState) => state.user);
+    const [shippingAddress, setShippingAddress] = useState<UserAddress|null>(null)
+    const [billingAddress, setBillingAddress] = useState<UserAddress|null>(null)
 
 
         useEffect(() => {
             if(loading) {showLoader()}else{
               hideLoader()
-              const shippingAddress = user.addresses.find(address => address.defaultShipping);
-              const billingAddress = user.addresses.find(address => address.defaultBilling);
+              const shippingAddress = user.addresses.find((address:UserAddress) => address.defaultShipping);
+              const billingAddress = user.addresses.find((address:UserAddress) => address.defaultBilling);
               setShippingAddress(shippingAddress ? shippingAddress : null);
               setBillingAddress(billingAddress ? billingAddress : null);
          

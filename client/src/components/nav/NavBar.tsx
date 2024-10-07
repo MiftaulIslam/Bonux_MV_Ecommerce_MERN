@@ -8,15 +8,16 @@ import {
   NavButton,
 } from "../../widgets/index";
 import { productData } from "../../static/data.ts";
-import { SearchIcon } from "../../widgets/icons/index.ts";
+import  SearchIcon  from "../../widgets/icons/SearchIcon";
 import { flex_Center } from "../../static/style.ts";
 import { Togglebar } from "../../state/reducers/responsiveToggleSidebarSlice.ts";
+import { RootState } from "../../state/store/store.ts";
 const NavBar = () => {
   
-  const { isOpen } = useSelector((state) => state.togglebar);
+  const { isOpen } = useSelector((state:RootState) => state.togglebar);
   const dispatch = useDispatch();
   // Getting user info from redux
-  const { isAuthenticated, user, loading } = useSelector((state) => state.user);
+  const { isAuthenticated, user, loading } = useSelector((state:RootState) => state.user);
   //Search Input Value
   const [SearchTerm, setSearchTerm] = useState("");
 
@@ -30,14 +31,14 @@ const NavBar = () => {
   const [showSearch, setshowSearch] = useState(false);
 
   //Search Input Handle
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value;
     setSearchTerm(term);
 
     //Going to add Database later ----------Warning--------------
-    const filteredData =
+    const  filteredData:any =
       productData &&
-      productData.filter((x) => {
+      productData.filter((x:any) => {
         return x.name.toLowerCase().includes(term.toLowerCase());
       });
 
@@ -76,8 +77,7 @@ const NavBar = () => {
           className={"relative h-10 sm:block hidden w-3/6"}
           term={SearchTerm}
           data={searchData}
-          handleSearch={handleSearchChange}
-        />
+          handleSearch={handleSearchChange}       />
 
         {/* search responsive */}
 

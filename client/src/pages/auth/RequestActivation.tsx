@@ -51,7 +51,7 @@ const RequestActivation = () => {
         try {
          
         showLoader();
-        const data = await PostService("user/activate/request", true, formDataToSend);
+        await PostService("user/activate/request", true, formDataToSend);
         
         hideLoader()    
         showAlert(true, 'Activation link sent to your email');

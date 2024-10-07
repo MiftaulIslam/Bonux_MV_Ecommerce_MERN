@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../state/actions/userAction';
 import {  useNavigate } from 'react-router-dom';
 import {time} from '../../static/data'
+import { AppDispatch, RootState } from '../../state/store/store';
 export default function StoreSettings() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-  const {  user  } = useSelector((state) => state.user)
-  const [formData, setFormData] = useState({
+  const {  user  } = useSelector((state:RootState) => state.user)
+  const [formData, setFormData] = useState<any>({
     
   
     name: '',

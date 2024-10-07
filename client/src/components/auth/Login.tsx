@@ -1,6 +1,6 @@
-import { ChangeEvent, FocusEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FocusEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchUser } from "../../state/actions/userAction.ts";
 
 // Input Validation functions
@@ -8,21 +8,20 @@ import {
   validateEmail,
   validatePassword,
 } from "../../utils/validation/validation";
-// Universal Password component
-import Password from "./Password";
 // Type validation model
 import { LoginModel } from "../../models/auth";
 // Post request Service
 import { PostService } from "../../utils/HTTP/Post.ts";
 import { useLoader } from "../../hooks/LoaderProvider.tsx";
+import { loginProp } from "../../models/PropType.ts";
+import { AppDispatch } from "../../state/store/store.ts";
 
-const Login = ({ role }) => {
+const Login:React.FC<loginProp> = ({ role }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { showLoader, hideLoader } = useLoader();
   // Redux state management
-  const { isLoggedIn, user, loading } = useSelector((state) => state.user);
 
   // Handling Form data
   const [formData, setFormData] = useState<LoginModel>({
@@ -77,6 +76,7 @@ const Login = ({ role }) => {
 
       console.log(data.data);
       if(data.ok){
+        dispatch(fetchUser());
         if(data.data.data.role =='admin'){
           navigate('/admin')
         }else if(data.data.data.role == 'seller'){
@@ -84,7 +84,6 @@ const Login = ({ role }) => {
         }else{
           navigate('/')
         }
-        dispatch(fetchUser());
 
       }
       

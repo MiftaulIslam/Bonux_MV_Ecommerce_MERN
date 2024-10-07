@@ -1,50 +1,51 @@
 import { useDispatch, useSelector } from "react-redux";
-import {  useEffect, useState } from "react";
-import { PutService } from "../../utils/HTTP/Put";
+import { useEffect, useState } from "react";
 import { useLoader } from "../../hooks/LoaderProvider";
-import { fetchUser, updateUser, deleteAddress } from "../../state/actions/userAction";
+import { updateUser, fetchUser } from "../../state/actions/userAction";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "../../widgets";
 import { DeleteService } from "../../utils/HTTP/Delete";
+import { UserAddress } from "../../models/StateType";
+import { AppDispatch, RootState } from "../../state/store/store";
 
 const ManageAddresses = () => {
-  const { user, loading } = useSelector((state) => state.user);
+  const { user } = useSelector((state: RootState) => state.user);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { showLoader, hideLoader } = useLoader();
-  const [isAdd, setIsAdd] = useState(false);
-  const [type, settype] = useState({
+  
+  const [type, setType] = useState({
     id: "",
     type: "",
   });
 
-  const [isDeleteModalOpen, setisDeleteModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isSelectingShipping, setIsSelectingShipping] = useState(false);
   const [isSelectingBilling, setIsSelectingBilling] = useState(false);
 
-  const [defaultShippingId, setDefaultShippingId] = useState(null);
-  const [defaultBillingId, setDefaultBillingId] = useState(null);
+  const [defaultShippingId, setDefaultShippingId] = useState<string | number | null>(null);
+  const [defaultBillingId, setDefaultBillingId] = useState<string | number | null>(null);
 
   useEffect(() => {
     const shippingAddress = user.addresses.find(
-      (address) => address.defaultShipping
+      (address: UserAddress) => address.defaultShipping
     );
     const billingAddress = user.addresses.find(
-      (address) => address.defaultBilling
+      (address: UserAddress) => address.defaultBilling
     );
-    
+
     setDefaultShippingId(shippingAddress ? shippingAddress._id : null);
     setDefaultBillingId(billingAddress ? billingAddress._id : null);
-  }, []);
+  }, [user.addresses]);
 
-  const handleSelect = (e) => {
-    if (e.target.name == "billing") {
+  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "billing") {
       setDefaultBillingId(e.target.value);
-      settype({ id: e.target.value, type: "billing" });
+      setType({ id: e.target.value, type: "billing" });
     } else {
       setDefaultShippingId(e.target.value);
-      settype({ id: e.target.value, type: "shipping" });
+      setType({ id: e.target.value, type: "shipping" });
     }
   };
 
@@ -53,40 +54,38 @@ const ManageAddresses = () => {
     formDataToSend.append("type", type.type);
     try {
       showLoader();
-      dispatch(updateUser(`user/update-paymentaddress/${type.id}`, formDataToSend))
-
-        navigate("/user");
-
-      hideLoader();
+      await dispatch(updateUser(`user/update-paymentaddress/${type.id}`, formDataToSend));
+      navigate("/user");
     } catch (error) {
+      console.error(error);
+    } finally {
       hideLoader();
     }
   };
-
-  const deleteAddress =async (id) => {
+  const deleteAddress = async (id: string) => {
     showLoader();
-const data = await DeleteService(`user/delete-address/${id}`, true)
-if(data.ok){
-  dispatch(fetchUser());
-}
-//  dispatch(deleteAddress(`user/delete-address/${id}`));
-hideLoader();
+    const data = await DeleteService(`user/delete-address/${id}`, true);
+    if (data.ok) {
+      
+    dispatch(fetchUser()) ;
+    }
+    hideLoader();
   };
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl  font-bold text-gray-900">
+        <h1 className="text-xl font-bold text-gray-900">
           {isSelectingBilling && !isSelectingShipping
             ? "Make default selecting billing address"
-            : ""}{" "}
+            : ""}
           {isSelectingShipping && !isSelectingBilling
             ? "Make default selecting shipping address"
-            : ""}{" "}
+            : ""}
           {!isSelectingBilling && !isSelectingShipping && "Address book"}
-        </h1>{
-          user.addresses.length != 0   ?(
-
-            <div className="space-x-2 text-right ">
+        </h1>
+        {user.addresses.length !== 0 && (
+          <div className="space-x-2 text-right ">
             <button
               type="button"
               className="text-xs text-gray-700 block sm:inline-block hover:text-blue-800"
@@ -109,13 +108,11 @@ hideLoader();
               Make default billing address
             </button>
           </div>
-          ):""
-        }
+        )}
       </div>
       <div className="bg-white shadow overflow-x-auto sm:rounded-lg">
         <div className="p-2 px-4 ">
-          {/* If no addresses foud then show the p tag else show the addresses as horizontal card */}
-          {user.addresses.length === 0 && !isAdd ? (
+          {user.addresses.length === 0 ? (
             <p className="mb-28">Save your shipping & billing address here</p>
           ) : (
             <>
@@ -138,15 +135,15 @@ hideLoader();
                   </tr>
                 </thead>
                 <tbody>
-                  {user?.addresses.map((address) => (
+                  {user.addresses.map((address:UserAddress) => (
                     <tr key={address._id} className="border-b">
                       <td className="text-sm py-2 px-3 text-gray-600 ">
                         {address.address}
                       </td>
 
-                      <td className="text-sm py-2 px-3 text-gray-600">{` ${address.region}-${address.city}-${address.zone}`}</td>
+                      <td className="text-sm py-2 px-3 text-gray-600">{`${address.region}-${address.city}-${address.zone}`}</td>
                       <td className="text-sm py-2 px-3 text-gray-600">
-                        {user?.phone}
+                        {user.phone}
                       </td>
                       <td className="">
                         {isSelectingShipping && (
@@ -156,7 +153,7 @@ hideLoader();
                               id={`shipping-${address._id}`}
                               name="shipping"
                               value={address._id}
-                              checked={defaultShippingId == address._id}
+                              checked={defaultShippingId === address._id}
                               onChange={handleSelect}
                               className="mr-2"
                             />
@@ -172,7 +169,7 @@ hideLoader();
                               id={`billing-${address._id}`}
                               name="billing"
                               value={address._id}
-                              checked={defaultBillingId == address._id}
+                              checked={defaultBillingId === address._id}
                               onChange={handleSelect}
                               className="mr-2"
                             />
@@ -182,7 +179,7 @@ hideLoader();
                           </div>
                         )}
                         {!isSelectingBilling && !isSelectingShipping && (
-                          <div className="flex flex-wrap  gap-2">
+                          <div className="flex flex-wrap gap-2">
                             <Link
                               to={`edit?id=${address._id}`}
                               className="text-blue-600 hover:text-blue-700 hover:underline "
@@ -190,7 +187,8 @@ hideLoader();
                               Edit
                             </Link>
                             <button
-                              onClick={() => setisDeleteModalOpen(true)}
+                            type="button"
+                              onClick={() => setIsDeleteModalOpen(true)}
                               className="text-blue-600 hover:text-blue-700 hover:underline"
                             >
                               Delete
@@ -201,13 +199,13 @@ hideLoader();
                                 action="delete"
                                 modalLabel={"Address"}
                                 isOpen={isDeleteModalOpen}
-                                onClose={() => setisDeleteModalOpen(false)}
-                                onSubmit={deleteAddress}
+                                onClose={() => setIsDeleteModalOpen(false)}
+                                onSubmit={() => deleteAddress(address._id)}
                                 data={address}
                               />
                             )}
                           </div>
-                        )}{" "}
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -239,16 +237,14 @@ hideLoader();
           )}
 
           {/* Add new address button */}
-          {!isAdd && (
-            <div className="text-right">
-              <Link
-                to={"add"}
-                className="w-full sm:w-auto mr-2 my-2 py-2 px-6 shadow-sm text-sm duration-300 font-medium text-center rounded-md inline-block border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-              >
-                + Add new address
-              </Link>
-            </div>
-          )}
+          <div className="text-right">
+            <Link
+              to={"add"}
+              className="w-full sm:w-auto mr-2 my-2 py-2 px-6 shadow-sm text-sm duration-300 font-medium text-center rounded-md inline-block border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+            >
+              + Add new address
+            </Link>
+          </div>
         </div>
       </div>
     </div>

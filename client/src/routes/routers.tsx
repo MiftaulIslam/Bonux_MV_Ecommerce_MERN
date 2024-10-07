@@ -13,7 +13,6 @@ import AdminLayout from '../layouts/AdminLayout'
 import PrivateRoute from "./privateRoute";
 import Admin from "../pages/Admin/Admin";
 import SellerLayout from "../layouts/SellerLayout";
-import AddProduct from "../pages/Seller/AddProduct";
 import ManageProfileLayout from "../layouts/ManageProfileLayout";
 import MyProfile from "../components/ManageProfile/MyProfile";
 import ManageProfile from "../components/ManageProfile/ManageProfile";

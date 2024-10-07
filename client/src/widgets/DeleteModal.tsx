@@ -1,6 +1,7 @@
+import { deleteModalProp } from "../models/PropType";
 
   
-  const DeleteModal = ({ isOpen, onClose, onConfirm }) => {
+  const DeleteModal:React.FC<deleteModalProp> = ({ isOpen, onClose, onConfirm }) => {
     if (!isOpen) return null;
   
     return (
