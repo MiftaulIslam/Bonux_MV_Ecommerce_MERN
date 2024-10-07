@@ -11,7 +11,7 @@ import Close from "../widgets/icons/Close";
 import LogOutIcon from "../widgets/icons/LogoutIcon";
 import MenuIcon from "../widgets/icons/MenuIcon";
 import MessageSquareIcon from "../widgets/icons/MessageSquareIcon";
-import NotepadIcon from "../widgets/icons/NotepadIcon";
+import NotepadIcon from "../widgets/icons/NotepadIcon.tsx";
 import ProductIcon from "../widgets/icons/ProductIcon";
 import RightArrow from "../widgets/icons/RightArrow";
 import SellerCenterIcon from "../widgets/icons/SellerCenterIcon";
