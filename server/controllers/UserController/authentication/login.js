@@ -14,7 +14,7 @@ const userLogin = async (req, res, next)=>{
         if(!isPasswordCorrect) return next(new ErrorHandler("Invalid Credentials", 400))
         
             const token = await existingUser.getJwtToken()
-            res.cookie('authenticate-token', token, {httpOnly: true})
+            res.cookie('authenticate-token', token, {httpOnly: true,  sameSite: 'None'})
         
             res.status(201).json({
             auth:true, 
