@@ -17,7 +17,7 @@ if(process.env.NODE_ENV !== 'production'){
 //Enable Cors
 app.use(express.json())
 const corsOptions = {
-    origin: true, 
+    origin: 'http://localhost:5173', 
     credentials: true, 
   };
 app.use(cors(corsOptions))
