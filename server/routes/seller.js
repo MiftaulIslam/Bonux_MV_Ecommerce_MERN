@@ -59,7 +59,7 @@ router.post(
         if(!isPasswordCorrect) return next(new ErrorHandler("Invalid Credentials", 400))
             try{
                 const token = await seller.getJwtToken()
-                res.cookie('authenticate-token', token, {httpOnly: true})
+                res.cookie('authenticate-token', token, {httpOnly: false, secure:true, sameSite:'none'})
                 
                 res.status(201).json({
                     auth:true,
