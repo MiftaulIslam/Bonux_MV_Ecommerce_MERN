@@ -73,7 +73,7 @@ const Login:React.FC<loginProp> = ({ role }) => {
         true,
         formDataToSend
       );
-
+      localStorage.setItem('token', JSON.stringify(data.data.token))
       console.log(data.data);
       if(data.ok){
         dispatch(fetchUser());
