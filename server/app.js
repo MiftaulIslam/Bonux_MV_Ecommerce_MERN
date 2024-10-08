@@ -17,7 +17,9 @@ if(process.env.NODE_ENV !== 'production'){
 //Enable Cors
 app.use(express.json())
 const corsOptions = {
-    origin: true, 
+    origin: true,  
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+    allowedHeaders: "*", 
     credentials: true, 
   };
 app.use(cors(corsOptions))
