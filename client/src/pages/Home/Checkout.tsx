@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../state/store/store'
 import { updateUser } from '../../state/actions/userAction'
@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 export default function Checkout() {
     const dispatch = useDispatch<AppDispatch>()
     const {user} = useSelector((state:RootState)=> state.user)
-    const [shippingAddress, setShippingAddress] = useState(null)
-    const [selectedAddress, setSelectedAddress] = useState(null)
+    const [shippingAddress, setShippingAddress] = useState<any>(null)
+    const [selectedAddress, setSelectedAddress] = useState<any>(null)
     const [isOffCanvasOpen, setIsOffCanvasOpen] = useState(false)
 useEffect(() => {
   const shippingAddress = user.addresses.find((address:any) => address.defaultShipping)
@@ -17,15 +17,9 @@ setShippingAddress(shippingAddress)
 setSelectedAddress(shippingAddress)
 }, [])
 
-const paymentAddressChange = async (id)=>{
+const paymentAddressChange = async (id:any)=>{
     await dispatch(updateUser(`user/update-paymentaddress/${id}?type=shipping`));
 }
-  // Mock user addresses
-  const userAddresses = [
-    { id: 1, label: 'Home', address: '123 Main St, Anytown, AT 12345' },
-    { id: 2, label: 'Office', address: '456 Work Ave, Biztown, BT 67890' },
-    { id: 3, label: 'Apartment', address: '789 City Rd, Metropolis, MP 13579' },
-  ]
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
@@ -186,7 +180,7 @@ const paymentAddressChange = async (id)=>{
               </div>
               <div className="space-y-4">
                 
-              {(user.addresses && user.addresses.length > 0) ? user.addresses.map((address) => (
+              {(user.addresses && user.addresses.length > 0) ? user.addresses.map((address:any) => (
                   <div key={address._id} className="flex items-center space-x-3 border border-gray-200 rounded-md p-4">
                     <input
                       type="radio"
@@ -215,7 +209,7 @@ const paymentAddressChange = async (id)=>{
                     <div>No address available.</div>
                 )}
               </div>
-              <button onClick={()=>paymentAddressChange(selectedAddress._id)} className="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+              <button onClick={()=>paymentAddressChange(selectedAddress?._id)} className="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
                 Save
               </button>
               <button onClick={()=>{setIsOffCanvasOpen(false); setSelectedAddress(shippingAddress)}} className="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
