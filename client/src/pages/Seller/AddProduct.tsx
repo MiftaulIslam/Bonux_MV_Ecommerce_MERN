@@ -1,4 +1,3 @@
-"use client";
 
 import { useState, FormEvent, useEffect, useRef } from "react";
 import { sellerInputLabel, sellerInputTag } from "../../style/style";
