@@ -71,7 +71,7 @@ export default function SellerLayout() {
         {
           label: 'Add Products',
           level: 1,
-          href: 'product/add'
+          href: 'product-add'
         },
         {
           label: 'Brands Management',

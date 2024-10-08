@@ -13,13 +13,14 @@ const productSchema = new mongoose.Schema({
         required: [true, "Please enter a product description"],
     },
     specification: [
-        {section:[
+        {title:String,
+            section:[
             { key: { type: String }, value: { type: String } }]}
     ],
     price: {
-        original_price: { type: Number, required: [true, "Please enter product price"] },
-        discount_percentage: { type: Number },
-        discounted_amount: { type: Number },
+        original_price: { type: Number, required:true },
+        discount_percentage: { type: Number, required:true },
+        discounted_amount: { type: Number,},
     },
     stock: {
         quantity: { type: Number, required: [true, "Please enter product quantity"] },
@@ -35,7 +36,7 @@ const productSchema = new mongoose.Schema({
         reviews_count: { type: String, default: 0 }
     },
     status: { type: String, enum: ["available", "discontinued"], default: "available" },
-    image: [{
+    images: [{
         url: { type: String },
         alt_text: { type: String },
     }],
@@ -70,7 +71,7 @@ const productSchema = new mongoose.Schema({
     warehouse: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Warehouse', // Reference to the Warehouse model
-        required: [true, "Please select a warehouse"],
+        // required: [true, "Please select a warehouse"],
     }
 });
 

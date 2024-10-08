@@ -5,7 +5,7 @@ import ForgotPassword from '../pages/auth/ForgotPassword'
 import ConfirmPassword from '../pages/auth/ConfirmPassword'
 import Activation from '../pages/auth/Activation'
 import RequestActivation from '../pages/auth/RequestActivation'
-import Home from '../pages/Home'
+import Home from '../pages/Home/Home'
 import Category from '../pages/Admin/Category'
 import ProductDetail from '../components/Helper/ProductDetail'
 import HomeLayout from '../layouts/HomeLayout'
@@ -20,7 +20,9 @@ import ManageAddresses from "../components/ManageProfile/ManageAddresses";
 import AddressForm from "../components/Helper/AddressForm";
 import SellerHome from "../pages/Seller/SellerHome";
 import StoreSettings from "../pages/Seller/StoreSetting";
+import AddProduct from "../pages/Seller/AddProduct";
 import StorePreview from "../pages/Seller/StorePreview";
+import Checkout from "../pages/Home/Checkout";
 
 
 const router = createBrowserRouter([
@@ -58,6 +60,11 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <Home />,
+          },
+          
+          {
+            path: "checkout/:id",
+            element: <Checkout/>,
           },
           {
             path:"/user",
@@ -133,6 +140,10 @@ const router = createBrowserRouter([
           {
             path: "/seller",
             element: <SellerHome />,
+          },
+          {
+            path: "product-add",
+            element: <AddProduct />,
           },
           {
             path: "store-settings",

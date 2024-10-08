@@ -107,7 +107,7 @@ router.post('/seller-signup', upload.single('avatar'), catchAsyncErrors(async (r
   
     // Generate activation token
     const activationToken = await seller.createExpirableActivationToken();
-    const activateUrl = `http://localhost:5173/activation/${activationToken}`;
+    const activateUrl = `https://bonux-mvec.onrender.com/activation/${activationToken}`;
   
     // Send activation email
     try {

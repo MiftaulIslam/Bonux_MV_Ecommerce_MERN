@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     if (!isAuthenticated && !isLoggedIn) {
       dispatch(fetchUser());
-    
+      
     }
   }, []);
 
@@ -26,7 +26,7 @@ function App() {
 <RouterProvider router={router} />
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

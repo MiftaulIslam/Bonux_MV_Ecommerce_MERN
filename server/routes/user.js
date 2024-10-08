@@ -67,16 +67,21 @@ router.put('/add-address', upload.none(), isAuthenticated, catchAsync(async (req
     if (!address.address || !address.region || !address.city || !address. zone) {
         return next(new ErrorHandler('All fields are required', 400));
     }
-
-    const id = req.id;
-    if (!id) return next(new ErrorHandler("Authentication failed", 400));
-
-    const updatedUser = await userSchema.findByIdAndUpdate(id, { $push: { addresses: address } });
-
+    
+    const user = await userSchema.findById(req.id);
+    
+        // Reset all addresses' defaultShipping to false
+        user.addresses.forEach(a => a.defaultShipping = false);
+        
+        // Set the selected address' defaultShipping to true
+    address.defaultShipping=true;
+    
+    user.addresses.push(address);
+    await user.save()
     res.status(200).json({
         success: true,
         message: 'User address added successfully',
-        data:updatedUser
+        data:user
     });
 }));
 router.put('/update-address/:id', upload.none(), isAuthenticated, catchAsync(async (req, res, next) => {
@@ -145,7 +150,7 @@ router.put('/update-address/:id', upload.none(), isAuthenticated, catchAsync(asy
 router.put('/update-paymentaddress/:id', upload.none(), isAuthenticated, catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const userId = req.id;
-    const {type} = req.body;
+    const {type} = req.query;
     if (!id) return next(new ErrorHandler('Invalid address ID', 400));
 
     try {
@@ -163,13 +168,16 @@ router.put('/update-paymentaddress/:id', upload.none(), isAuthenticated, catchAs
         // Set the selected address' defaultShipping to true
         address.defaultShipping = true;
 
-        }else{            
+        }
+        else if(type == 'billing'){            
         // Reset all addresses' defaultBilling to false
         user.addresses.forEach(a => a.defaultBilling = false);
         
         // Set the selected address' defaultBilling to true
         address.defaultBilling = true;
 
+        }else{
+            return next(new ErrorHandler('Invalid payment type', 400));
         }
         // Save the updated user document
         const updatedUser = await user.save();

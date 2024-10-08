@@ -50,11 +50,11 @@ const ManageAddresses = () => {
   };
 
   const handleSelectSubmit = async () => {
-    const formDataToSend = new FormData();
-    formDataToSend.append("type", type.type);
+    // const formDataToSend = new FormData();
+    // formDataToSend.append("type", type.type);
     try {
       showLoader();
-      await dispatch(updateUser(`user/update-paymentaddress/${type.id}`, formDataToSend));
+      await dispatch(updateUser(`user/update-paymentaddress/${type.id}?type=${type.type}`));
       navigate("/user");
     } catch (error) {
       console.error(error);

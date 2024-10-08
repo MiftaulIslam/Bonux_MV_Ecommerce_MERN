@@ -20,7 +20,7 @@ const data = await GetService(`user/getuser`)
 
   }
 };
-export const updateUser = (url:string,updatedUserData:any) => async (dispatch: Dispatch) => {
+export const updateUser = (url:string,updatedUserData?:any) => async (dispatch: Dispatch) => {
   dispatch(LoadUserRequest());
 
   

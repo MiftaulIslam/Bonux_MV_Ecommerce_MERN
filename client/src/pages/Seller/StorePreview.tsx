@@ -1,7 +1,7 @@
 import  {  useRef, useState } from "react";
 import Loader from "../../widgets/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { default_src } from "../../static/data";
+import { default_src, imageValidTypes } from "../../static/data";
 import EmailIcon from "../../widgets/icons/EmailIcon";
 import PhoneIcon from "../../widgets/icons/PhoneIcon";
 import InfoCardIcon from "../../widgets/icons/InfoCardIcon";
@@ -124,8 +124,8 @@ const logoInputClick = useRef<any>(null)
     const formDataToSend = new FormData();
     const file = event.target.files[0];
     formDataToSend.append("media", file);
-    const validTypes = ["image/jpeg", "image/png", "image/jpg"]
-    if(file && validTypes.includes(file.type)){
+    // const validTypes = ["image/jpeg", "image/png", "image/jpg"]
+    if(file && imageValidTypes.includes(file.type)){
       
       disptach(updateStore(`store/update-media/${store?._id}?type=banner`, formDataToSend))
     }else{

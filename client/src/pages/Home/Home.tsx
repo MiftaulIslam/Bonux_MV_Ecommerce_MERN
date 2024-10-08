@@ -1,6 +1,6 @@
-import { HeroSection } from "../components";
-import FlashSale from "../components/Home/FlashSale";
-import JustForYou from "../components/Home/JustForYou";
+import { HeroSection } from "../../components";
+import FlashSale from "../../components/Home/FlashSale";
+import JustForYou from "../../components/Home/JustForYou";
 
 const Home = () => {
   return (

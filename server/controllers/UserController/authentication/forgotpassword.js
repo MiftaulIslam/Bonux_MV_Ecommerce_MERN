@@ -33,7 +33,8 @@ if(role==='seller'){
 
     
     // const activateUrl = `http://localhost:3000/user/confirm-password/${activationToken}`
-    const activateUrl = `http://localhost:5173/confirm-password/${activationToken}`
+    const activateUrl = `https://bonux-mvec.onrender.com/confirm-password/${activationToken}`
+    // const activateUrl = `http://localhost:5173/confirm-password/${activationToken}`
 
     //send mail
     try{
