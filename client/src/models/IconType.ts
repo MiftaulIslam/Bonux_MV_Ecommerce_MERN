@@ -6,6 +6,10 @@ export interface addressIconProp{
     width: number|string;
     height: number|string;
 }
+export interface dangerIconProp{
+    width: number|string;
+    height: number|string;
+}
 export interface cardIconProp{
     width: number|string;
     height: number|string;

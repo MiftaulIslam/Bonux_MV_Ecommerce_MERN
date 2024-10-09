@@ -89,7 +89,11 @@ console.log(product)
       })
     }
   }
-
+  const handleBuyClick = () => {
+    const formattedTitle = product.title.split(" ").join("-");
+    
+    navigate(`/checkout/${formattedTitle}/${product.id}?quantity=${quantity}`);
+  };
   const handleReviewSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log("review submmited")
@@ -148,6 +152,7 @@ if(loading) return <Loader/>
           <h1 className="text-3xl font-bold mb-4">{product?.title}</h1>
           {/* <div className="flex items-center gap-4 mb-4">
             <img
+            <img
               src={dummyProduct.vendor.image}
               alt={dummyProduct.vendor.name}
               className="w-8 h-8 rounded-full"
@@ -190,7 +195,7 @@ if(loading) return <Loader/>
             <button className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors">
               Add to Cart
             </button>
-            <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition-colors">
+            <button onClick={handleBuyClick} className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition-colors">
               Buy Now
             </button>
           </div>

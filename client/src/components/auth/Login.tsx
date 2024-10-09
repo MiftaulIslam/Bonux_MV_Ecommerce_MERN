@@ -81,8 +81,10 @@ const Login:React.FC<loginProp> = ({ role }) => {
           navigate('/admin')
         }else if(data.data.data.role == 'seller'){
           navigate('/seller')
-        }else{
+        }else if(data.data.data.role == 'user'){
           navigate('/')
+        }else{
+          navigate('/login')
         }
 
       }

@@ -6,12 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { showAlert } from '../utils/showAlert';
 import { useDispatch } from 'react-redux';
 import { ResetState } from '../state/reducers/userSlice.ts';
+import { AppDispatch } from '../state/store/store.ts';
 const LogoutButton = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
     const handleLogout =async ()=>{
+        const formData = new FormData();
+        formData.append('someKey', 'someValue');
         const response = await fetch(`${base_url}/user/logout`,{
-            credentials:'include'
+            method:'POST',
+            credentials:'include',
+            body:formData
         })
         const responseData =await response.json()
         if(response.ok){
@@ -19,6 +24,7 @@ const LogoutButton = () => {
             dispatch(ResetState())
             navigate('/login')
             showAlert(true, responseData.message);
+            window.location.reload()
         }else{
             showAlert(false, responseData.message||"Something went wrong");
 

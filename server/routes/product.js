@@ -11,10 +11,10 @@ const { getProducts } = require("../controllers/ProductController/getProducts");
 
 const router = express.Router();
 // Get all products
-// router.get(
-//   "/products",
-//   catchAsyncErrors(getProducts)
-// );
+router.get(
+  "/products",
+  catchAsyncErrors(getProducts)
+);
 
 // // Get product by id
 // router.get(

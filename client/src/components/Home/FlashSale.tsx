@@ -51,7 +51,7 @@ const FlashSale = () => {
           />
           <div className="p-3">
             {/* Product info */}
-            <div onClick={()=> navigate(`product-detail/${product.id}`)}>
+            <div onClick={()=> navigate(`product-detail/${product.title.split("").join("-")}/${product.id}`)}>
             <h3 className="text-sm font-semibold text-gray-800 mb-2">
               {product.title.length > 80 ? `${product.title.slice(0,50)}...` : product.title}
             </h3>

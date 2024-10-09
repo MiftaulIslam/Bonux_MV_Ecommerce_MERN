@@ -7,7 +7,7 @@ import { GetService } from '../../utils/HTTP/Get.ts';
 const HeroSection = () => {
     const [categories, setCategories] = useState(null)
     const getCategories = async ()=>{
-        const categories = await GetService(`category/categories-order`, true) 
+        const categories = await GetService(`category/categories-order`) 
         if(categories){
             setCategories(categories.data.data);
         }
@@ -19,7 +19,7 @@ const HeroSection = () => {
     return (
         <>
             {/* DropDown */}
-            <div className='hidden md:block shadow-md w-[280px] h-full border'>
+            <div className='hidden md:block shadow-md w-[300px] h-full border overflow-y-auto overflow-x-hidden'>
                 <MultiLevelDropDown items={categories} className=" py-1 w-[280px] relative text-[#757575] text-[14px]"/>
           
             </div>

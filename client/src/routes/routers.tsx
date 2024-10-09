@@ -23,6 +23,9 @@ import StoreSettings from "../pages/Seller/StoreSetting";
 import AddProduct from "../pages/Seller/AddProduct";
 import StorePreview from "../pages/Seller/StorePreview";
 import Checkout from "../pages/Home/Checkout";
+import ProductSearch from "../pages/Home/ProductSearch";
+import CategoryProducts from "../pages/Home/CategoryProducts";
+import ManageProduct from "../components/Store/ManageProduct";
 
 
 const router = createBrowserRouter([
@@ -63,8 +66,12 @@ const router = createBrowserRouter([
           },
           
           {
-            path: "checkout/:id",
+            path: "checkout/:productname/:id",
             element: <Checkout/>,
+          },
+          {
+            path: "search",
+            element: <ProductSearch/>,
           },
           {
             path:"/user",
@@ -101,8 +108,12 @@ const router = createBrowserRouter([
             ]
           },
           {
-            path: "/product-detail/:id",
+            path: "/product-detail/:productname/:id",
             element: <ProductDetail />,
+          },
+          {
+            path: "/category",
+            element: <CategoryProducts />,
           },
         ],
       },
@@ -152,6 +163,10 @@ const router = createBrowserRouter([
           {
             path: "store-preview",
             element: <StorePreview />,
+          },
+          {
+            path: "products",
+            element: <ManageProduct />,
           },
         ],
       },

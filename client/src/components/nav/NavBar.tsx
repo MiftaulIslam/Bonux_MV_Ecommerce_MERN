@@ -7,7 +7,7 @@ import {
   UserProfile,
   NavButton,
 } from "../../widgets/index";
-import { productData } from "../../static/data.ts";
+// import { productData } from "../../static/data.ts";
 import  SearchIcon  from "../../widgets/icons/SearchIcon";
 import { flex_Center } from "../../static/style.ts";
 import { Togglebar } from "../../state/reducers/responsiveToggleSidebarSlice.ts";
@@ -22,7 +22,7 @@ const NavBar = () => {
   const [SearchTerm, setSearchTerm] = useState("");
 
   //Searched Data on page
-  const [searchData, setsearchData] = useState(null);
+  const [searchData, setSearchData] = useState(null);
 
   //Toggle Profile click dropdown
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -31,22 +31,23 @@ const NavBar = () => {
   const [showSearch, setshowSearch] = useState(false);
 
   //Search Input Handle
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value;
     setSearchTerm(term);
-
+    const data = await fetch(`https://dummyjson.com/products/search?q=${term}`)
     //Going to add Database later ----------Warning--------------
-    const  filteredData:any =
-      productData &&
-      productData.filter((x:any) => {
-        return x.name.toLowerCase().includes(term.toLowerCase());
-      });
-
+    // const  filteredData:any =
+    //   productData &&
+    //   productData.filter((x:any) => {
+    //     return x.name.toLowerCase().includes(term.toLowerCase());
+    //   });
+    const jsonData = await data.json()
+    console.log(jsonData.products)
     //Storing all of the matched data to the searchData
-    setsearchData(filteredData);
+    setSearchData(jsonData.products);
 
     //When the search input field is blank make the term null
-    if (term === "") setsearchData(null);
+    if (term === "") setSearchData(null);
   };
   return (
     <>
@@ -77,6 +78,8 @@ const NavBar = () => {
           className={"relative h-10 sm:block hidden w-3/6"}
           term={SearchTerm}
           data={searchData}
+          setsearchTerm = {setSearchTerm}
+          setsearchData = {setSearchData}
           handleSearch={handleSearchChange}       />
 
         {/* search responsive */}
@@ -85,6 +88,9 @@ const NavBar = () => {
           <NavSearch 
             term={SearchTerm}
             data={searchData}
+          
+            setsearchTerm = {setSearchTerm}
+            setsearchData = {setSearchData}
             className={'w-full  top-[3.75rem]  h-12 absolute right-0 block sm:hidden z-20'}
             handleSearch={handleSearchChange}
           />
@@ -98,7 +104,7 @@ const NavBar = () => {
               display={"hidden"}
               bold={true}
               color={"#fff"}
-              to={"login"}
+              to={"login?role=seller"}
               smallMedia={"sm:block"}
               hover={"hover:text-[#ddd]"}
             />

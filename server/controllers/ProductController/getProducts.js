@@ -1,11 +1,11 @@
-const Product = require("../../models/ProductSchema");
+const productSchema = require("../../models/ProductSchema");
 const { ErrorHandler } = require("../../utiles");
 
 
 const getProducts = async (req, res, next) => {
     try {
       // fetch products from db
-      const products = await Product.find();
+      const products = await productSchema.find();
       // return products
       res.status(200).json({
         success: true,

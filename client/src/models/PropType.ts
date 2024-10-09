@@ -22,7 +22,7 @@ export interface quickViewodalProp{
     onClose: any;
 }
 export interface multiLevelDropDownProp{
-    items:any;
+    items?:any;
     className: string;
 }
 export interface verticalMultiLevelDropDownProp{

@@ -16,7 +16,7 @@ router.post('/register',upload.single('avatar'), catchAsync(userRegister))
 router.post('/login', upload.none(),  catchAsync(userLogin))
 
 //logout
-router.get('/logout', upload.none(),  catchAsync((req, res, next)=>{
+router.post('/logout', upload.none(),  catchAsync((req, res, next)=>{
     try{
 
         res.clearCookie('authenticate-token')

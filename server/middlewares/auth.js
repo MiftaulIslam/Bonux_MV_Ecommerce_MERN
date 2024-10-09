@@ -6,7 +6,7 @@ exports.isAuthenticated = catchAsync(async (req, res, next) => {
   const token = req.cookies['authenticate-token'];
   console.log(token)
   if (!token) {
-    return next(new ErrorHandler("Invalid token", 401));
+    return next(new ErrorHandler("Login to access", 401));
   }
 
   try {
