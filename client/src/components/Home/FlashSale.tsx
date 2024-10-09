@@ -44,14 +44,14 @@ const FlashSale = () => {
           onMouseLeave={() => setquickDemo(0)}
         >
           <img
-          onClick={()=> navigate(`product-detail/${product.id}`)}
+          onClick={()=> navigate(`product-detail/${product.title.split(" ").join("-")}/${product.id}`)}
             src={product.images[0]}
             alt={product.title}
             className="w-full h-36 object-contain"
           />
           <div className="p-3">
             {/* Product info */}
-            <div onClick={()=> navigate(`product-detail/${product.title.split("").join("-")}/${product.id}`)}>
+            <div onClick={()=> navigate(`product-detail/${product.title.split(" ").join("-")}/${product.id}`)}>
             <h3 className="text-sm font-semibold text-gray-800 mb-2">
               {product.title.length > 80 ? `${product.title.slice(0,50)}...` : product.title}
             </h3>
