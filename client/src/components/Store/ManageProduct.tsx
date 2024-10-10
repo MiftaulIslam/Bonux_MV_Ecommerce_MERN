@@ -7,6 +7,8 @@ import { Modal } from '../../widgets';
 import { PutService } from '../../utils/HTTP/Put';
 import { PostService } from '../../utils/HTTP/Post';
 import { DeleteService } from '../../utils/HTTP/Delete';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../state/store/store';
 // import { PostService, PutService, DeleteService } from '../../utils/HTTP';
 const StockBadge = ({ status, quantity }: { status: string; quantity: number }) => {
     let bgColor = ''
@@ -31,6 +33,7 @@ const StockBadge = ({ status, quantity }: { status: string; quantity: number }) 
     )
   }
 const ManageProduct = () => {
+  const {store} = useSelector((state:RootState)=> state.store)
   const [products, setProducts] = useState<any>(null);
   const [selectedProduct] = useState<any>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -41,7 +44,7 @@ const ManageProduct = () => {
 
   const getProducts = async () => {
     setLoading(true);
-    const data = await GetService(`product/products`);
+    const data = await GetService(`product/products?store=${store._id}`);
     if (data) {
       setProducts(data.data.data);
     }
