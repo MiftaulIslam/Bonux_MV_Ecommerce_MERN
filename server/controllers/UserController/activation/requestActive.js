@@ -32,7 +32,8 @@ const requestActivation =async (req, res, next) => {
         }
 
     
-    const activateUrl = `https://bonux-mvec.onrender.com/activation/${activationToken}`
+    // const activateUrl = `https://bonux-mvec.onrender.com/activation/${activationToken}`
+    const activateUrl = `http://localhost:5173/activation/${activationToken}`
     //send mail
     try{
         
