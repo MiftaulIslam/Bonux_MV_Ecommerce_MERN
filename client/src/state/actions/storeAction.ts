@@ -13,7 +13,6 @@ export const fetchStore = (storeId:string) => async (dispatch: Dispatch) => {
   });
 
   const jsonResponse = await response.json();
-  // console.log(jsonResponse)
   if (response.ok) {
     dispatch(GetStoreSuccess(jsonResponse.data));
   }else{

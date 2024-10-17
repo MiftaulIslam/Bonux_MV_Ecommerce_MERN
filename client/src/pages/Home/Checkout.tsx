@@ -46,7 +46,6 @@ setSelectedAddress(shippingAddress)
 getProductbyId()
 
 }, [])
-console.log(product)
 const calculateDiscountPrice = (discountPercentage:any, originalPrice:any, quantity:any) =>{
 return (((originalPrice - ((discountPercentage / 100) * originalPrice))*parseInt(quantity))).toFixed(2)
 }

@@ -1,5 +1,9 @@
 import { useEffect, useState, useRef } from "react"
 import { quickViewodalProp } from "../../models/PropType"
+import { StarRating } from "../../widgets"
+import Subtract from "../../widgets/icons/Subtract"
+import Plus from "../../widgets/icons/Plus"
+import Cart from "../../widgets/icons/Cart"
 
 const QuickViewModal:React.FC<quickViewodalProp> = ({ data, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -43,20 +47,23 @@ const QuickViewModal:React.FC<quickViewodalProp> = ({ data, onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-4xl w-full min-h-[50vh] sm:max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
+    <div className="fixed overflow-y-auto inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+
+      <div className="bg-white rounded-lg max-w-4xl w-full min-h-[47vh] sm:max-h-[90vh] overflow-y-auto">
+
+        <div className="px-6 py-2">
+          {/* Close button */}
           <div className="flex justify-end mb-4">
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+            <button onClick={onClose} className="text-3xl text-gray-500 hover:text-gray-700">
+              x
             </button>
           </div>
-          <div className="flex flex-col  gap-32 sm:flex-row space-x-6">
-            <div className=" w-full sm:w-64 h-80  space-y-4">
+
+          {/* Container */}
+          <div className="flex flex-col space-y-20 sm:space-y-0 sm:gap-10 sm:flex-row space-x-6">
+            <div className=" w-full sm:w-64 h-72  space-y-4">
               <div 
-                className="relative w-full h-full overflow-hidden rounded-lg aspect-w-2 aspect-h-2"
+                className="relative shadow w-full h-full overflow-hidden rounded-lg aspect-w-2 aspect-h-2"
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
               >
@@ -64,7 +71,7 @@ const QuickViewModal:React.FC<quickViewodalProp> = ({ data, onClose }) => {
                   ref={imageRef}
                   src={data.images[currentImageIndex]}
                   alt={`${data.name} - Image ${currentImageIndex + 1}`}
-                  className="w-full h-full cursor-pointer object-contain"
+                  className="w-full h-full cursor-pointer hover:cursor-zoom-in object-contain"
                 />
                 <div 
                   className="absolute inset-0 bg-no-repeat bg-cover pointer-events-none"
@@ -94,60 +101,48 @@ const QuickViewModal:React.FC<quickViewodalProp> = ({ data, onClose }) => {
               </div>
             </div>
             <div className="flex-1 space-y-4">
-              <h2 className="text-2xl font-bold">{data.title}</h2>
-              {/* <div className="flex items-center space-x-2">
-                <img src={data.vendor.image} alt={data.vendor.name} className="w-8 h-8 rounded-full" />
-                <span className="text-sm text-gray-600">{data.vendor.name}</span>
-              </div> */}
+              <h2 className="text-xl text-gray-700 font-bold">{data.title}</h2>
               <div className="flex items-center  space-x-1">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={`h-5 w-5 ${i < Math.floor(data.rating) ? "text-yellow-400" : "text-gray-300"}`}
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-                <span className="text-sm text-gray-600">({data.reviews.length} reviews)</span>
+              <StarRating rating={data?.rating} />
+          <span className='text-xs mr-1 text-gray-500'>{data?.rating.toFixed(1)} </span>
+          <span className='text-xs text-gray-500'>({data?.reviews.length})</span>
+        
               </div>
               <p className="text-sm text-gray-600">{data.description}</p>
               <div className="flex items-center space-x-2">
-                <span className="text-2xl font-bold">${discountedPrice.toFixed(2)}</span>
+                <span className="text-base text-blue-600 font-semibold">${discountedPrice.toFixed(2)}</span>
                 <span className="text-sm text-gray-500 line-through">${(data.price * quantity).toFixed(2)}</span>
-                <span className="text-sm text-green-600">-{data.discountPercentage}%</span>
+                <span className="text-sm text-blue-500">-{data.discountPercentage}%</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium">Quantity:</span>
+              <div className="flex gap-6 flex-wrap">
+                
+              <div className="flex items-center flex-wrap space-x-2">
+                <span className="text-sm text-gray-700 font-medium">Quantity:</span>
                 <button
                   onClick={decrementQuantity}
-                  className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
-                >
-                  -
+                  className="w-8 h-8  flex items-center justify-center  rounded-full"
+                ><Subtract width={20} height={20}/>
                 </button>
-                <span className="w-8 text-center">{quantity}</span>
+                <span className="w-8 text-sm font-semibold text-center">{quantity}</span>
                 <button
                   onClick={incrementQuantity}
-                  className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
+                  className="w-8 h-8 flex items-center justify-center  rounded-full"
                 >
-                  +
+                  <Plus width={20} height={20}/>
                 </button>
               </div>
-              <div className="flex space-x-2">
+              <div className="bg-blue-600 text-start  w-1/3 relative">
                 <button
+                type="button"
                   onClick={handleAddToCart}
-                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
+                  className="text-start text-xs font-semibold px-2 w-full h-full text-white rounded-md hover:bg-blue-700  transition duration-300"
                 >
                   Add to Cart
                 </button>
-                <button
-                  onClick={onClose}
-                  className="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 transition duration-300"
-                >
-                  Close
-                </button>
+                <span className="flex justify-center items-center w-[50px] h-full absolute top-0 right-0 bg-blue-700">
+                  <Cart width={20} height={20} color={'#fff'}/>
+                </span>
+              </div>
               </div>
             </div>
           </div>

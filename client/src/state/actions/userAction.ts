@@ -40,7 +40,6 @@ export const deleteAddress = (url:string) => async (dispatch: Dispatch) => {
 
   
   const data = await DeleteService(url, true)
-console.log(data)
   if(data.ok){
     dispatch(UpdateUserSuccess(data.data.data));
 

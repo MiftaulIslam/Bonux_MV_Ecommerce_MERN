@@ -1,32 +1,39 @@
-import { createBrowserRouter } from "react-router-dom";
+import React, { Suspense, lazy } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
+
 import LoginPage from '../pages/auth/Loginpage'
 import SignupPage from '../pages/auth/SignupPage'
-import ForgotPassword from '../pages/auth/ForgotPassword'
-import ConfirmPassword from '../pages/auth/ConfirmPassword'
-import Activation from '../pages/auth/Activation'
-import RequestActivation from '../pages/auth/RequestActivation'
-import Home from '../pages/Home/Home'
-import Category from '../pages/Admin/Category'
-import ProductDetail from '../components/Helper/ProductDetail'
-import HomeLayout from '../layouts/HomeLayout'
-import AdminLayout from '../layouts/AdminLayout'
 import PrivateRoute from "./privateRoute";
-import Admin from "../pages/Admin/Admin";
-import SellerLayout from "../layouts/SellerLayout";
 import ManageProfileLayout from "../layouts/ManageProfileLayout";
 import MyProfile from "../components/ManageProfile/MyProfile";
 import ManageProfile from "../components/ManageProfile/ManageProfile";
 import ManageAddresses from "../components/ManageProfile/ManageAddresses";
-import AddressForm from "../components/Helper/AddressForm";
-import SellerHome from "../pages/Seller/SellerHome";
-import StoreSettings from "../pages/Seller/StoreSetting";
-import AddProduct from "../pages/Seller/AddProduct";
-import StorePreview from "../pages/Seller/StorePreview";
-import Checkout from "../pages/Home/Checkout";
-import ProductSearch from "../pages/Home/ProductSearch";
-import CategoryProducts from "../pages/Home/CategoryProducts";
-import ManageProduct from "../components/Store/ManageProduct";
+import AddressForm from  "../components/Helper/AddressForm"
+import Loader from '../widgets/Loader';
 
+// Lazy loaded components
+
+const ForgotPassword = lazy(()=> import( '../pages/auth/ForgotPassword'))
+const ConfirmPassword = lazy(()=> import( '../pages/auth/ConfirmPassword'))
+const Activation = lazy(()=> import( '../pages/auth/Activation'))
+const RequestActivation = lazy(()=> import( '../pages/auth/RequestActivation'))
+const Admin = lazy(()=>import( "../pages/Admin/Admin"));
+const Home = lazy(()=>import( '../pages/Home/Home'))
+const Category = lazy(()=>import( '../pages/Admin/Category'))
+const ProductDetail = lazy(()=>import( '../components/Helper/ProductDetail'))
+const SellerHome = lazy(()=>import( "../pages/Seller/SellerHome"))
+const StoreSettings = lazy(()=>import( "../pages/Seller/StoreSetting"))
+const AddProduct = lazy(()=>import( "../pages/Seller/AddProduct"))
+const StorePreview = lazy(()=>import( "../pages/Seller/StorePreview"))
+const Checkout = lazy(()=>import( "../pages/Home/Checkout"))
+const CategoryProducts =lazy(()=>import( "../pages/Home/CategoryProducts"));
+const ManageProduct =lazy(()=>import( "../components/Store/ManageProduct"));
+const ProductSearch = lazy(()=> import( "../pages/Home/ProductSearch"));
+// Lazy Layouts
+
+const HomeLayout = lazy(()=> import( '../layouts/HomeLayout'))
+const AdminLayout = lazy(()=> import( '../layouts/AdminLayout'))
+const SellerLayout = lazy(()=> import( "../layouts/SellerLayout"));
 
 const router = createBrowserRouter([
   {
@@ -38,40 +45,56 @@ const router = createBrowserRouter([
     element: <SignupPage />,
   },{
     path: "/forgot-password",
-    element: <ForgotPassword />,
+    element: (      
+      <Suspense fallback={<Loader/>}>
+      <ForgotPassword />
+    </Suspense>
+    )
   },
   {
     path: "/confirm-password/:token",
-    element: <ConfirmPassword />,
+    element: (<Suspense fallback={<Loader/>}><ConfirmPassword /></Suspense>),
   },
   {
     path: "/activation/:token",
-    element: <Activation />,
+    element: (<Suspense fallback={<Loader/>}><Activation /></Suspense>),
   },
   {
     path: "/request-activation",
-    element: <RequestActivation />,
+    element: (<Suspense fallback={<Loader/>}><RequestActivation /></Suspense>),
   },
   {
     element: <PrivateRoute role="user"/>,
     children: [
       {
         path: "/",
-        element: <HomeLayout />,
+        element: (
+        <Suspense fallback={<Loader/>}>
+
+          <HomeLayout />
+        </Suspense>
+
+        ),
         // errorElement: <ErrorPage />,
         children: [
           {
             path: "/",
-            element: <Home />,
+            element: (
+              <Suspense fallback={<Loader/>}>
+            <Home/></Suspense> ),
           },
           
           {
             path: "checkout/:productname/:id",
-            element: <Checkout/>,
+            element: ( 
+              <Suspense fallback={<Loader/>}>
+            <Checkout/></Suspense> ),
           },
           {
             path: "search",
-            element: <ProductSearch/>,
+            element: (
+              <Suspense fallback={<Loader/>}>
+            <ProductSearch/></Suspense> ),
           },
           {
             path:"/user",
@@ -109,11 +132,15 @@ const router = createBrowserRouter([
           },
           {
             path: "/product-detail/:productname/:id",
-            element: <ProductDetail />,
+            element: (<Suspense fallback={<Loader/>}><ProductDetail /></Suspense>) ,
           },
           {
             path: "/category",
-            element: <CategoryProducts />,
+            element: (<Suspense fallback={<Loader/>}>
+
+              <CategoryProducts />
+            </Suspense> 
+          ) ,
           },
         ],
       },
@@ -125,15 +152,29 @@ const router = createBrowserRouter([
     children: [
       {
         path: "admin",
-        element: <AdminLayout />,
+        element: (
+        <Suspense fallback={<Loader/>}>
+
+          <AdminLayout />
+        </Suspense>
+
+        ),
         // errorElement: <ErrorPage />,
         children: [
           {
             path: "/admin",
-            element: <Admin />,
+            element: (<Suspense fallback={<Loader/>}>
+
+              <Admin />
+            </Suspense>
+          ),
           },{
             path: "category",
-            element: <Category />,
+            element: (<Suspense fallback={<Loader/>}>
+
+              <Category />
+            </Suspense>
+          ),
           },
         ],
       },
@@ -145,28 +186,59 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/seller",
-        element: <SellerLayout />,
+        element: (
+        <Suspense fallback={<Loader/>}>
+
+          <SellerLayout />
+        </Suspense>
+
+        ),
         // errorElement: <ErrorPage />,
         children: [
           {
             path: "/seller",
-            element: <SellerHome />,
+            element: (
+              <Suspense fallback={<Loader/>}>
+
+                <SellerHome />
+              </Suspense>
+          ),
           },
           {
             path: "product-add",
-            element: <AddProduct />,
+            element: (
+              <Suspense fallback={<Loader/>}>
+
+                <AddProduct />
+              </Suspense>
+          ),
           },
           {
             path: "store-settings",
-            element: <StoreSettings />,
+            element: (
+              <Suspense fallback={<Loader/>}>
+
+                <StoreSettings />
+              </Suspense>
+          ),
           },
           {
             path: "store-preview",
-            element: <StorePreview />,
+            element: (
+              <Suspense fallback={<Loader/>}>
+
+                <StorePreview />
+              </Suspense>
+          ),
           },
           {
             path: "products",
-            element: <ManageProduct />,
+            element: (
+              <Suspense fallback={<Loader/>}>
+
+                <ManageProduct />
+              </Suspense>
+          ),
           },
         ],
       },

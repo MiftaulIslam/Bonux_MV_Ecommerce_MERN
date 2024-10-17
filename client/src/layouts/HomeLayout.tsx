@@ -20,7 +20,7 @@ const HomeLayout = () => {
   }, [])
   return (
     <>
-      <div className="bg-sky-900 ">
+      <div className="bg-blue-700 bg-opacity-85 ">
         <NavBar />
       </div>
       <div className={`w-full ${!isOpen && "hidden"}`}>

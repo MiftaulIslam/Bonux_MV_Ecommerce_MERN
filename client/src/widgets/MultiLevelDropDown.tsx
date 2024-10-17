@@ -16,7 +16,6 @@ showLoader()
   }
   hideLoader()
 }
-console.log(categories)
 useEffect(() => {
 getCategories()
 }, [])

@@ -20,7 +20,9 @@ function App() {
   }, []);
 
   return (
-    <><LoaderProvider>
+    <>
+    
+    <LoaderProvider>
 
 
 <RouterProvider router={router} />

@@ -1,15 +1,9 @@
 import  { useEffect, useState } from 'react';
-import  Cart  from '../../widgets/icons/Cart';
-import QuickViewModal from '../Helper/QuickViewModal';
-import { useNavigate } from 'react-router-dom';
+import ProductCard from '../Helper/ProductCard';
 
 const JustForYou = () => {
-  const navigate = useNavigate()
-  const [quickDemo, setquickDemo] = useState(0);
   const [products, setproducts] = useState<any>([]);
   const [pageSize, setPageSize] = useState(0);
-  const [toggleQuickView, settoggleQuickView] = useState(false);
-  const [selectedProduct, setselectedProduct] = useState(null);
 
  
 
@@ -38,50 +32,11 @@ const JustForYou = () => {
       </div>
       <hr />
       <div className="grid py-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-        {products.map((product:any, i:number) => (
-          <div
-            key={i}
-            className="relative p-3 cursor-pointer bg-white rounded-lg overflow-hidden hover:shadow-lg hover:translate-y-1 transition-transform duration-200"
-            onMouseEnter={() => setquickDemo(product.id)}
-            onMouseLeave={() => setquickDemo(0)}
-          >
-            <img
-            onClick={()=> navigate(`product-detail/${product.title.split(" ").join("-")}/${product.id}`)}
-              src={product.image || product?.images[0]}
-              alt={product.title}
-              className="w-full h-36 object-contain"
-            />
-            <div >
-<div onClick={()=> navigate(`product-detail/${product.title.split(" ").join("-")}/${product.id}`)}><h3 className="text-sm font-semibold text-gray-800 mb-2">
-                {product.title.length > 80 ? `${product.title.slice(0, 50)}...` : product.title}
-              </h3>
-              <div className="mb-4">
-                <p className="text-base font-bold text-red-600">${(product.price - ((product.discountPercentage / 100) * product.price)).toFixed(2)}</p>
-                <p>
-                  <span className="text-xs line-through text-gray-500">
-                    ${product.price.toFixed(2)}
-                  </span>
-                  <span className='text-xs ml-1'>-{product.discountPercentage}%</span>
-                </p>
-              </div></div>
-              
-              <div className='flex justify-between'>
-                <button
-                  type='button'
-                  className={`bg-white px-3 rounded hover:shadow-sm hover:border transition-opacity duration-300 ${quickDemo === product.id ? 'opacity-100' : 'opacity-0'}`}
-                >
-                  <Cart width={"1.3rem"} height={"1.3rem"} color={"#0C4A6E"} />
-                </button>
-                <button
-                  onClick={() => { settoggleQuickView(true); setselectedProduct(product); }}
-                  type='button'
-                  className={`bg-white text-[#0C4A6E] text-xs sm:text-sm font-bold hover:shadow-md hover:border py-2 px-4 rounded transition-opacity duration-300 ${quickDemo === product.id ? 'opacity-100' : 'opacity-0'}`}
-                >
-                  Quick view
-                </button>
-              </div>
-            </div>
-          </div>
+        {products.map((product:any) => (
+
+<div key={product.id}>
+  <ProductCard product={product}/>
+</div>
         ))}
       </div>
       <div className='text-center my-2'>
@@ -93,7 +48,6 @@ const JustForYou = () => {
           Load more
         </button>
       </div>
-      {toggleQuickView && selectedProduct && <QuickViewModal data={selectedProduct} onClose={() => settoggleQuickView(false)} />}
     </section>
   );
 }

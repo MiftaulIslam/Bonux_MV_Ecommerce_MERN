@@ -78,7 +78,6 @@ const Modal:React.FC<ModalProps> = ({
         onSubmit(formDataValues,data?._id);
       
       } else {
-        console.log(data?.id)
         onSubmit(formDataValues,data?._id );
       }
     } else if (action === "delete") {

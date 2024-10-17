@@ -54,7 +54,6 @@ const Category = () => {
   }
 
   const updateCategory = async (body:any,id:any)=>{
-    console.log(body)
     setLoading(true)
     await PutService(`category/update-category/${id}`, true, body)
     setLoading(false)

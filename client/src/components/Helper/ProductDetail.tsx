@@ -77,7 +77,6 @@ const fetchProduct =async  ()=>{
     fetchProduct()
     window.scrollTo(0, 0);
   }, [id])
-console.log(product)
   const handleMouseMove = (e:React.MouseEvent) => {
     if (imageRef.current) {
       const { left, top, width, height } = imageRef.current.getBoundingClientRect()

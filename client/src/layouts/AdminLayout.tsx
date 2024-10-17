@@ -7,7 +7,6 @@ import { RootState } from "../state/store/store";
 const AdminLayout = () => {
   const {loading} = useSelector((state:RootState)=> state.user)
   // useEffect(() => {
-  //   console.log(user)
 
   //   if(user.role !== "admin" || !isLoggedIn) {
   //     showAlert(false, "Unauthorized access detected")  

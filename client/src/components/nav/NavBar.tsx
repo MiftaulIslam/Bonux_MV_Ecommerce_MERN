@@ -42,7 +42,6 @@ const NavBar = () => {
     //     return x.name.toLowerCase().includes(term.toLowerCase());
     //   });
     const jsonData = await data.json()
-    console.log(jsonData.products)
     //Storing all of the matched data to the searchData
     setSearchData(jsonData.products);
 

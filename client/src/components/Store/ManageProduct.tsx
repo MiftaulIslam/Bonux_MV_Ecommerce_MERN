@@ -48,7 +48,6 @@ const ManageProduct = () => {
     if (data) {
       setProducts(data.data.data);
     }
-    console.log(data.data.data)
     setLoading(false);
   };
 

@@ -37,7 +37,6 @@ const logoInputClick = useRef<any>(null)
   //   openingHours: store?.openingHours || "",
   //   closingHours: store?.closingHours || "",
   // });
-  // console.log(store)
   const About = () => {
     return (
       <div className="bg-white shadow rounded-lg p-4">
