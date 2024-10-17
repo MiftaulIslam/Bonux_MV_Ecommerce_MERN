@@ -1,9 +1,7 @@
 import  { useCallback, useEffect, useRef, useState } from 'react'
 import { useLoader } from '../../hooks/LoaderProvider'
-import QuickViewModal from '../../components/Helper/QuickViewModal'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Cart from '../../widgets/icons/Cart'
-import { sellerInputLabel, sellerInputTag } from '../../style/style'
+import {  sellerInputTag } from '../../style/style'
 import { showAlert } from '../../utils/showAlert'
 import useCapitalization from '../../hooks/CapitalizationProvider'
 import ProductCard from '../../components/Helper/ProductCard'
@@ -18,9 +16,6 @@ const ProductSearch = () => {
     const [loading, setLoading] = useState(false)
     const [sortOrder, setSortOrder] = useState<any>('')  
     const [totalProducts, setTotalProducts] = useState(0);
-    const [toggleQuickView, settoggleQuickView] = useState(false)
-    const [selectedProduct, setselectedProduct] = useState(false)
-    const [quickDemo, setquickDemo] = useState(0)
     const [page, setPage] = useState(1)
     const loader = useRef(null)
   const{showLoader, hideLoader} = useLoader()
